@@ -27,7 +27,7 @@ public class ErgebnistabelleActivity extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         super.onCreate(savedInstanceState);
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         setContentView(R.layout.activity_ergebnistabelle);
 
         statistik = (Statistik) getIntent().getExtras().getParcelable("Statistik");

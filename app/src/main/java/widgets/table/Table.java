@@ -89,6 +89,8 @@ public class Table extends RelativeLayout {
 
         this.resizeHeaderHeight();
 
+        this.resizeHeaderWidth();
+
         this.getTableRowHeaderCellWidth();
 
         this.generateTableC_AndTable_D();
@@ -103,6 +105,12 @@ public class Table extends RelativeLayout {
 
         for (int i=0; i<spieler.size(); i++){
             DataObject dataObject = new DataObject(activity, spieler.get(i), statistikwerte.get(i));
+
+            if(i == spieler.size()-1){
+                View v =  dataObject.getDataviews().get(0);
+                v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), v.getPaddingBottom()+30);
+            }
+
             dataObjects.add(dataObject);
         }
 
@@ -252,12 +260,11 @@ public class Table extends RelativeLayout {
     TableRow tableRowForTableC(DataObject dataObject){
 
         TableRow.LayoutParams params = new TableRow.LayoutParams( this.headerCellsWidth.get(0),LayoutParams.MATCH_PARENT);
-//        params.setMargins(0, -1, 0, 0);
+
 
         TableRow tableRowForTableC = new TableRow(this.context);
 
         View view = dataObject.getDataviews().get(0);
-
         tableRowForTableC.addView(view,params);
 
         return tableRowForTableC;
@@ -276,10 +283,8 @@ public class Table extends RelativeLayout {
 
         for(int x=0 ; x<loopCount; x++){
             TableRow.LayoutParams params = new TableRow.LayoutParams( headerCellsWidth.get(x+1),LayoutParams.MATCH_PARENT);
-            //params.setMargins(2, 2, 0, 0);
 
             View viewB = info.get(x);
-
             taleRowForTableD.addView(viewB,params);
         }
 
@@ -287,30 +292,23 @@ public class Table extends RelativeLayout {
 
     }
 
-    // table cell standard TextView
-    TextView bodyTextView(String label){
+    // resizing TableRow height starts here
+    void resizeHeaderHeight() {
 
-        TextView bodyTextView = new TextView(this.context);
-        bodyTextView.setText(label);
-        bodyTextView.setGravity(Gravity.CENTER);
-//        bodyTextView.setPadding(5, 5, 5, 5);
+        TableRow productNameHeaderTableRow = (TableRow) this.tableA.getChildAt(0);
+        TableRow productInfoTableRow = (TableRow)  this.tableB.getChildAt(0);
 
-        return bodyTextView;
-    }
+        int rowAHeight = this.viewHeight(productNameHeaderTableRow);
+        int rowBHeight = this.viewHeight(productInfoTableRow);
 
-    // header standard TextView
-    TextView headerTextView(String label){
+        TableRow tableRow = rowAHeight < rowBHeight ? productNameHeaderTableRow : productInfoTableRow;
+        int finalHeight = rowAHeight > rowBHeight ? rowAHeight : rowBHeight;
 
-        TextView headerTextView = new TextView(this.context);
-        headerTextView.setText(label);
-        headerTextView.setGravity(Gravity.CENTER);
-        //headerTextView.setPadding(5, 5, 5, 5);
-
-        return headerTextView;
+        this.matchLayoutHeight(tableRow, finalHeight);
     }
 
     // resizing TableRow height starts here
-    void resizeHeaderHeight() {
+    void resizeHeaderWidth() {
 
         TableRow productNameHeaderTableRow = (TableRow) this.tableA.getChildAt(0);
         TableRow productInfoTableRow = (TableRow)  this.tableB.getChildAt(0);

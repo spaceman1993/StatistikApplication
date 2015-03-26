@@ -2,6 +2,7 @@ package widgets.table;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,23 +45,31 @@ public class DataObject {
     }
 
     public View getSpielerView(Spieler spieler){
-        View v = activity.findViewById(R.id.table_spieler);
+        LayoutInflater inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(R.layout.table_spieler, null);
 
         TextView trikonummer = (TextView) v.findViewById(R.id.trikonummerErfassung);
         ImageView foto = (ImageView) v.findViewById(R.id.image_view);
         TextView nachname = (TextView) v.findViewById(R.id.nachname);
         TextView vorname = (TextView) v.findViewById(R.id.vorname);
 
-        trikonummer.setText(spieler.getTrikonummer());
+        trikonummer.setText(String.valueOf(spieler.getTrikonummer()));
         foto.setImageBitmap(spieler.getFoto());
         nachname.setText(spieler.getNachname());
         vorname.setText(spieler.getVorname());
+
+        v.setBackgroundResource(R.drawable.tableheader);
+        v.setPadding(v.getPaddingLeft()+100, v.getPaddingTop(), v.getPaddingRight(), v.getPaddingBottom());
 
         return v;
     }
 
     public View getDataView(Statistikwerte statistikwert){
-        View v = null;
+        TextView t = new TextView(activity);
+        t.setText(statistikwert.getWert());
+        View v = t;
+
+        v.setBackgroundResource(R.drawable.tabledata);
 
         return v;
     }

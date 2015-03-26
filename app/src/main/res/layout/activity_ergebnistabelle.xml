@@ -12,32 +12,11 @@
         android:scaleType="fitXY"
         />
 
-
-    <RelativeLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:paddingTop="40dp"
-        android:paddingLeft="@dimen/activity_horizontal_marginLeft"
-        android:paddingRight="@dimen/activity_horizontal_marginRight"
-        android:gravity="center" >
-
-        <TextView
-            android:id="@+id/kategorieÜberschrift"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Statistikliste"
-            style="@style/ueberschrift_text" />
-    </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/body"
-        android:layout_below="@id/header"
         android:layout_height="match_parent"
-        android:layout_width="match_parent" >
+        android:layout_width="match_parent">
     </RelativeLayout>Layout>
-
 
     <ImageView
         android:layout_width="fill_parent"
