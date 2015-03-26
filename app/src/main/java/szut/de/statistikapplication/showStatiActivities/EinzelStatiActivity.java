@@ -71,7 +71,7 @@ public class EinzelStatiActivity extends Activity {
         mannschaft = g.getMannschaft();
 
         //Ausgabefelder
-        spielerListView = new SwipeMenuEditDelete(this, mannschaft, (SwipeMenuListView)findViewById(R.id.statistikList), new Statistik(), R.layout.swipemenu_item_stati, true, false, true, false);
+        spielerListView = new SwipeMenuEditDelete(this, mannschaft, (SwipeMenuListView)findViewById(R.id.statistikList), new Statistik(), R.layout.swipemenu_item_stati, true, false, true, true);
 
     }
 

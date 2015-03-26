@@ -17,6 +17,7 @@ import android.widget.TextView;
 import hilfklassen.Mannschaft;
 import szut.de.statistikapplication.createStatiActivities.ErfassungsartActivity;
 import szut.de.statistikapplication.showStatiActivities.EinzelStatiActivity;
+import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
 
 
 public class HauptmenuActivity extends Activity {
@@ -102,8 +103,8 @@ public class HauptmenuActivity extends Activity {
     }
 
     public void gesamtstatistik_click(View view){
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Hier können Sie später die Gesamtstatistiken einsehen").show();
+        Intent intent = new Intent(this, ErgebnistabelleActivity.class);
+        startActivity(intent);
     }
 
     public void config_click(View view){

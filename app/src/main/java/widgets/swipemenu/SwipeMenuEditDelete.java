@@ -31,6 +31,7 @@ import hilfklassen.listview.CustomArrayAdapter;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.createMannschaftActivities.NewKategorieActivity;
 import szut.de.statistikapplication.createMannschaftActivities.NewSpielerActivity;
+import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
 import widgets.swipemenulistview.SwipeMenu;
 import widgets.swipemenulistview.SwipeMenuCreator;
 import widgets.swipemenulistview.SwipeMenuItem;
@@ -120,30 +121,39 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
             // TODO Auto-generated method stub
 
             if(isStatusChanging) {
-                View convertView = ((ViewGroup) view).getChildAt(0);
-
-                ImageView iv = (ImageView) convertView.findViewById(R.id.image_view);
-                TextView tv1 = (TextView) convertView.findViewById(R.id.bezeichnungEins);
-                TextView tv2 = (TextView) convertView.findViewById(R.id.bezeichnungZwei);
-                TextView tv3 = (TextView) convertView.findViewById(R.id.bezeichnungDrei);
-
-                DBHandler dbHandler = new DBHandler(getActivity().getApplicationContext(), null, null, 1);
-
-                if (selectorList.get(position).getSelected() == 1) {
-                    Log.d("Selected", "Wird deaktiviert");
-                    selectorList.get(position).setSelected(0);
-                    deaktiviereSchaltflächen(iv, tv1, tv2, tv3);
-                } else {
-                    Log.d("Selected", "Wird aktiviert");
-                    selectorList.get(position).setSelected(1);
-                    aktiviereSchaltflächen(iv, tv1, tv2, tv3);
+                if(selectableKlasse instanceof Statistik){
+                    Intent intent = new Intent(activity, ErgebnistabelleActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("Statistik", (Statistik)selectorList.get(position));
+                    intent.putExtras(bundle);
+                    activity.startActivity(intent);
                 }
+                else {
+                    View convertView = ((ViewGroup) view).getChildAt(0);
 
-                if (isDatabaseUpdating) {
-                    dbHandler.update(selectorList.get(position));
+                    ImageView iv = (ImageView) convertView.findViewById(R.id.image_view);
+                    TextView tv1 = (TextView) convertView.findViewById(R.id.bezeichnungEins);
+                    TextView tv2 = (TextView) convertView.findViewById(R.id.bezeichnungZwei);
+                    TextView tv3 = (TextView) convertView.findViewById(R.id.bezeichnungDrei);
+
+                    DBHandler dbHandler = new DBHandler(getActivity().getApplicationContext(), null, null, 1);
+
+                    if (selectorList.get(position).getSelected() == 1) {
+                        Log.d("Selected", "Wird deaktiviert");
+                        selectorList.get(position).setSelected(0);
+                        deaktiviereSchaltflächen(iv, tv1, tv2, tv3);
+                    } else {
+                        Log.d("Selected", "Wird aktiviert");
+                        selectorList.get(position).setSelected(1);
+                        aktiviereSchaltflächen(iv, tv1, tv2, tv3);
+                    }
+
+                    if (isDatabaseUpdating) {
+                        dbHandler.update(selectorList.get(position));
+                    }
+
+                    dbHandler.close();
                 }
-
-                dbHandler.close();
             }
         }
     };

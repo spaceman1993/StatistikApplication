@@ -25,7 +25,7 @@ import szut.de.statistikapplication.R;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 109;
+    private static final int DATABASE_VERSION = 110;
     private static final String DATABASE_NAME = "statistikDB.db";
     private Context context;
 
@@ -400,7 +400,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Statistikwerte> getStatistikwerteDerStatistikDesSpielers(Statistik statistik, Spieler spieler){
         Gson gson = new Gson();
-        String query = "Select * FROM " + TABLE_STATISTIKWERTE + " WHERE " + COLUMN_STATISTIKID + " = " + statistik.getId() + " & " + COLUMN_SPIELERID + " = " + spieler.getId();
+        String query = "Select * FROM " + TABLE_STATISTIKWERTE + " WHERE " + COLUMN_STATISTIKID + " = " + statistik.getId() + " AND " + COLUMN_SPIELERID + " = " + spieler.getId();
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
@@ -448,6 +448,29 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
 
         return spielerListe;
+    }
+
+    public ArrayList<Kategorie> getKategorienDerStatistik(Statistik statistik){
+
+        String query = "Select DISTINCT " + COLUMN_KATEGORIEID + " FROM " + TABLE_STATISTIKWERTE + " WHERE " + COLUMN_STATISTIKID + " = " + statistik.getId();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        ArrayList<Kategorie> kategorienListe = new ArrayList<Kategorie>();
+
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                int kategorieId = Integer.parseInt(cursor.getString(0));
+                kategorienListe.add(findKategorie(kategorieId));
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        db.close();
+
+        return kategorienListe;
     }
 
 

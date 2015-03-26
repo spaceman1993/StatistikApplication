@@ -40,5 +40,6 @@
     <string name="title_activity_erfassungs">ErfassungsActivity</string>
     <string name="title_activity_spielerbild">SpielerbildActivity</string>
     <string name="title_activity_einzel_stati">EinzelStatiActivity</string>
+    <string name="title_activity_ergebnistabelle">ErgebnistabelleActivity</string>
 
 </resources>

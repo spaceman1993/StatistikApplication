@@ -28,6 +28,7 @@ import hilfklassen.Statistikwerte;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.HauptmenuActivity;
 import szut.de.statistikapplication.R;
+import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
 import widgets.horizontalListView.HorizontalListView;
 import widgets.katItems.KatItemCheckbox;
 import widgets.katItems.KatItemCounter;
@@ -297,6 +298,10 @@ public class ErfassungsActivity extends Activity {
     }
 
     public void stati_Fertig_Click(View view){
-
+        Intent intent = new Intent(this, ErgebnistabelleActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Statistik", statistik);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }
