@@ -2,18 +2,24 @@ package widgets.table;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.Image;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import hilfklassen.DBHandler;
 import hilfklassen.Kategorie;
@@ -26,9 +32,6 @@ public class Table extends RelativeLayout {
 
     public final String TAG = "TableMainLayout.java";
 
-    // set the header titles
-    ArrayList<String> headers;
-
     TableLayout tableA;
     TableLayout tableB;
     TableLayout tableC;
@@ -40,18 +43,25 @@ public class Table extends RelativeLayout {
     ScrollView scrollViewC;
     ScrollView scrollViewD;
 
+    Activity activity;
     Context context;
     Statistik statistik;
 
+    ArrayList<View> headerObjects;
     ArrayList<DataObject> dataObjects;
+
+    ArrayList<Spieler> spieler;
+    ArrayList<ArrayList<Statistikwerte>> spielerstatistikwerte;
+    ArrayList<Kategorie> kategorien;
 
     ArrayList<Integer> headerCellsWidth = new ArrayList<Integer>();
 
-    public Table(Context context, Statistik statistik) {
+    public Table(Activity activity, Statistik statistik) {
 
-        super(context);
+        super(activity.getApplicationContext());
 
-        this.context = context;
+        this.activity = activity;
+        this.context = activity.getApplicationContext();
         this.statistik = statistik;
 
         // initialize the main components (TableLayouts, HorizontalScrollView, ScrollView)
@@ -87,12 +97,12 @@ public class Table extends RelativeLayout {
     }
 
     // this is just the sample data
-    ArrayList<DataObject> dataObjects(ArrayList<Spieler> spieler, ArrayList<ArrayList<Statistikwerte>> statistikwerte){
+    ArrayList<DataObject> dataObjects(Activity activity, ArrayList<Spieler> spieler, ArrayList<ArrayList<Statistikwerte>> statistikwerte){
 
         ArrayList<DataObject> dataObjects = new ArrayList<DataObject>();
 
         for (int i=0; i<spieler.size(); i++){
-            DataObject dataObject = new DataObject(spieler.get(i), statistikwerte.get(i));
+            DataObject dataObject = new DataObject(activity, spieler.get(i), statistikwerte.get(i));
             dataObjects.add(dataObject);
         }
 
@@ -104,20 +114,20 @@ public class Table extends RelativeLayout {
     private void initVariables(){
         DBHandler dbHandler = new DBHandler(context, null, null, 1);
 
-        ArrayList<Kategorie> kategorien = dbHandler.getKategorienDerStatistik(statistik);
-        headers = new HeaderObjects(kategorien).getHeaders();
+        kategorien = dbHandler.getKategorienDerStatistik(statistik);
+        headerObjects = new HeaderObjects(activity, kategorien).getHeaderViews();
 
-        ArrayList<Spieler> spieler = dbHandler.getSpielerDerStatistik(statistik);
-        ArrayList<ArrayList<Statistikwerte>> spielerstatistikwerte = new ArrayList<ArrayList<Statistikwerte>>();
+        spieler = dbHandler.getSpielerDerStatistik(statistik);
+        spielerstatistikwerte = new ArrayList<ArrayList<Statistikwerte>>();
 
         for(int i=0; i<spieler.size(); i++){
             spielerstatistikwerte.add(dbHandler.getStatistikwerteDerStatistikDesSpielers(statistik, spieler.get(i)));
         }
 
-        dataObjects = dataObjects(spieler, spielerstatistikwerte);
+        dataObjects = dataObjects(activity, spieler, spielerstatistikwerte);
 
-        for(int i=0; i<headers.size(); i++){
-            headerCellsWidth.add(headers.get(i).length());
+        for(int i=0; i<headerObjects.size(); i++){
+            headerCellsWidth.add(headerObjects.get(i).getWidth());
         }
 
         dbHandler.close();
@@ -194,9 +204,8 @@ public class Table extends RelativeLayout {
     TableRow componentATableRow(){
 
         TableRow componentATableRow = new TableRow(this.context);
-        TextView textView = this.headerTextView(this.headers.get(0));
-        textView.setBackgroundResource(R.drawable.tableheader);
-        componentATableRow.addView(textView);
+        View view = this.headerObjects.get(0);
+        componentATableRow.addView(view);
 
         return componentATableRow;
     }
@@ -205,16 +214,15 @@ public class Table extends RelativeLayout {
     TableRow componentBTableRow(){
 
         TableRow componentBTableRow = new TableRow(this.context);
-        int headerFieldCount = this.headers.size();
+        int headerFieldCount = this.headerObjects.size();
 
         TableRow.LayoutParams params = new TableRow.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.MATCH_PARENT);
 //        params.setMargins(-1, 0, 0, 0);
 
         for(int x=0; x<(headerFieldCount-1); x++){
-            TextView textView = this.headerTextView(this.headers.get(x+1));
-            textView.setLayoutParams(params);
-            textView.setBackgroundResource(R.drawable.tableheader);
-            componentBTableRow.addView(textView);
+            View view = headerObjects.get(x+1);
+
+            componentBTableRow.addView(view, params);
         }
 
 
@@ -247,9 +255,10 @@ public class Table extends RelativeLayout {
 //        params.setMargins(0, -1, 0, 0);
 
         TableRow tableRowForTableC = new TableRow(this.context);
-        TextView textView = this.bodyTextView(dataObject.getDatas().get(0));
-        textView.setBackgroundResource(R.drawable.tableheader);
-        tableRowForTableC.addView(textView,params);
+
+        View view = dataObject.getDataviews().get(0);
+
+        tableRowForTableC.addView(view,params);
 
         return tableRowForTableC;
     }
@@ -259,19 +268,19 @@ public class Table extends RelativeLayout {
         TableRow taleRowForTableD = new TableRow(this.context);
 
         int loopCount = ((TableRow)this.tableB.getChildAt(0)).getChildCount();
-        ArrayList<String> info = new ArrayList<String>();
+        ArrayList<View> info = new ArrayList<View>();
 
-        for(int i=1; i<dataObject.getDatas().size(); i++){
-            info.add(dataObject.getDatas().get(i));
+        for(int i=1; i<dataObject.getDataviews().size(); i++){
+            info.add(dataObject.getDataviews().get(i));
         }
 
         for(int x=0 ; x<loopCount; x++){
             TableRow.LayoutParams params = new TableRow.LayoutParams( headerCellsWidth.get(x+1),LayoutParams.MATCH_PARENT);
             //params.setMargins(2, 2, 0, 0);
 
-            TextView textViewB = this.bodyTextView(info.get(x));
-            textViewB.setBackgroundResource(R.drawable.tabledata);
-            taleRowForTableD.addView(textViewB,params);
+            View viewB = info.get(x);
+
+            taleRowForTableD.addView(viewB,params);
         }
 
         return taleRowForTableD;

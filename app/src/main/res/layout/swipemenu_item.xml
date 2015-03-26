@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_centerVertical="true"
+                android:gravity="center|left"
                 android:layout_toRightOf="@+id/image_view"
                 android:text="1. Bezeichnung"
                 android:textColor="@android:color/black"
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_centerVertical="true"
+                android:gravity="center|left"
                 android:text="2. Bezeichnung"
                 android:textColor="@android:color/black"
                 android:textSize="25sp" />
@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="bottom"
+                android:gravity="bottom|left"
                 android:text="3. Bezeichnung"
                 android:textColor="@android:color/black"
                 android:textSize="13sp" />
