@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Statistiko</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="firststart_ueberschrift">Sportkategorie</string>
+    <string name="handball">Handball</string>
+    <string name="fussball">Fußball</string>
+    <string name="basketball">Basketball</string>
+    <string name="eigene">Eigene</string>
+    <string name="fertig">Fertig</string>
+
+    <color name="selected">#00FF00</color>
+    <color name="transparent">@android:color/transparent</color>
+
+    <string name="kategorie">Kategorie</string>
+    <string name="spieler">Spieler</string>
+    <string name="stati1">Statistik 1</string>
+    <string name="stati2">Statistik 2</string>
+    <string name="stati3">Statistik 3</string>
+    <string name="spieler1">Spieler 1</string>
+    <string name="spieler2">Spieler 2</string>
+    <string name="spieler3">Spieler 3</string>
+    <string name="title_activity_first_start">FirstStart</string>
+    <string name="title_activity_kategorie">Kategorienauswahl</string>
+    <string name="title_activity_new_kategorie">NewKategorieActivity</string>
+    <string name="title_activity_kader">KaderActivity</string>
+    <string name="title_activity_new_spieler">NewSpielerActivity</string>
+    <string name="title_activity_hauptmenu">HauptmenuActivity</string>
+    <string name="statistiken">Statistiken</string>
+    <string name="gesamtstatistik">Gesamtstatistik</string>
+    <string name="einzelstatistiken">Einzelstatistiken</string>
+    <string name="neuestatistiken">Neue Statistiken</string>
+    <string name="title_activity_mannschaft">MannschaftActivity</string>
+    <string name="title_activity_config">ConfigActivity</string>
+    <string name="title_activity_auswahl_mannschaft">AuswahlMannschaftActivity</string>
+    <string name="title_activity_erfasse_neue_stati">ErfasseNeueStatiActivity</string>
+    <string name="title_activity_erfassungsart">ErfassungsartActivity</string>
+    <string name="title_activity_erfassungs">ErfassungsActivity</string>
+    <string name="title_activity_spielerbild">SpielerbildActivity</string>
+    <string name="title_activity_einzel_stati">EinzelStatiActivity</string>
+
+</resources>

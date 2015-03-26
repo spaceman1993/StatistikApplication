@@ -1,0 +1,136 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_marginLeft"
+    android:paddingRight="@dimen/activity_horizontal_marginRight"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="de.szut.statistikapp.activities.Erfasse_Neue_StatiActivity"
+    android:background="@drawable/bg"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/kaderÜberschrift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Neue Statistik"
+            style="@style/ueberschrift_text" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/stati_Anlegen"
+            android:text="Statistik anlegen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="stati_Anlegen" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/body"
+        android:layout_below="@id/header"
+        android:layout_above="@id/footer"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_width="fill_parent"
+            android:layout_weight="1.0">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <RadioGroup
+                    android:id="@+id/radioHeimAuswärts"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0">
+
+                    <RadioButton
+                        android:id="@+id/radioHeim"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:text="HEIM"
+                        android:checked="true"/>
+
+                    <RadioButton
+                        android:id="@+id/radioAuswärts"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:text="AUSWÄRTS"/>
+
+                    </RadioGroup>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.0">
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gegnerbezeichnung"
+                    style="@style/unterueberschrift_text"/>
+
+                <EditText
+                    android:id="@+id/gegnerbezeichnung"
+                    android:layout_weight="1"
+                    android:layout_height="0dp"
+                    android:layout_width="match_parent"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_width="fill_parent"
+            android:layout_weight="1.5"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:text="Teilnehmer"
+                android:layout_height="wrap_content"
+                style="@style/unterueberschrift_text"/>
+
+            <widgets.swipemenulistview.SwipeMenuListView
+                android:id="@+id/spielerList"
+                android:layout_height="0dp"
+                android:layout_weight="1.0"
+                android:layout_width="fill_parent"
+                android:scrollbars="vertical"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

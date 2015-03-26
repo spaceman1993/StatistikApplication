@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.szut.statistikapp.activities.StatiKategorienActivity"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/bg_papier"
+        android:scaleType="fitXY"
+        />
+
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:paddingTop="40dp"
+        android:paddingLeft="@dimen/activity_horizontal_marginLeft"
+        android:paddingRight="@dimen/activity_horizontal_marginRight"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/kategorieÜberschrift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kategorienauswahl"
+            style="@style/ueberschrift_text" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingLeft="@dimen/activity_horizontal_marginLeft"
+        android:paddingRight="@dimen/activity_horizontal_marginRight"
+        android:paddingBottom="40dp"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/addbutton"
+            android:text="Kategorie erzeugen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="addKategorie" />
+
+        <Button
+            android:id="@+id/fertig"
+            android:text="@string/fertig"
+            android:layout_below="@id/addbutton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="fertig_Click" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/body"
+        android:layout_below="@id/header"
+        android:layout_above="@id/footer"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" >
+
+        <widgets.swipemenulistview.SwipeMenuListView
+            android:id="@+id/kategorienList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"/>
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/bg_grass"
+        android:scaleType="fitXY"
+        />
+
+</RelativeLayout>

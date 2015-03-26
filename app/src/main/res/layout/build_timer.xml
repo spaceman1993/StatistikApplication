@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/timerView"
+    android:orientation="vertical"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:background="@drawable/yellow_button"
+    android:gravity="bottom"
+    android:padding="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp">
+
+
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tor"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            />
+
+        <TextView
+            android:id="@+id/timerTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="00:00:00"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="@color/abc_primary_text_disable_only_material_dark"
+            android:clickable="true"
+            android:longClickable="true"
+            android:paddingBottom="1dp"
+            android:paddingTop="1dp"/>
+
+    <TextView
+        android:id="@+id/beschreibung"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Beschreibung"
+        android:textStyle="bold"
+        android:textSize="10sp"
+        android:textColor="@color/abc_primary_text_disable_only_material_dark"
+        android:gravity="center"
+        />
+
+</LinearLayout>

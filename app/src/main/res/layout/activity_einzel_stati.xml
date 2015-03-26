@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="szut.de.statistikapplication.showStatiActivities.EinzelStatiActivity"
+android:orientation="vertical" >
+
+<ImageView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:src="@drawable/bg_papier"
+    android:scaleType="fitXY"
+    />
+
+
+<RelativeLayout
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:paddingTop="40dp"
+    android:paddingLeft="@dimen/activity_horizontal_marginLeft"
+    android:paddingRight="@dimen/activity_horizontal_marginRight"
+    android:gravity="center" >
+
+    <TextView
+        android:id="@+id/einzelSpielÜberschrift"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Einzelspielstatistik"
+        style="@style/ueberschrift_text" />
+</RelativeLayout>
+
+
+<LinearLayout
+    android:id="@+id/body"
+    android:layout_below="@id/header"
+    android:layout_above="@id/footer"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent" >
+
+    <widgets.swipemenulistview.SwipeMenuListView
+        android:id="@+id/statistikList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
+</LinearLayout>
+
+
+<ImageView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:src="@drawable/bg_grass"
+    android:scaleType="fitXY"
+    />
+
+</RelativeLayout>

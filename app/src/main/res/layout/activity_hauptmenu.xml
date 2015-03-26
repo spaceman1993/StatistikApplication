@@ -1,0 +1,102 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_marginLeft"
+    android:paddingRight="@dimen/activity_horizontal_marginRight"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/bg"
+    tools:context="de.szut.statistikapp.activities.HauptmenuActivity" >
+
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/hauptmenuÜberschrift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistiken"
+            style="@style/ueberschrift_text" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center">
+
+            <Button
+                android:id="@+id/Mannschaftauswahl"
+                android:background= "@drawable/ic_zurueck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="mannschaftsauswahl_click" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center">
+
+            <Button
+                android:id="@+id/hauptmenuConfig"
+                android:background= "@drawable/ic_config"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="config_click" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/body"
+        android:layout_below="@id/header"
+        android:layout_above="@id/footer"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" >
+
+        <Button
+            android:id="@+id/gesamtstatistik"
+            android:text="@string/gesamtstatistik"
+            android:background="@drawable/red_button"
+            android:onClick="gesamtstatistik_click"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="@style/button_text"/>
+
+        <Button
+            android:id="@+id/einzelstatistiken"
+            android:text="@string/einzelstatistiken"
+            android:background="@drawable/green_button"
+            android:onClick="einzelstatistik_click"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="@style/button_text"/>
+
+        <Button
+            android:id="@+id/neuestatistik"
+            android:text="Neue Statistik"
+            android:background="@drawable/blue_button"
+            android:onClick="neuestatistik_click"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            style="@style/button_text"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

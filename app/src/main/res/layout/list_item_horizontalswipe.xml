@@ -1,0 +1,38 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="5dp"
+    android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/trikonummerErfassung"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:text="12"
+            android:textSize="35sp"
+            android:gravity="center|center_vertical"
+            android:textStyle="bold"
+            android:lineSpacingExtra="-14dp"/>
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="70dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_unbekannt"/>
+
+        <widgets.horizontalListView.HorizontalListView
+            android:id="@+id/horizontalListView"
+            android:layout_width="0dp"
+            android:layout_weight="1.0"
+            android:layout_height="fill_parent"
+            android:background="#ddd"/>
+
+
+</LinearLayout>
+
+

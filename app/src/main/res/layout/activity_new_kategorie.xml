@@ -1,0 +1,106 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_marginLeft"
+    android:paddingRight="@dimen/activity_horizontal_marginRight"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/bg"
+    tools:context="de.szut.statistikapp.activities.NewKategorieActivity" >
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/überschrift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kategorienauswahl"
+            style="@style/ueberschrift_text" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/addbutton"
+            android:text="Kategorie hinzufügen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:onClick="addKategorie" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/body"
+        android:layout_below="@id/header"
+        android:layout_above="@id/footer"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" >
+
+        <TextView
+            android:id="@+id/katname"
+            android:paddingTop="20dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="KATEGORIENAME:"
+            style="@style/body_text"/>
+
+        <EditText
+            android:id="@+id/kategoriename"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/katname"
+            android:singleLine="true"
+            android:inputType="text|textCapSentences"/>
+
+        <TextView
+            android:id="@+id/katart"
+            android:paddingTop="20dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="ART DER KATEGORIE:"
+            android:layout_below="@id/kategoriename"
+            style="@style/body_text"/>
+
+        <Spinner
+            android:id="@+id/kategorieart"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/katart"/>
+
+        <TextView
+            android:id="@+id/kategoriesymbol"
+            android:paddingTop="20dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="SYMBOL:"
+            android:layout_below="@id/kategorieart"
+            style="@style/body_text"/>
+
+       <GridView
+           android:id="@+id/symbolauswahl"
+           android:layout_width="fill_parent"
+           android:layout_height="fill_parent"
+           android:layout_below="@id/kategoriesymbol"
+           android:numColumns="5"
+           android:verticalSpacing="7dp"
+           android:horizontalSpacing="8dp"
+           android:columnWidth="75dp"
+           android:stretchMode="columnWidth"
+           android:gravity="center"
+           android:listSelector="#00000000"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

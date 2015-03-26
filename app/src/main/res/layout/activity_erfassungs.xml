@@ -1,0 +1,105 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.szut.statistikapp.activities.ErfassungsActivity"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/bg_papier"
+        android:scaleType="fitXY"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="0dp"
+        android:paddingLeft="@dimen/activity_horizontal_marginLeft"
+        android:paddingRight="10dp"
+        android:paddingTop="0dp">
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:paddingBottom="0dp"
+            android:paddingLeft="@dimen/activity_horizontal_marginLeft"
+            android:paddingRight="@dimen/activity_horizontal_marginRight"
+            android:paddingTop="0dp"
+            android:gravity="center" >
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:paddingBottom="40dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="start|center">
+
+                <Button
+                    android:id="@+id/go_Hauptmenu"
+                    android:background= "@drawable/ic_zurueck"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="go_Hauptmenu_Click" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="end|center"
+                android:paddingRight="30dp">
+
+                <Button
+                    android:id="@+id/stati_Fertig"
+                    android:background= "@drawable/ic_ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="stati_Fertig_Click" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/body"
+            android:layout_below="@id/header"
+            android:layout_above="@id/footer"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" >
+
+            <ListView
+                android:id="@+id/erfassungsListe"
+                android:background="@android:color/transparent"
+                android:cacheColorHint="@android:color/transparent"
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:drawSelectorOnTop="true"
+                android:choiceMode="none">
+            </ListView>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/bg_grass"
+        android:scaleType="fitXY"
+        />
+
+
+</RelativeLayout>

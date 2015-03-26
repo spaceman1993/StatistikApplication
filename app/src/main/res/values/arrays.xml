@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="kat_handball">
+        <item>@string/stati1</item>
+        <item>@string/stati2</item>
+        <item>@string/stati3</item>
+    </string-array>
+
+    <string-array name="kat_fussball">
+        <item>@string/stati1</item>
+        <item>@string/stati2</item>
+    </string-array>
+
+    <string-array name="kat_basketball">
+        <item>@string/stati1</item>
+    </string-array>
+
+    <string-array name="kat_eigene">
+        <item>@string/stati1</item>
+    </string-array>
+
+    <string-array name="spieler_handball">
+        <item>@string/spieler1</item>
+        <item>@string/spieler2</item>
+        <item>@string/spieler3</item>
+    </string-array>
+
+    <string-array name="spieler_fussball">
+        <item>@string/spieler1</item>
+        <item>@string/spieler2</item>
+        <item>@string/spieler3</item>
+    </string-array>
+
+    <string-array name="spieler_basketball">
+        <item>@string/spieler1</item>
+        <item>@string/spieler2</item>
+    </string-array>
+
+    <string-array name="spieler_eigene">
+    </string-array>
+
+</resources>
