@@ -18,6 +18,7 @@ import hilfklassen.Mannschaft;
 import szut.de.statistikapplication.createStatiActivities.ErfassungsartActivity;
 import szut.de.statistikapplication.showStatiActivities.EinzelStatiActivity;
 import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
+import szut.de.statistikapplication.showStatiActivities.GesamtStatiActivity;
 
 
 public class HauptmenuActivity extends Activity {
@@ -103,7 +104,7 @@ public class HauptmenuActivity extends Activity {
     }
 
     public void gesamtstatistik_click(View view){
-        Intent intent = new Intent(this, ErgebnistabelleActivity.class);
+        Intent intent = new Intent(this, GesamtStatiActivity.class);
         startActivity(intent);
     }
 

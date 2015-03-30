@@ -1,0 +1,245 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.szut.statistikapp.activities.ErfassungsActivity"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/bg_papier"
+        android:scaleType="fitXY"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="0dp"
+        android:paddingLeft="@dimen/activity_horizontal_marginLeft"
+        android:paddingRight="@dimen/activity_horizontal_marginRight"
+        android:paddingTop="0dp">
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:paddingBottom="0dp"
+            android:paddingLeft="@dimen/activity_horizontal_marginLeft"
+            android:paddingRight="@dimen/activity_horizontal_marginRight"
+            android:paddingTop="0dp"
+            android:gravity="center" >
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/body"
+            android:layout_below="@id/header"
+            android:layout_above="@id/footer"
+            android:orientation="vertical"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" >
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Gesamt Statistik"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:gravity="center"
+                        style="@style/unterueberschrift_text"/>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Spiele-Übersicht"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:gravity="left"
+                        style="@style/unterueberschrift_text"/>
+
+                    <TableLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                        <TableRow
+                            android:id="@+id/anzahlspiele"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:text="Anzahl Spiele:"
+                                android:layout_weight="2"
+                                />
+                            <TextView
+                                android:text="123"
+                                android:layout_weight="1"
+                                />
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/gewonnen"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:text="Gewonnen:"
+                                android:layout_weight="2"
+                                />
+                            <TextView
+                                android:text="123"
+                                android:layout_weight="1"
+                                />
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/verloren"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:text="Verloren:"
+                                android:layout_weight="2"
+                                />
+                            <TextView
+                                android:text="123"
+                                android:layout_weight="1"
+                                />
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/unentschieden"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:text="Unentschieden:"
+                                android:layout_weight="2"
+                                />
+                            <TextView
+                                android:text="123"
+                                android:layout_weight="1"
+                                />
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/tore"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:text="Tore:"
+                                android:layout_weight="2"
+                                />
+                            <TextView
+                                android:text="123"
+                                android:layout_weight="1"
+                                />
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/gegentore"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:text="Gegentore:"
+                                android:layout_weight="2"
+                                />
+                            <TextView
+                                android:text="123"
+                                android:layout_weight="1"
+                                />
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/schnittTore"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:text="Durchschnitt Tore/Spiel:"
+                                android:layout_weight="2"
+                                />
+                            <TextView
+                                android:text="123"
+                                android:layout_weight="1"
+                                />
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/schnittGegentore"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:text="Gegentore:"
+                                android:layout_weight="2"
+                                />
+                            <TextView
+                                android:text="123"
+                                android:layout_weight="1"
+                                />
+                        </TableRow>
+
+                        </TableLayout>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:text="Spieler-Übersicht"
+                        android:paddingTop="@dimen/activity_vertical_margin"
+                        android:gravity="left"
+                        style="@style/unterueberschrift_text"/>
+
+                    <AdapterViewFlipper
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:autoStart="true"
+                        android:flipInterval="3000"
+                        android:focusable="true"
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/adapterViewFlipper" />
+
+                    </LinearLayout>
+
+                </ScrollView>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/bg_grass"
+        android:scaleType="fitXY"
+        />
+
+
+</RelativeLayout>

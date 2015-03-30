@@ -76,6 +76,10 @@
             android:name=".showStatiActivities.ErgebnistabelleActivity"
             android:label="@string/title_activity_ergebnistabelle" >
         </activity>
+        <activity
+            android:name=".showStatiActivities.GesamtStatiActivity"
+            android:label="@string/title_activity_gesamt_stati" >
+        </activity>
     </application>
 
 </manifest>
