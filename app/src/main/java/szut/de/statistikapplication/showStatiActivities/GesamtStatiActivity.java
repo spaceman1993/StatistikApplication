@@ -1,11 +1,13 @@
 package szut.de.statistikapplication.showStatiActivities;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -24,6 +26,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 import android.view.animation.AnimationUtils;
 
@@ -54,14 +57,7 @@ public class GesamtStatiActivity extends Activity {
 
     private AdapterViewFlipper spielerstatis;
 
-    private Animation animFlipInForeward;
-    private Animation animFlipOutForeward;
-    private Animation animFlipInBackward;
-    private Animation animFlipOutBackward;
-
-
-    private GestureDetector.SimpleOnGestureListener listener;
-
+    private GestureDetectorCompat mDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,17 +86,36 @@ public class GesamtStatiActivity extends Activity {
         spieler = dbHandler.getSpielerDerMannschaft(mannschaft);
         kategorien = dbHandler.getKategorienDerMannschaft(mannschaft);
 
-        //Variablen
-        animFlipInForeward = AnimationUtils.loadAnimation(this, R.anim.flipin);
-        animFlipOutForeward = AnimationUtils.loadAnimation(this, R.anim.flipout);
-        animFlipInBackward = AnimationUtils.loadAnimation(this, R.anim.flipin_reverse);
-        animFlipOutBackward = AnimationUtils.loadAnimation(this, R.anim.flipout_reverse);
 
         //Ausgabefelder
         spielerstatis = (AdapterViewFlipper) findViewById(R.id.adapterViewFlipper);
         spielerstatis.setAdapter(new MyCustomAdapter(this, R.layout.swipeview_spieler, spieler));
 
+
+        //Variablen
+        mDetector = new GestureDetectorCompat(this, new MyGestureListener());
+
+        spielerstatis.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return mDetector.onTouchEvent(event);
+            }
+        });
+
         dbHandler.close();
+    }
+
+
+    private void SwipeRight(){
+        spielerstatis.setInAnimation(this, R.anim.right_out);
+        spielerstatis.setOutAnimation(this, R.anim.left_in);
+        spielerstatis.showPrevious();
+    }
+
+    private void SwipeLeft(){
+        spielerstatis.setInAnimation(this, R.anim.right_in);
+        spielerstatis.setOutAnimation(this, R.anim.left_out);
+        spielerstatis.showNext();
     }
 
 
@@ -126,46 +141,92 @@ public class GesamtStatiActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        // TODO Auto-generated method stub
-        return gestureDetector.onTouchEvent(event);
-    }
+    class SwipeGestureListener extends SimpleOnGestureListener implements
+            OnTouchListener {
+        Context context;
+        GestureDetector gDetector;
+        static final int SWIPE_MIN_DISTANCE = 120;
+        static final int SWIPE_MAX_OFF_PATH = 250;
+        static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
+        public SwipeGestureListener() {
+            super();
+        }
 
-    private void SwipeRight(){
-        spielerstatis.setInAnimation(animFlipInBackward);
-        spielerstatis.setOutAnimation(animFlipOutBackward);
-        spielerstatis.showPrevious();
-    }
+        public SwipeGestureListener(Context context) {
+            this(context, null);
+        }
 
-    private void SwipeLeft(){
-        spielerstatis.setInAnimation(animFlipInForeward);
-        spielerstatis.setOutAnimation(animFlipOutForeward);
-        spielerstatis.showNext();
-    }
+        public SwipeGestureListener(Context context, GestureDetector gDetector) {
 
-    GestureDetector.SimpleOnGestureListener simpleOnGestureListener
-            = new GestureDetector.SimpleOnGestureListener(){
+            if (gDetector == null)
+                gDetector = new GestureDetector(context);
+
+            this.context = context;
+            this.gDetector = gDetector;
+        }
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
                                float velocityY) {
 
-            float sensitvity = 100;
+
+
+            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH) {
+                if (Math.abs(e1.getX() - e2.getX()) > SWIPE_MAX_OFF_PATH
+                        || Math.abs(velocityY) < SWIPE_THRESHOLD_VELOCITY) {
+                    return false;
+                }
+                if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE) {
+                    Toast.makeText(DemoSwipe.this, "bottomToTop" + countryName,
+                            Toast.LENGTH_SHORT).show();
+                } else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE) {
+                    Toast.makeText(DemoSwipe.this,
+                            "topToBottom  " + countryName, Toast.LENGTH_SHORT)
+                            .show();
+                }
+            } else {
+                if (Math.abs(velocityX) < SWIPE_THRESHOLD_VELOCITY) {
+                    return false;
+                }
+                if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE) {
+                    Toast.makeText(DemoSwipe.this,
+                            "swipe RightToLeft " + countryName, 5000).show();
+                } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE) {
+                    Toast.makeText(DemoSwipe.this,
+                            "swipe LeftToright  " + countryName, 5000).show();
+                }
+            }
+
+            return super.onFling(e1, e2, velocityX, velocityY);
+
+        }
+
+
+    public class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+        private static final String DEBUG_TAG = "Gestures";
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            Log.d(DEBUG_TAG,"onDown: " + event.toString());
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                               float velocityY) {
+            float sensitvity = 50;
             if((e1.getX() - e2.getX()) > sensitvity){
+                Log.d("LEFT", String.valueOf(e1.getX() - e2.getX()));
                 SwipeLeft();
             }else if((e2.getX() - e1.getX()) > sensitvity){
+                Log.d("RIGHT", String.valueOf(e2.getX() - e1.getX()));
                 SwipeRight();
             }
 
             return true;
         }
-
-    };
-
-    GestureDetector gestureDetector
-            = new GestureDetector(simpleOnGestureListener);
+    }
 
 
     public class MyCustomAdapter extends ArrayAdapter<Spieler> {
