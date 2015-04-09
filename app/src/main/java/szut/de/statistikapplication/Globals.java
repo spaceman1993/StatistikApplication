@@ -2,7 +2,7 @@ package szut.de.statistikapplication;
 
 import android.app.Application;
 
-import hilfklassen.Mannschaft;
+import database.data.Mannschaft;
 
 /**
  * Created by Spaceman on 18.03.2015.

@@ -1,32 +1,21 @@
 package widgets.table;
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
-import android.graphics.Color;
-import android.media.Image;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import hilfklassen.DBHandler;
-import hilfklassen.Kategorie;
-import hilfklassen.Spieler;
-import hilfklassen.Statistik;
-import hilfklassen.Statistikwerte;
-import szut.de.statistikapplication.R;
+import database.DBHandler;
+import database.data.Kategorie;
+import database.data.Spieler;
+import database.data.Statistik;
+import database.data.Statistikwerte;
 
 public class Table extends RelativeLayout {
 

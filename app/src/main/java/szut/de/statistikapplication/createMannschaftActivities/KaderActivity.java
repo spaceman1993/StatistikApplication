@@ -12,8 +12,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import hilfklassen.Mannschaft;
-import hilfklassen.Spieler;
+import database.data.Mannschaft;
+import database.data.Spieler;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.R;
 import widgets.swipemenu.SwipeMenuEditDelete;

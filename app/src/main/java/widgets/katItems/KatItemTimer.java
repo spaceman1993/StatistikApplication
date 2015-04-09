@@ -13,11 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import hilfklassen.DBHandler;
-import hilfklassen.Kategorie;
-import hilfklassen.Spieler;
-import hilfklassen.Statistik;
-import hilfklassen.Statistikwerte;
+import database.DBHandler;
+import database.data.Kategorie;
+import database.data.Spieler;
+import database.data.Statistik;
+import database.data.Statistikwerte;
 import szut.de.statistikapplication.R;
 
 /**

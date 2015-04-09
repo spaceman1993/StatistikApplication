@@ -2,26 +2,18 @@ package szut.de.statistikapplication.showStatiActivities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 
-import java.util.ArrayList;
-
-import hilfklassen.DBHandler;
-import hilfklassen.Mannschaft;
-import hilfklassen.Spieler;
-import hilfklassen.Statistik;
+import database.DBHandler;
+import database.data.Mannschaft;
+import database.data.Statistik;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.R;
-import szut.de.statistikapplication.createMannschaftActivities.KategorieActivity;
-import szut.de.statistikapplication.createMannschaftActivities.NewSpielerActivity;
 import widgets.swipemenu.SwipeMenuEditDelete;
 import widgets.swipemenulistview.SwipeMenuListView;
 

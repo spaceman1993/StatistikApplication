@@ -1,6 +1,6 @@
 package hilfklassen.listview;
 
-import hilfklassen.Mannschaft;
+import database.data.Mannschaft;
 
 /**
  * Created by roese on 17.02.2015.

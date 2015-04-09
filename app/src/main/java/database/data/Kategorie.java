@@ -1,4 +1,4 @@
-package hilfklassen;
+package database.data;
 
 import android.graphics.Bitmap;
 import android.os.Parcel;

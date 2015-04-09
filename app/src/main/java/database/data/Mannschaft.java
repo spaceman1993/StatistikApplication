@@ -1,10 +1,8 @@
-package hilfklassen;
+package database.data;
 
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.ArrayList;
 
 /**
  * Created by roese on 13.02.2015.

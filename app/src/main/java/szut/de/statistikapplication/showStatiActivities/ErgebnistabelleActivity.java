@@ -2,7 +2,6 @@ package szut.de.statistikapplication.showStatiActivities;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,9 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
-import hilfklassen.DBHandler;
-import hilfklassen.Spieler;
-import hilfklassen.Statistik;
+import database.data.Statistik;
 import szut.de.statistikapplication.R;
 import widgets.table.Table;
 

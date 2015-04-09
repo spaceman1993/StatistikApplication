@@ -21,11 +21,11 @@ import android.widget.TextView;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import hilfklassen.DBHandler;
-import hilfklassen.Mannschaft;
+import database.DBHandler;
+import database.data.Mannschaft;
 import hilfklassen.OnTouchCloseKeyboardActivity;
-import hilfklassen.Position;
-import hilfklassen.Spieler;
+import database.data.Position;
+import database.data.Spieler;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.R;
 

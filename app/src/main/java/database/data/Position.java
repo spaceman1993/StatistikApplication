@@ -1,11 +1,7 @@
-package hilfklassen;
+package database.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.util.ArrayList;
-
-import szut.de.statistikapplication.R;
 
 /**
  * Created by roese on 06.03.2015.

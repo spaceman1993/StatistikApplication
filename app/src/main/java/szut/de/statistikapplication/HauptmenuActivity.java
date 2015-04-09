@@ -1,7 +1,6 @@
 package szut.de.statistikapplication;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -14,10 +13,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import hilfklassen.Mannschaft;
+import database.data.Mannschaft;
 import szut.de.statistikapplication.createStatiActivities.ErfassungsartActivity;
 import szut.de.statistikapplication.showStatiActivities.EinzelStatiActivity;
-import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
 import szut.de.statistikapplication.showStatiActivities.GesamtStatiActivity;
 
 

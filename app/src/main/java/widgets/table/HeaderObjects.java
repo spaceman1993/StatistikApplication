@@ -8,11 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import hilfklassen.Kategorie;
-import hilfklassen.Spieler;
-import hilfklassen.Statistikwerte;
+import database.data.Kategorie;
 import szut.de.statistikapplication.R;
 
 /**

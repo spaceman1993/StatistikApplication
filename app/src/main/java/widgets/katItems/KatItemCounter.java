@@ -3,21 +3,17 @@ package widgets.katItems;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import hilfklassen.DBHandler;
-import hilfklassen.Kategorie;
-import hilfklassen.Spieler;
-import hilfklassen.Statistik;
-import hilfklassen.Statistikwerte;
+import database.DBHandler;
+import database.data.Kategorie;
+import database.data.Spieler;
+import database.data.Statistik;
+import database.data.Statistikwerte;
 import szut.de.statistikapplication.R;
 
 /**

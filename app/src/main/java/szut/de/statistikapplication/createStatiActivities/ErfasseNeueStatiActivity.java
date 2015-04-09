@@ -17,13 +17,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import hilfklassen.DBHandler;
-import hilfklassen.Kategorie;
-import hilfklassen.Mannschaft;
+import database.DBHandler;
+import database.data.Kategorie;
+import database.data.Mannschaft;
 import hilfklassen.OnTouchCloseKeyboardActivity;
-import hilfklassen.Spieler;
-import hilfklassen.Statistik;
-import hilfklassen.Statistikwerte;
+import database.data.Spieler;
+import database.data.Statistik;
+import database.data.Statistikwerte;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.R;
 import widgets.swipemenu.SwipeMenuEditDelete;
@@ -148,7 +148,19 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
 
         for(int i=0; i<spieler.size(); i++){
             for(int j=0; j<kategorien.size(); j++){
-                statistikwerte = new Statistikwerte(statistik.getId(), spieler.get(i).getId(), kategorien.get(j).getId(), "");
+                String wert = "";
+
+                if(kategorien.get(i).getArt().equals("Zähler") || kategorien.get(i).getArt().equals("Auto-Zähler") || kategorien.get(i).getArt().equals("Checkbox")){
+                    wert = "0";
+                }
+                else if (kategorien.get(i).getArt().equals("Fließzahleingabe")){
+                    wert = "0.00";
+                }
+                else if (kategorien.get(i).getArt().equals("Timer")){
+                    wert = "00:00:00";
+                }
+
+                statistikwerte = new Statistikwerte(statistik.getId(), spieler.get(i).getId(), kategorien.get(j).getId(), wert);
                 dbHandler.add(statistikwerte);
             }
         }

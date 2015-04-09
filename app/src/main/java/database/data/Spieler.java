@@ -1,13 +1,9 @@
-package hilfklassen;
+package database.data;
 
 import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.ImageView;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.nio.channels.Selector;
 import java.util.ArrayList;
 
 /**

@@ -26,9 +26,9 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
-import hilfklassen.DBHandler;
-import hilfklassen.Kategorie;
-import hilfklassen.Mannschaft;
+import database.DBHandler;
+import database.data.Kategorie;
+import database.data.Mannschaft;
 import hilfklassen.OnTouchCloseKeyboardActivity;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.R;

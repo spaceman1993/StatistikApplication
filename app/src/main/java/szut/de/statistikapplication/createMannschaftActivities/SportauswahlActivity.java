@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import hilfklassen.DBHandler;
-import hilfklassen.Mannschaft;
+import database.DBHandler;
+import database.data.Mannschaft;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.R;
 

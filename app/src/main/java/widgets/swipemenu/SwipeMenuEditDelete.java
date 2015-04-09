@@ -21,13 +21,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import hilfklassen.DBHandler;
-import hilfklassen.Kategorie;
-import hilfklassen.Mannschaft;
-import hilfklassen.SelectableItem;
-import hilfklassen.Spieler;
-import hilfklassen.Statistik;
-import hilfklassen.listview.CustomArrayAdapter;
+import database.DBHandler;
+import database.data.Kategorie;
+import database.data.Mannschaft;
+import database.data.SelectableItem;
+import database.data.Spieler;
+import database.data.Statistik;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.createMannschaftActivities.NewKategorieActivity;
 import szut.de.statistikapplication.createMannschaftActivities.NewSpielerActivity;

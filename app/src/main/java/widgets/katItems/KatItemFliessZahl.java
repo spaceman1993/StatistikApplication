@@ -1,25 +1,16 @@
 package widgets.katItems;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.regex.Pattern;
-
-import hilfklassen.DBHandler;
-import hilfklassen.Kategorie;
-import hilfklassen.Spieler;
-import hilfklassen.Statistik;
-import hilfklassen.Statistikwerte;
+import database.DBHandler;
+import database.data.Kategorie;
+import database.data.Spieler;
+import database.data.Statistik;
+import database.data.Statistikwerte;
 import szut.de.statistikapplication.R;
 
 /**

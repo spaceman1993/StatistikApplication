@@ -18,8 +18,8 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import hilfklassen.DBHandler;
-import hilfklassen.Mannschaft;
+import database.DBHandler;
+import database.data.Mannschaft;
 import hilfklassen.listview.EntryAdapter;
 import hilfklassen.listview.EntryItem;
 import hilfklassen.listview.Item;

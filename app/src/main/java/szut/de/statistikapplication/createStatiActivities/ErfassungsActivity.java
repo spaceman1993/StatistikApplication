@@ -1,11 +1,15 @@
 package szut.de.statistikapplication.createStatiActivities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,18 +18,20 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import hilfklassen.DBHandler;
-import hilfklassen.Kategorie;
-import hilfklassen.Mannschaft;
-import hilfklassen.Spieler;
-import hilfklassen.Statistik;
-import hilfklassen.Statistikwerte;
+import database.DBHandler;
+import database.data.Kategorie;
+import database.data.Mannschaft;
+import database.data.Spieler;
+import database.data.Statistik;
+import database.data.Statistikwerte;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.HauptmenuActivity;
 import szut.de.statistikapplication.R;
@@ -216,28 +222,8 @@ public class ErfassungsActivity extends Activity {
             else {
                 v = inflater.inflate(layout, parent, false);
             }
-//            Button kategorienAction = (Button) v.findViewById(R.id.kategorieaction);
-//
-//            kategorienAction.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_fussball, 0, 0);
-//
-//                    kategorienAction.setText(getItem(position).getName());
-//
-//            if(position == items.size()-1){
-//                v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight()+50, v.getPaddingBottom());
-//            }
-//
-//            if(position%3 == 0){
-//                kategorienAction.setBackgroundResource(R.drawable.blue_button);
-//            }
-//            else if(position%3 == 1){
-//                kategorienAction.setBackgroundResource(R.drawable.red_button);
-//            }
-//            else{
-//                kategorienAction.setBackgroundResource(R.drawable.green_button);
-//            }
 
             return v;
-
         }
 
 
@@ -300,10 +286,80 @@ public class ErfassungsActivity extends Activity {
     }
 
     public void stati_Fertig_Click(View view){
-        Intent intent = new Intent(this, ErgebnistabelleActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("Statistik", statistik);
-        intent.putExtras(bundle);
-        startActivity(intent);
+
+
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ErfassungsActivity.this);
+
+                        alert.setTitle("Endergebnis");
+                        alert.setMessage("Tragen Sie das Endergebnis des Spiels ein:");
+
+                        final TextView toreText = new TextView(getApplicationContext());
+                        toreText.setText(mannschaft.getVereinsname());
+                        toreText.setPadding(40,0,15,0);
+
+                        final EditText tore = new EditText(getApplicationContext());
+                        tore.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                        final TextView filler = new TextView(getApplicationContext());
+                        toreText.setText(":");
+                        toreText.setPadding(15,0,15,0);
+
+                        final EditText gegnertore = new EditText(getApplicationContext());
+                        gegnertore.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                        final TextView gegnertoreText =  new TextView(getApplicationContext());
+                        gegnertoreText.setText(statistik.getGegner());
+                        gegnertoreText.setPadding(15,0,40,0);
+
+
+                        LinearLayout layout = new LinearLayout(getApplicationContext());
+                        layout.setOrientation(LinearLayout.HORIZONTAL);
+                        layout.addView(toreText);
+                        layout.addView(tore);
+                        layout.addView(filler);
+                        layout.addView(gegnertore);
+                        layout.addView(gegnertoreText);
+                        alert.setView(layout);
+
+                        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+
+                                DBHandler dbHandler = new DBHandler(getApplicationContext(), null, null, 1);
+                                statistik.setEigeneTore(Integer.parseInt(tore.getText().toString()));
+                                statistik.setGegnerTore(Integer.parseInt(gegnertore.getText().toString()));
+                                dbHandler.update(statistik);
+
+                                Intent intent = new Intent(getApplicationContext(), ErgebnistabelleActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable("Statistik", statistik);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
+
+                        alert.show();
+
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+
+        Dialog d = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_DARK)
+                .setTitle("Erstellung")
+                .setMessage("Wollen Sie die Erfassung beenden?")
+                .setPositiveButton("JA", dialogClickListener)
+                .setNegativeButton("NEIN", dialogClickListener)
+                .create();
+        d.show();
+
     }
 }

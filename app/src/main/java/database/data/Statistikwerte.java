@@ -1,4 +1,4 @@
-package hilfklassen;
+package database.data;
 
 /**
  * Created by roese on 24.03.2015.
