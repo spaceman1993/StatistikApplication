@@ -139,6 +139,8 @@ public class SQL_Statistikwerte {
         }
         cursor.close();
 
+        statistikwerteListe.add(new Statistikwerte());
+
         return statistikwerteListe;
     }
 

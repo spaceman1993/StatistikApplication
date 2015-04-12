@@ -168,7 +168,7 @@ public class SQL_Statistiken {
             if(statistik.getEigeneTore() > statistik.getGegnerTore()){
                 gewonnen++;
             }
-            else if(statistik.getEigeneTore() > statistik.getGegnerTore()){
+            else if(statistik.getEigeneTore() < statistik.getGegnerTore()){
                 verloren++;
             }
             else {
@@ -186,9 +186,14 @@ public class SQL_Statistiken {
         übersicht.add(String.valueOf(gegentore));
 
 
+
         //Durchschnitt errechnen
-        double schnittTore = tore / anzahl;
-        double schnittGegentore = gegentore / anzahl;
+        double schnittTore = 0.0;
+        double schnittGegentore = 0.0;
+        if(anzahl != 0) {
+            schnittTore = tore / anzahl;
+            schnittGegentore = gegentore / anzahl;
+        }
 
         übersicht.add(String.valueOf(schnittTore));
         übersicht.add(String.valueOf(schnittGegentore));

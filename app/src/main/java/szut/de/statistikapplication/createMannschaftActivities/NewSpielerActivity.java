@@ -1,6 +1,7 @@
 package szut.de.statistikapplication.createMannschaftActivities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -232,7 +233,6 @@ public class NewSpielerActivity extends OnTouchCloseKeyboardActivity {
 
     public void createPositionChanger(){
 
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Wähle Position/en");
         builder.setMultiChoiceItems(items, isCheck,
@@ -247,13 +247,7 @@ public class NewSpielerActivity extends OnTouchCloseKeyboardActivity {
                         }
                     }
                 })
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        Log.d("POS", String.valueOf(selectedPositionen.size()));
-                    }
-                });
+                .setPositiveButton("OK", null);
 
         position = builder.create();
     }
@@ -270,6 +264,55 @@ public class NewSpielerActivity extends OnTouchCloseKeyboardActivity {
 
     public void spielerAdd_click(View view){
 
+        String vornameText = vorname.getText().toString();
+        String nachnameText = nachname.getText().toString();
+
+        int i = 0;
+        while (i < isCheck.length && !isCheck[i]) {
+            i++;
+        }
+
+        if(vornameText.isEmpty() && nachnameText.isEmpty()){
+            String fehlermeldung = "Bitte geben Sie mindestens den Vornamen oder Nachnamen des Spielers an!";
+
+            Dialog d = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_DARK)
+                    .setTitle("Achtung")
+                    .setMessage(fehlermeldung)
+                    .setNegativeButton("OK", null)
+                    .create();
+            d.show();
+        }
+        else if (i == isCheck.length || foto.sameAs(BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.ic_unbekannt))){
+
+                String fehlermeldung = "Wollen Sie die nachfolgenden Angaben des Spielers ändern?\n";
+                if (i == isCheck.length) {
+                    fehlermeldung += "\nPosition";
+                }
+                if (foto.sameAs(BitmapFactory.decodeResource(context.getResources(),
+                        R.drawable.ic_unbekannt))) {
+                    fehlermeldung += "\nFoto";
+                }
+
+                Dialog d = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_DARK)
+                        .setTitle("Hinweis")
+                        .setMessage(fehlermeldung)
+                        .setPositiveButton("JA", null)
+                        .setNegativeButton("NEIN", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                fortfahren();
+                            }
+                        })
+                        .create();
+                d.show();
+            }
+        else {
+            fortfahren();
+        }
+    }
+
+    public void fortfahren(){
         //Aktivierte Positionen finden
         for(int i=0; i<isCheck.length; i++){
             if(isCheck[i])

@@ -43,7 +43,7 @@
 
             <Button
                 android:id="@+id/addbutton"
-                android:text="Spieler erzeugen"
+                android:text="Spieler erstellen"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

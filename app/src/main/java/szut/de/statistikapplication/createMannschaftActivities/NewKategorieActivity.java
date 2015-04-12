@@ -1,5 +1,7 @@
 package szut.de.statistikapplication.createMannschaftActivities;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -39,6 +41,9 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
     //Global-Varaiblen
     Globals g;
 
+    //Activity
+    Context context;
+
     Mannschaft mannschaft;
 
     Kategorie kategorie;
@@ -74,6 +79,8 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
     public void initWidgets(){
 
         g = (Globals)getApplication();
+
+        context = this;
 
         //Objekt
         mannschaft = g.getMannschaft();
@@ -120,7 +127,7 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
                 }
 
                 kategorie.setFoto(imageIDs.get(position));
-
+                activatedSymbol = position;
                 gridView.getChildAt(position).setBackground(rectShapeDrawable);
 
             }
@@ -146,7 +153,6 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
                 i++;
             }
 
-
             Bitmap suche = kategorie.getFoto();
             i = 0;
             gefunden = false;
@@ -158,13 +164,15 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
                 i++;
             }
         }
-
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         if(hasFocus){
             if(isUpdate){
+                gridView.getChildAt(activatedSymbol).setBackground(rectShapeDrawable);
+            }
+            else if(activatedSymbol != -1){
                 gridView.getChildAt(activatedSymbol).setBackground(rectShapeDrawable);
             }
             else{
@@ -199,6 +207,25 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
 
     public void addKategorie(View view){
 
+        String kategorienameText = name.getText().toString();
+
+        if(kategorienameText.isEmpty()){
+            String fehlermeldung = "Bitte geben Sie der Kategorie eine Bezeichnung!";
+
+            Dialog d = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_DARK)
+                    .setTitle("Achtung")
+                    .setMessage(fehlermeldung)
+                    .setNegativeButton("OK", null)
+                    .create();
+            d.show();
+        }
+        else {
+            fortfahren();
+        }
+
+    }
+
+    public void fortfahren(){
         DBHandler dbHandler = new DBHandler(this, null, null, 1);
 
         kategorie.setName(name.getText().toString());

@@ -39,28 +39,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal"
-            android:paddingBottom="40dp">
+            android:paddingBottom="20dp">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="start|center">
-
-                <Button
-                    android:id="@+id/go_Hauptmenu"
-                    android:background= "@drawable/ic_zurueck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="go_Hauptmenu_Click" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="end|center"
-                android:paddingRight="30dp">
+                android:paddingRight="35dp">
 
                 <Button
                     android:id="@+id/stati_Fertig"

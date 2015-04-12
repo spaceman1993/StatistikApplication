@@ -33,7 +33,7 @@
 
         <Button
             android:id="@+id/handball"
-            android:text="LIVE ON AIR"
+            android:text="LAUFENDER BETRIEB"
             android:background="@drawable/green_button"
             android:onClick="live_click"
             android:layout_height="0dp"

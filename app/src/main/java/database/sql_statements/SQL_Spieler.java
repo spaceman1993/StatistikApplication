@@ -243,7 +243,7 @@ public class SQL_Spieler {
 
     public ArrayList<Spieler> findByMannschaftAndAktiv(Mannschaft mannschaft){
         Gson gson = new Gson();
-        String query = "Select * FROM " + TABLE_SPIELER + " WHERE " + COLUMN_MANNSCHAFTSID + " = " + mannschaft.getId() + " & " + COLUMN_SELECTED + " = 1";
+        String query = "Select * FROM " + TABLE_SPIELER + " WHERE " + COLUMN_MANNSCHAFTSID + " = " + mannschaft.getId() + " AND " + COLUMN_SELECTED + " = 1";
 
         Cursor cursor = dbR.rawQuery(query, null);
 

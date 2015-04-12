@@ -97,7 +97,7 @@
                 android:layout_height="0dp"
                 android:layout_width="match_parent"
                 android:singleLine="true"
-                android:inputType="text|textCapSentences"/>
+                android:inputType="text|textCapWords"/>
 
 
             <TextView
@@ -113,7 +113,7 @@
                 android:layout_height="0dp"
                 android:layout_width="match_parent"
                 android:singleLine="true"
-                android:inputType="text|textCapSentences"/>
+                android:inputType="text|textCapWords"/>
 
             <LinearLayout
                 android:layout_weight="1"

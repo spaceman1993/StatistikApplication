@@ -1,10 +1,14 @@
 package szut.de.statistikapplication.createMannschaftActivities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,7 +96,7 @@ public class KaderActivity extends Activity {
 
     /**
      * Button-On-Click-Listener
-     * Bei der Auswahl des Buttons "SPIELER ERZEUGEN" wird  die NewSpieler-Activity gestartet
+     * Bei der Auswahl des Buttons "SPIELER ERZEUGEN" wird die NewSpieler-Activity gestartet
      * @param view
      */
     public void addSpieler(View view){
@@ -111,6 +115,30 @@ public class KaderActivity extends Activity {
      */
     public void fertig_Click(View view) {
 
+        if(spielerListView.getAllAktivItems().size() == 0){
+            String fehlermeldung = "Sie haben keine Spieler gewählt! Wollen Sie trotzdem fortfahren?";
+
+            Dialog d = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_DARK)
+                    .setTitle("Hinweis")
+                    .setMessage(fehlermeldung)
+                    .setPositiveButton("JA", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    fortfahren();
+                                }
+                        })
+                    .setNegativeButton("NEIN", null)
+                    .create();
+            d.show();
+        }
+        else{
+            fortfahren();
+        }
+
+
+    }
+
+    public void fortfahren(){
         if(isUpdate){
             finish();
         }

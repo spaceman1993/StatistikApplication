@@ -112,6 +112,7 @@ public class Table extends RelativeLayout {
         DBHandler dbHandler = new DBHandler(context, null, null, 1);
 
         kategorien = dbHandler.getKategorienDerStatistik(statistik);
+        kategorien.add(new Kategorie());
         headerObjects = new HeaderObjects(activity, kategorien).getHeaderViews();
 
         spieler = dbHandler.getSpielerDerStatistik(statistik);

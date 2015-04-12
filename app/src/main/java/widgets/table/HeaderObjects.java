@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -38,17 +40,16 @@ public class HeaderObjects {
     public void initHeaderViews(){
 
         TextView firstHeader = new TextView(activity.getApplicationContext());
-        firstHeader.setText("12345678901234567890");
+        firstHeader.setMinimumWidth(275);
         firstHeader.setBackgroundResource(R.drawable.tableheader);
         headerViews.add(firstHeader);
 
         for(int i=0; i<kategorien.size(); i++){
             View v = getKategorienView(kategorien.get(i));
-
-            if(i == kategorien.size()-1){
-                v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight()+80, v.getPaddingBottom());
-            }
-
+//            if(i == kategorien.size()-1) {
+//                v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight() + 250, v.getPaddingBottom());
+//            }
+            v.setMinimumWidth(145);
             headerViews.add(v);
         }
     }
@@ -57,13 +58,15 @@ public class HeaderObjects {
         LayoutInflater inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.table_kategorien, null);
 
-
         ImageView icon = (ImageView) v.findViewById(R.id.image_view);
         TextView kategoriename = (TextView) v.findViewById(R.id.kategorie);
 
-        icon.setImageBitmap(kategorie.getFoto());
-        kategoriename.setText(kategorie.getName());
+        try{
+            icon.setImageBitmap(kategorie.getFoto());
+            kategoriename.setText(kategorie.getName());
+        }catch (Exception e){
 
+        }
         v.setBackgroundResource(R.drawable.tableheader);
         v.setPadding(v.getPaddingLeft(), v.getPaddingTop()+40, v.getPaddingRight(), v.getPaddingBottom());
 
