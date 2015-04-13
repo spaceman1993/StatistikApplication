@@ -2,6 +2,7 @@ package widgets.swipemenu;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +28,7 @@ import database.data.Mannschaft;
 import database.data.SelectableItem;
 import database.data.Spieler;
 import database.data.Statistik;
+import hilfklassen.listview.CustomArrayAdapter;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.createMannschaftActivities.NewKategorieActivity;
 import szut.de.statistikapplication.createMannschaftActivities.NewSpielerActivity;
@@ -131,6 +133,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
                     View convertView = ((ViewGroup) view).getChildAt(0);
 
                     ImageView iv = (ImageView) convertView.findViewById(R.id.image_view);
+                    TextView tv0 = (TextView) convertView.findViewById(R.id.trikonummerErfassung);
                     TextView tv1 = (TextView) convertView.findViewById(R.id.bezeichnungEins);
                     TextView tv2 = (TextView) convertView.findViewById(R.id.bezeichnungZwei);
                     TextView tv3 = (TextView) convertView.findViewById(R.id.bezeichnungDrei);
@@ -140,11 +143,11 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
                     if (selectorList.get(position).getSelected() == 1) {
                         Log.d("Selected", "Wird deaktiviert");
                         selectorList.get(position).setSelected(0);
-                        deaktiviereSchaltflächen(iv, tv1, tv2, tv3);
+                        deaktiviereSchaltflächen(iv, tv0, tv1, tv2, tv3);
                     } else {
                         Log.d("Selected", "Wird aktiviert");
                         selectorList.get(position).setSelected(1);
-                        aktiviereSchaltflächen(iv, tv1, tv2, tv3);
+                        aktiviereSchaltflächen(iv, tv0, tv1, tv2, tv3);
                     }
 
                     if (isDatabaseUpdating) {
@@ -164,12 +167,13 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
             //String value = adapter.getItem(position);
             SelectableItem selectable = selectorList.get(position);
             setPos(position);
+            DBHandler dbHandler = new DBHandler(activity.getApplicationContext(), null, null, 1);
+            final Object object = dbHandler.find(selectable.getId(), selectableKlasse);
+
             switch (index) {
                 case 0:
 
                     Intent intent = null;
-                    DBHandler dbHandler = new DBHandler(activity.getApplicationContext(), null, null, 1);
-                    Object object = dbHandler.find(selectable.getId(), selectableKlasse);
 
                     if(selectableKlasse instanceof Spieler) {
                         Spieler spieler = (Spieler) object;
@@ -180,20 +184,33 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
                         bundle.putParcelable("Spieler", spieler);
 
                         intent.putExtras(bundle);
+                        activity.startActivity(intent);
                     }
 
                     else if(selectableKlasse instanceof Kategorie) {
                         Kategorie kategorie = (Kategorie) object;
-                        intent = new Intent(activity, NewKategorieActivity.class);
 
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean("Update", true);
-                        bundle.putParcelable("Kategorie", kategorie);
+                        if(kategorie.getEigene() == 0) {
+                            intent = new Intent(activity, NewKategorieActivity.class);
 
-                        intent.putExtras(bundle);
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean("Update", true);
+                            bundle.putParcelable("Kategorie", kategorie);
+
+                            intent.putExtras(bundle);
+                            activity.startActivity(intent);
+                        }
+                        else{
+                            String fehlermeldung = "Sie dürfen diese Kategorie nicht ändern!";
+
+                            Dialog d = new AlertDialog.Builder(activity, AlertDialog.THEME_HOLO_DARK)
+                                    .setTitle("Achtung")
+                                    .setMessage(fehlermeldung)
+                                    .setNegativeButton("OK", null)
+                                    .create();
+                            d.show();
+                        }
                     }
-
-                    activity.startActivity(intent);
 
                     break;
 
@@ -201,26 +218,38 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
                     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    //Yes button clicked
-                                    DBHandler dbHandler = new DBHandler(activity.getApplicationContext(), null, null, 1);
-                                    dbHandler.delete(selectorList.get(getPos()));
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+                                        DBHandler dbHandler = new DBHandler(activity.getApplicationContext(), null, null, 1);
+                                        dbHandler.delete(selectorList.get(getPos()));
 
-                                    updateListView();
-                                    break;
+                                        updateListView();
+                                        break;
 
 
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    //No button clicked
-                                    break;
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        break;
+                                }
                             }
-                        }
                     };
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage(selectable.getText1() + " " + selectable.getText2() + " wirklich löschen?").setPositiveButton("JA", dialogClickListener)
-                            .setNegativeButton("NEIN", dialogClickListener).show();
+                    if(selectableKlasse instanceof Kategorie && ((Kategorie)object).getEigene() == 1){
+                        String fehlermeldung = "Sie dürfen diese Kategorie nicht löschen!";
+
+                        Dialog d = new AlertDialog.Builder(activity, AlertDialog.THEME_HOLO_DARK)
+                                .setTitle("Achtung")
+                                .setMessage(fehlermeldung)
+                                .setNegativeButton("OK", null)
+                                .create();
+                        d.show();
+                    }
+                    else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(selectable.getText1() + " " + selectable.getText2() + " wirklich löschen?").setPositiveButton("JA", dialogClickListener)
+                                .setNegativeButton("NEIN", dialogClickListener).show();
+                    }
             }
             return false;
         }
@@ -248,6 +277,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
 
             if(listviewItemId == R.layout.swipemenu_item) {
                 ImageView iv = (ImageView) convertView.findViewById(R.id.image_view);
+                TextView tv0 = (TextView) convertView.findViewById(R.id.trikonummerErfassung);
                 TextView tv1 = (TextView) convertView.findViewById(R.id.bezeichnungEins);
                 TextView tv2 = (TextView) convertView.findViewById(R.id.bezeichnungZwei);
                 TextView tv3 = (TextView) convertView.findViewById(R.id.bezeichnungDrei);
@@ -256,6 +286,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
                     Spieler spieler = (Spieler) item;
 
                     iv.setImageBitmap(spieler.getFoto());
+                    tv0.setText(String.valueOf(spieler.getTrikonummer()));
                     tv1.setText(spieler.getNachname() + ",");
                     tv2.setText(spieler.getVorname());
                     String positionen = "";
@@ -295,9 +326,9 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
                 }
 
                 if ((selectorList.get(position)).getSelected() == 1) {
-                    aktiviereSchaltflächen(iv, tv1, tv2, tv3);
+                    aktiviereSchaltflächen(iv, tv0, tv1, tv2, tv3);
                 } else {
-                    deaktiviereSchaltflächen(iv, tv1, tv2, tv3);
+                    deaktiviereSchaltflächen(iv, tv0, tv1, tv2, tv3);
                 }
             }
             else if(listviewItemId == R.layout.swipemenu_item_stati){
@@ -343,15 +374,17 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
             return convertView;
         }
     }
-    public void aktiviereSchaltflächen(ImageView iv, TextView tv1, TextView tv2, TextView tv3){
+    public void aktiviereSchaltflächen(ImageView iv, TextView tv0, TextView tv1, TextView tv2, TextView tv3){
         imageNormal(iv);
+        textBlackOut(tv0);
         textBlackOut(tv1);
         textBlackOut(tv2);
         textBlackOut(tv3);
     }
 
-    public void deaktiviereSchaltflächen(ImageView iv, TextView tv1, TextView tv2, TextView tv3){
+    public void deaktiviereSchaltflächen(ImageView iv, TextView tv0, TextView tv1, TextView tv2, TextView tv3){
         imageGreyOut(iv);
+        textGreyOut(tv0);
         textGreyOut(tv1);
         textGreyOut(tv2);
         textGreyOut(tv3);
