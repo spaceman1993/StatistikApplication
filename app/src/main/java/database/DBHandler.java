@@ -180,6 +180,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public Object find(int id, Object klasse){
 
+        if(klasse instanceof Statistik){
+            return findStatistik(id);
+        }
         if(klasse instanceof Spieler){
             return findSpieler(id);
         }
@@ -309,6 +312,10 @@ public class DBHandler extends SQLiteOpenHelper {
 
     private void deleteStatistik(Statistik statistik) {
         statistiken.delete(statistik);
+    }
+
+    private Statistik findStatistik(int id) {
+        return this.statistiken.findById(id);
     }
 
     public Statistik getLastStatistik(){

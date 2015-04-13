@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import java.text.SimpleDateFormat;
@@ -48,6 +49,7 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
     Mannschaft mannschaft;
     Statistik statistik;
     Statistikwerte statistikwerte;
+    Boolean isUpdate;
 
     //Variablen
     ArrayList<Spieler> spieler;
@@ -65,6 +67,8 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
         initCloseEvent();
 
         initWidgets();
+
+        checkStatistikUpdating();
     }
 
 
@@ -83,6 +87,7 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
         mannschaft = g.getMannschaft();
         statistik = new Statistik();
         statistikwerte =  new Statistikwerte();
+        isUpdate = getIntent().getExtras().getBoolean("Update");
 
         //Input-Widgets
         heim = (RadioGroup) findViewById(R.id.radioHeimAuswärts);
@@ -97,6 +102,27 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
 
     }
 
+    public void checkStatistikUpdating() {
+
+        if (isUpdate) {
+            statistik = (Statistik) getIntent().getExtras().getParcelable("Statistik");
+
+            ((Button) findViewById(R.id.stati_Anlegen)).setText("Statistik updaten");
+
+            if(statistik.getHeim() == 1){
+                ((RadioButton)heim.getChildAt(0)).setChecked(true);
+            }
+            else{
+                ((RadioButton)heim.getChildAt(1)).setChecked(true);
+            }
+
+            gegner.setText(statistik.getGegner());
+
+            statistik.setGegner(gegner.getText().toString());
+            statistik.setEigeneTore(statistik.getEigeneTore());
+            statistik.setGegnerTore(statistik.getGegnerTore());
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -125,9 +151,6 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
 
         statistik.setMannschaftsid(g.getMannschaft().getId());
 
-        String fDate = new SimpleDateFormat("dd.MM.yy").format(datum);
-        statistik.setDatum(fDate);
-
         if(heim.getCheckedRadioButtonId() == R.id.radioHeim){
             statistik.setHeim(1);
         }
@@ -135,37 +158,47 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
             statistik.setHeim(0);
         }
         statistik.setGegner(gegner.getText().toString());
-        statistik.setEigeneTore(0);
-        statistik.setGegnerTore(0);
 
-        dbHandler.add(statistik);
+        if(isUpdate){
+            dbHandler.update(statistik);
+        }
+        else{
+            String fDate = new SimpleDateFormat("dd.MM.yy").format(datum);
+            statistik.setDatum(fDate);
 
-        statistik = dbHandler.getLastStatistik();
-        spieler = spielerListView.getAllAktivItems();
-        kategorien = dbHandler.getAktiveKategorienDerMannschaft(mannschaft);
-
-        for(int i=0; i<spieler.size(); i++){
-            for(int j=0; j<kategorien.size(); j++){
-                String wert = "";
-
-                if(kategorien.get(i).getArt().equals("Zähler") || kategorien.get(i).getArt().equals("Auto-Zähler") || kategorien.get(i).getArt().equals("Checkbox")){
-                    wert = "0";
-                }
-                else if (kategorien.get(i).getArt().equals("Fließzahleingabe")){
-                    wert = "0.00";
-                }
-                else if (kategorien.get(i).getArt().equals("Timer")){
-                    wert = "00:00:00";
-                }
-
-                statistikwerte = new Statistikwerte(statistik.getId(), spieler.get(i).getId(), kategorien.get(j).getId(), wert);
-                dbHandler.add(statistikwerte);
-            }
+            statistik.setEigeneTore(0);
+            statistik.setGegnerTore(0);
+            dbHandler.add(statistik);
         }
 
-        dbHandler.close();
+        if(!isUpdate) {
+            statistik = dbHandler.getLastStatistik();
+            spieler = spielerListView.getAllAktivItems();
+            kategorien = dbHandler.getAktiveKategorienDerMannschaft(mannschaft);
 
-        Intent intent = new Intent(this, ErfassungsActivity.class);
-        startActivity(intent);
+            for (int i = 0; i < spieler.size(); i++) {
+                for (int j = 0; j < kategorien.size(); j++) {
+                    String wert = "";
+
+                    if (kategorien.get(i).getArt().equals("Zähler") || kategorien.get(i).getArt().equals("Auto-Zähler") || kategorien.get(i).getArt().equals("Checkbox")) {
+                        wert = "0";
+                    } else if (kategorien.get(i).getArt().equals("Fließzahleingabe")) {
+                        wert = "0.00";
+                    } else if (kategorien.get(i).getArt().equals("Timer")) {
+                        wert = "00:00:00";
+                    }
+
+                    statistikwerte = new Statistikwerte(statistik.getId(), spieler.get(i).getId(), kategorien.get(j).getId(), wert);
+                    dbHandler.add(statistikwerte);
+                }
+            }
+
+            dbHandler.close();
+
+            Intent intent = new Intent(this, ErfassungsActivity.class);
+            startActivity(intent);
+        }
+        dbHandler.close();
+        finish();
     }
 }

@@ -115,6 +115,30 @@ public class SQL_Statistiken {
         return statistik;
     }
 
+    public Statistik findById(int id){
+        String query = "Select * FROM " + TABLE_STATISTIK + " WHERE " + COLUMN_ID + " = " + id;
+
+        Cursor cursor = dbR.rawQuery(query, null);
+
+        Statistik statistik = new Statistik();
+
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            statistik.setId(Integer.parseInt(cursor.getString(0)));
+            statistik.setMannschaftsid(Integer.parseInt(cursor.getString(1)));
+            statistik.setDatum(cursor.getString(2));
+            statistik.setHeim(Integer.parseInt(cursor.getString(3)));
+            statistik.setGegner(cursor.getString(4));
+            statistik.setEigeneTore(Integer.parseInt(cursor.getString(5)));
+            statistik.setGegnerTore(Integer.parseInt(cursor.getString(6)));
+        }
+        else{
+            statistik = null;
+        }
+        cursor.close();
+
+        return statistik;
+    }
 
     public ArrayList<Statistik> findByMannschaft(Mannschaft mannschaft){
         String query = "Select * FROM " + TABLE_STATISTIK + " WHERE " + COLUMN_MANNSCHAFTSID + " = " + mannschaft.getId();
@@ -191,12 +215,12 @@ public class SQL_Statistiken {
         double schnittTore = 0.0;
         double schnittGegentore = 0.0;
         if(anzahl != 0) {
-            schnittTore = tore / anzahl;
-            schnittGegentore = gegentore / anzahl;
+            schnittTore = (double)tore / (double)anzahl;
+            schnittGegentore = (double)gegentore / (double)anzahl;
         }
 
-        übersicht.add(String.valueOf(schnittTore));
-        übersicht.add(String.valueOf(schnittGegentore));
+        übersicht.add(String.valueOf(String.format("%.1f", schnittTore)));
+        übersicht.add(String.valueOf(String.format("%.1f", schnittGegentore)));
 
         return übersicht;
     }

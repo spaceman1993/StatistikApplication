@@ -11,22 +11,25 @@
         android:id="@+id/list_item_entry_drawable"
         android:layout_height="fill_parent"
         android:layout_width="wrap_content"
-        android:paddingLeft="9dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:src="@android:drawable/ic_menu_preferences">
+
+        <ImageView
+            android:id="@+id/vereinslogo"
+            android:layout_height="match_parent"
+            android:layout_width="75dp"
+            android:src="@drawable/defaultvereinslogo"/>
 
         <RelativeLayout
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dip"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="6dip"
-            android:layout_marginTop="6dip"
-            android:layout_weight="1"
-            android:layout_width="0dp">
+            android:layout_width="wrap_content"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
 
             <TextView
-                android:ellipsize="marquee"
-                android:fadingEdge="horizontal"
                 android:id="@+id/list_item_entry_title"
+                android:text="Vereinsname"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:singleLine="true"
@@ -35,13 +38,13 @@
 
             <TextView
                 android:id="@+id/list_item_entry_summary"
+                android:text="Mannschaftsname"
                 android:layout_alignLeft="@id/list_item_entry_title"
                 android:layout_below="@id/list_item_entry_title"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="?android:attr/textColorSecondary">
+                android:textAppearance="?android:attr/textAppearanceSmall">
 
             </TextView>
         </RelativeLayout>

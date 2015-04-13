@@ -1,6 +1,7 @@
 package szut.de.statistikapplication.showStatiActivities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,7 +34,11 @@ public class ErgebnistabelleActivity extends Activity {
         body.addView(new Table(this, statistik));
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, EinzelStatiActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

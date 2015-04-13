@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterViewFlipper;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
@@ -40,7 +42,6 @@ public class GesamtStatiActivity extends Activity {
     private Mannschaft mannschaft;
     private ArrayList<Spieler> spieler;
     private ArrayList<Kategorie> kategorien;
-    private ArrayList<View> pages;
 
     private ViewFlipper pageFlipper;
     private AdapterViewFlipper spielerFlipper;
@@ -50,6 +51,10 @@ public class GesamtStatiActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gesamt_stati);
 
@@ -81,7 +86,6 @@ public class GesamtStatiActivity extends Activity {
         spielerFlipper = (AdapterViewFlipper) findViewById(R.id.spielerViewFlipper);
 
         //Variablen
-        pages = new ArrayList<>();
         swipeDetector = new GestureDetector(new SwipeDetector());
         switchListener = new View.OnTouchListener() {
 

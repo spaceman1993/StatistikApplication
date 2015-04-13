@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -48,14 +49,18 @@ public class EntryAdapter extends ArrayAdapter<Item> {
             }else{
                 EntryItem ei = (EntryItem)i;
                 v = vi.inflate(R.layout.list_item_entry, null);
+
+                final ImageView picture = (ImageView)v.findViewById(R.id.vereinslogo);
                 final TextView title = (TextView)v.findViewById(R.id.list_item_entry_title);
                 final TextView subtitle = (TextView)v.findViewById(R.id.list_item_entry_summary);
 
-
+                if(picture != null)
+                    picture.setImageBitmap(ei.picture);
                 if (title != null)
                     title.setText(ei.title);
                 if(subtitle != null)
                     subtitle.setText(ei.subtitle);
+
             }
         }
         return v;

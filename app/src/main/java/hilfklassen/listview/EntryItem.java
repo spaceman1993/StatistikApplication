@@ -1,5 +1,7 @@
 package hilfklassen.listview;
 
+import android.graphics.Bitmap;
+
 import database.data.Mannschaft;
 
 /**
@@ -8,12 +10,14 @@ import database.data.Mannschaft;
 public class EntryItem implements Item{
 
     public int id = 0;
+    public Bitmap picture;
     public String title ="";
     public String subtitle = "";
 
     public EntryItem(Mannschaft mannschaft) {
 
         this.id = mannschaft.getId();
+        this.picture = mannschaft.getVereinslogo();
         this.title = mannschaft.getVereinsname();
         this.subtitle = mannschaft.getMannschaftsname();
     }

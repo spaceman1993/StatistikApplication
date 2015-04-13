@@ -32,6 +32,7 @@ import hilfklassen.listview.CustomArrayAdapter;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.createMannschaftActivities.NewKategorieActivity;
 import szut.de.statistikapplication.createMannschaftActivities.NewSpielerActivity;
+import szut.de.statistikapplication.createStatiActivities.ErfasseNeueStatiActivity;
 import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
 import widgets.swipemenulistview.SwipeMenu;
 import widgets.swipemenulistview.SwipeMenuCreator;
@@ -175,7 +176,18 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
 
                     Intent intent = null;
 
-                    if(selectableKlasse instanceof Spieler) {
+                    if(selectableKlasse instanceof Statistik){
+                        Statistik statistik = (Statistik) object;
+                        intent = new Intent(activity, ErfasseNeueStatiActivity.class);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("Update", true);
+                        bundle.putParcelable("Statistik", statistik);
+
+                        intent.putExtras(bundle);
+                        activity.startActivity(intent);
+                    }
+                    else if(selectableKlasse instanceof Spieler) {
                         Spieler spieler = (Spieler) object;
                         intent = new Intent(activity, NewSpielerActivity.class);
 

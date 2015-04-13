@@ -60,6 +60,9 @@ public class ErfassungsartActivity extends Activity {
 
     public void weiterleiten(){
         Intent intent = new Intent(this, ErfasseNeueStatiActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("Update", false);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

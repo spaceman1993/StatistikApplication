@@ -280,11 +280,6 @@ public class ErfassungsActivity extends Activity {
         }
     }
 
-    public void go_Hauptmenu_Click(View view){
-        Intent intent = new Intent(this, HauptmenuActivity.class);
-        startActivity(intent);
-    }
-
     public void stati_Fertig_Click(View view){
 
 
@@ -294,45 +289,40 @@ public class ErfassungsActivity extends Activity {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
 
-                        AlertDialog.Builder alert = new AlertDialog.Builder(ErfassungsActivity.this);
+                        final View v = getLayoutInflater().inflate(R.layout.dialog_ergebnisabfrage, null);
 
+                        TextView heimmannschaft = (TextView)v.findViewById(R.id.heimmannschaft);
+                        TextView gastmannschaft = (TextView)v.findViewById(R.id.gastmannschaft);
+
+                        if(statistik.getHeim() == 1) {
+                            heimmannschaft.setText(mannschaft.getVereinsname());
+                            gastmannschaft.setText(statistik.getGegner());
+                        }
+                        else{
+                            heimmannschaft.setText(statistik.getGegner());
+                            gastmannschaft.setText(mannschaft.getVereinsname());
+                        }
+
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ErfassungsActivity.this);
+                        alert.setView(v);
                         alert.setTitle("Endergebnis");
                         alert.setMessage("Tragen Sie das Endergebnis des Spiels ein:");
-
-                        final TextView toreText = new TextView(getApplicationContext());
-                        toreText.setText(mannschaft.getVereinsname());
-                        toreText.setPadding(40,0,15,0);
-
-                        final EditText tore = new EditText(getApplicationContext());
-                        tore.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-                        final TextView filler = new TextView(getApplicationContext());
-                        toreText.setText(":");
-                        toreText.setPadding(15,0,15,0);
-
-                        final EditText gegnertore = new EditText(getApplicationContext());
-                        gegnertore.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-                        final TextView gegnertoreText =  new TextView(getApplicationContext());
-                        gegnertoreText.setText(statistik.getGegner());
-                        gegnertoreText.setPadding(15,0,40,0);
-
-
-                        LinearLayout layout = new LinearLayout(getApplicationContext());
-                        layout.setOrientation(LinearLayout.HORIZONTAL);
-                        layout.addView(toreText);
-                        layout.addView(tore);
-                        layout.addView(filler);
-                        layout.addView(gegnertore);
-                        layout.addView(gegnertoreText);
-                        alert.setView(layout);
-
                         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
 
                                 DBHandler dbHandler = new DBHandler(getApplicationContext(), null, null, 1);
-                                statistik.setEigeneTore(Integer.parseInt(tore.getText().toString()));
-                                statistik.setGegnerTore(Integer.parseInt(gegnertore.getText().toString()));
+
+                                EditText heimtore = (EditText)v.findViewById(R.id.heimtore);
+                                EditText gegnertore = (EditText)v.findViewById(R.id.gasttore);
+
+                                if(statistik.getHeim() == 1) {
+                                    statistik.setEigeneTore(Integer.parseInt(heimtore.getText().toString()));
+                                    statistik.setGegnerTore(Integer.parseInt(gegnertore.getText().toString()));
+                                }
+                                else{
+                                    statistik.setEigeneTore(Integer.parseInt(gegnertore.getText().toString()));
+                                    statistik.setGegnerTore(Integer.parseInt(heimtore.getText().toString()));
+                                }
                                 dbHandler.update(statistik);
 
                                 Intent intent = new Intent(getApplicationContext(), ErgebnistabelleActivity.class);

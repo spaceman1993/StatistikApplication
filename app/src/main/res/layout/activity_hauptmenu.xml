@@ -10,20 +10,27 @@
     tools:context="de.szut.statistikapp.activities.HauptmenuActivity" >
 
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center" >
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/hauptmenuÜberschrift"
+            android:id="@+id/vereinsname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/statistiken"
+            android:text="Vereinsname"
             style="@style/ueberschrift_text" />
-    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/mannschaftsname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mannschaftsname"
+            style="@style/unterueberschrift_text" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/footer"
@@ -68,7 +75,9 @@
         android:layout_above="@id/footer"
         android:orientation="vertical"
         android:layout_height="match_parent"
-        android:layout_width="match_parent" >
+        android:layout_width="match_parent"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp">
 
         <Button
             android:id="@+id/gesamtstatistik"

@@ -32,11 +32,11 @@ public class HauptmenuActivity extends Activity {
     private Mannschaft mannschaft;
 
     //Widget-Variablen
-    TextView überschrift;
+    TextView vereinsname;
+    TextView mannschaftsname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Wähle", "Test10");
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -45,7 +45,6 @@ public class HauptmenuActivity extends Activity {
         setContentView(R.layout.activity_hauptmenu);
 
         initWidgets();
-
     }
 
     /**
@@ -63,10 +62,12 @@ public class HauptmenuActivity extends Activity {
         mannschaft = g.getMannschaft();
 
         //Ausgabefelder
-        überschrift = ((TextView)findViewById(R.id.hauptmenuÜberschrift));
+        vereinsname = ((TextView)findViewById(R.id.vereinsname));
+        mannschaftsname = ((TextView)findViewById(R.id.mannschaftsname));
 
         //Default-Werte setzen
-        überschrift.setText(mannschaft.getMannschaftsname());
+        vereinsname.setText(mannschaft.getVereinsname());
+        mannschaftsname.setText(mannschaft.getMannschaftsname());
     }
 
     @Override
