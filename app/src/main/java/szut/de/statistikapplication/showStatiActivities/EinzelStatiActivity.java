@@ -2,6 +2,7 @@ package szut.de.statistikapplication.showStatiActivities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import database.DBHandler;
 import database.data.Mannschaft;
 import database.data.Statistik;
 import szut.de.statistikapplication.Globals;
+import szut.de.statistikapplication.HauptmenuActivity;
 import szut.de.statistikapplication.R;
 import widgets.swipemenu.SwipeMenuEditDelete;
 import widgets.swipemenulistview.SwipeMenuListView;
@@ -78,6 +80,11 @@ public class EinzelStatiActivity extends Activity {
         spielerListView.updateListView();
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HauptmenuActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
