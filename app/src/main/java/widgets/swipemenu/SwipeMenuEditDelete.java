@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import database.DBHandler;
 import database.data.Kategorie;
@@ -29,6 +30,7 @@ import database.data.SelectableItem;
 import database.data.Spieler;
 import database.data.Statistik;
 import hilfklassen.listview.CustomArrayAdapter;
+import hilfklassen.sorter.SortTrikonummer;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.createMannschaftActivities.NewKategorieActivity;
 import szut.de.statistikapplication.createMannschaftActivities.NewSpielerActivity;
@@ -109,11 +111,17 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
     }
 
     public void updateListView(){
-        selectorList = getListe(selectableKlasse);
 
+        int index = swipeMenuListView.getFirstVisiblePosition();
+        View v = swipeMenuListView.getChildAt(0);
+        int top = (v == null) ? 0 : (v.getTop() - swipeMenuListView.getPaddingTop());
+
+
+        selectorList = getListe(selectableKlasse);
+        selectorList = sortListe(selectorList);
         adapter = new CustomArrayAdapter(activity, listviewItemId, selectorList);
         swipeMenuListView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        swipeMenuListView.setSelectionFromTop(index, top);
     }
 
 
@@ -151,11 +159,13 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
                         aktiviereSchaltflächen(iv, tv0, tv1, tv2, tv3);
                     }
 
+
                     if (isDatabaseUpdating) {
                         dbHandler.update(selectorList.get(position));
                     }
-
                     dbHandler.close();
+
+                    updateListView();
                 }
             }
         }
@@ -462,6 +472,35 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
 
         return liste;
 
+    }
+
+    public ArrayList<T> sortListe(ArrayList<T> liste){
+
+        ArrayList<T> sortListe = new ArrayList<T>();
+
+        if(selectableKlasse instanceof Spieler){
+
+            ArrayList<Spieler> aktiv = new ArrayList<Spieler>();
+            ArrayList<Spieler> inaktiv = new ArrayList<Spieler>();
+
+            for (int i=0; i<liste.size(); i++){
+                if(liste.get(i).getSelected() == 1){
+                    aktiv.add((Spieler)liste.get(i));
+                }
+                else{
+                    inaktiv.add(((Spieler)liste.get(i)));
+                }
+            }
+
+            Collections.sort(aktiv, new SortTrikonummer());
+            Collections.sort(inaktiv, new SortTrikonummer());
+
+            sortListe.addAll((ArrayList<T>)aktiv);
+            sortListe.addAll((ArrayList<T>)inaktiv);
+
+        }
+
+        return sortListe;
     }
 
     public ArrayList<? extends SelectableItem> getAllAktivItems(){
