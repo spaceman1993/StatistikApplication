@@ -36,7 +36,7 @@ import szut.de.statistikapplication.R;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 122;
+    private static final int DATABASE_VERSION = 123;
     private static final String DATABASE_NAME = "statistikDB.db";
     private Context context;
 
@@ -106,20 +106,20 @@ public class DBHandler extends SQLiteOpenHelper {
 
 
         add(new Kategorie(0, "Tore", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.tor)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Verworfen", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keintor)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Würfe", "Auto-Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Verworfen", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keintor)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Würfe", "Auto-Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "handball"), db);
 
-        add(new Kategorie(0, "7 M.-Tor", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.siebenmetertor)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "7 M.-Gehalten", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keinsiebenmetertor)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Fouls", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.foul)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "7 M.-Tor", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.siebenmetertor)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "7 M.-Gehalten", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keinsiebenmetertor)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Fouls", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.foul)).getBitmap(), "handball"), db);
 
-        add(new Kategorie(0, "Paraden", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.gehalten)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Tempos", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.tempos)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Block", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.block)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Paraden", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.gehalten)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Tempos", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.tempos)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Block", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.block)).getBitmap(), "handball"), db);
 
-        add(new Kategorie(0, "2-Minuten", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.zweiminutenhand)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Gelbe Karte", "Checkbox", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.gelbekarte)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Rote Karte", "Checkbox", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.rotekarte)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "2-Minuten", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.zweiminutenhand)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Gelbe Karte", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.gelbekarte)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Rote Karte", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.rotekarte)).getBitmap(), "handball"), db);
 
 
 

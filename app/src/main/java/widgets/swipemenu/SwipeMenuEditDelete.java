@@ -30,6 +30,7 @@ import database.data.SelectableItem;
 import database.data.Spieler;
 import database.data.Statistik;
 import hilfklassen.listview.CustomArrayAdapter;
+import hilfklassen.sorter.SortName;
 import hilfklassen.sorter.SortTrikonummer;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.createMannschaftActivities.NewKategorieActivity;
@@ -59,6 +60,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
     boolean isDatabaseUpdating;
     boolean isUnactivItemsShowing;
     boolean isStatusChanging;
+    boolean isDataNull = true;
 
     public SwipeMenuEditDelete(Activity activity, Mannschaft mannschaft, SwipeMenuListView swipeMenuListView, T selectableKlasse, int listviewItemId, boolean isMenuItemsShowing, boolean isDatabaseUpdating, boolean isUnactivItemsShowing, boolean isStatusChanging){
 
@@ -116,10 +118,20 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
         View v = swipeMenuListView.getChildAt(0);
         int top = (v == null) ? 0 : (v.getTop() - swipeMenuListView.getPaddingTop());
 
-
-        selectorList = getListe(selectableKlasse);
+        if(isDatabaseUpdating || isDataNull) {
+            selectorList = getListe(selectableKlasse);
+            isDataNull = false;
+        }
         selectorList = sortListe(selectorList);
-        adapter = new CustomArrayAdapter(activity, listviewItemId, selectorList);
+
+        if(selectorList.size() == 0){
+            selectorList.add((T) new Kategorie());
+            adapter = new CustomArrayAdapter(activity, R.layout.swipemenu_item_leer, selectorList);
+            isDataNull = true;
+        }
+        else{
+            adapter = new CustomArrayAdapter(activity, listviewItemId, selectorList);
+        }
         swipeMenuListView.setAdapter(adapter);
         swipeMenuListView.setSelectionFromTop(index, top);
     }
@@ -149,14 +161,31 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
 
                     DBHandler dbHandler = new DBHandler(getActivity().getApplicationContext(), null, null, 1);
 
-                    if (selectorList.get(position).getSelected() == 1) {
-                        Log.d("Selected", "Wird deaktiviert");
-                        selectorList.get(position).setSelected(0);
-                        deaktiviereSchaltflächen(iv, tv0, tv1, tv2, tv3);
-                    } else {
-                        Log.d("Selected", "Wird aktiviert");
-                        selectorList.get(position).setSelected(1);
-                        aktiviereSchaltflächen(iv, tv0, tv1, tv2, tv3);
+                    boolean isGesperrt = false;
+                    if(selectableKlasse instanceof Kategorie){
+                        if(((Kategorie)selectorList.get(position)).getEigene() == 1){
+                            isGesperrt = true;
+                            String fehlermeldung = "Sie dürfen den Status dieser Kategorie nicht ändern!";
+
+                            Dialog d = new AlertDialog.Builder(activity, AlertDialog.THEME_HOLO_DARK)
+                                    .setTitle("Achtung")
+                                    .setMessage(fehlermeldung)
+                                    .setNegativeButton("OK", null)
+                                    .create();
+                            d.show();
+                        }
+                    }
+
+                    if(!isGesperrt) {
+                        if (selectorList.get(position).getSelected() == 1) {
+                            Log.d("Selected", "Wird deaktiviert");
+                            selectorList.get(position).setSelected(0);
+                            deaktiviereSchaltflächen(iv, tv0, tv1, tv2, tv3);
+                        } else {
+                            Log.d("Selected", "Wird aktiviert");
+                            selectorList.get(position).setSelected(1);
+                            aktiviereSchaltflächen(iv, tv0, tv1, tv2, tv3);
+                        }
                     }
 
 
@@ -285,7 +314,6 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
             super(activity, resourceId, objects);
             layout = resourceId;
             inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         }
 
         @Override
@@ -297,7 +325,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
                 convertView = inflater.inflate(layout, parent, false);
             }
 
-            if(listviewItemId == R.layout.swipemenu_item) {
+            if(layout == R.layout.swipemenu_item) {
                 ImageView iv = (ImageView) convertView.findViewById(R.id.image_view);
                 TextView tv0 = (TextView) convertView.findViewById(R.id.trikonummerErfassung);
                 TextView tv1 = (TextView) convertView.findViewById(R.id.bezeichnungEins);
@@ -353,7 +381,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
                     deaktiviereSchaltflächen(iv, tv0, tv1, tv2, tv3);
                 }
             }
-            else if(listviewItemId == R.layout.swipemenu_item_stati){
+            else if(layout == R.layout.swipemenu_item_stati){
                 TextView heim = (TextView) convertView.findViewById(R.id.heim);
                 TextView gast = (TextView) convertView.findViewById(R.id.gast);
                 TextView datum = (TextView) convertView.findViewById(R.id.datum);
@@ -498,6 +526,34 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
             sortListe.addAll((ArrayList<T>)aktiv);
             sortListe.addAll((ArrayList<T>)inaktiv);
 
+        }
+        else if(selectableKlasse instanceof Kategorie){
+            ArrayList<Kategorie> gesperrte = new ArrayList<Kategorie>();
+            ArrayList<Kategorie> aktiv = new ArrayList<Kategorie>();
+            ArrayList<Kategorie> inaktiv = new ArrayList<Kategorie>();
+
+            for (int i=0; i<liste.size(); i++){
+                if(((Kategorie)liste.get(i)).getEigene() == 1){
+                    gesperrte.add((Kategorie)liste.get(i));
+                }
+                else if(liste.get(i).getSelected() == 1){
+                    aktiv.add((Kategorie)liste.get(i));
+                }
+                else{
+                    inaktiv.add(((Kategorie)liste.get(i)));
+                }
+            }
+
+            Collections.sort(gesperrte, new SortName());
+            Collections.sort(aktiv, new SortName());
+            Collections.sort(inaktiv, new SortName());
+
+            sortListe.addAll((ArrayList<T>)gesperrte);
+            sortListe.addAll((ArrayList<T>)aktiv);
+            sortListe.addAll((ArrayList<T>)inaktiv);
+        }
+        else{
+            sortListe = liste;
         }
 
         return sortListe;
