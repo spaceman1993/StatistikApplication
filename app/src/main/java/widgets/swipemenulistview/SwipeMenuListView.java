@@ -202,6 +202,10 @@ public class SwipeMenuListView extends ListView {
                 getContext().getResources().getDisplayMetrics());
     }
 
+    public SwipeMenuCreator getMenuCreator() {
+        return mMenuCreator;
+    }
+
     public void setMenuCreator(SwipeMenuCreator menuCreator) {
         this.mMenuCreator = menuCreator;
     }

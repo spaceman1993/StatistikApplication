@@ -49,6 +49,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
 
     Mannschaft mannschaft;
     SwipeMenuListView swipeMenuListView;
+    SwipeMenuCreator creator;
 
     Activity activity;
     ArrayList<T> selectorList;
@@ -75,7 +76,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
         this.isStatusChanging = isStatusChanging;
 
         if(isMenuItemsShowing) {
-            SwipeMenuCreator creator = new SwipeMenuCreator() {
+            creator = new SwipeMenuCreator() {
                 @Override
                 public void create(SwipeMenu menu) {
                     //create an action that will be showed on swiping an item in the list
@@ -128,8 +129,12 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
             selectorList.add((T) new Kategorie());
             adapter = new CustomArrayAdapter(activity, R.layout.swipemenu_item_leer, selectorList);
             isDataNull = true;
+            swipeMenuListView.setMenuCreator(null);
         }
         else{
+            if(swipeMenuListView.getMenuCreator() == null){
+                swipeMenuListView.setMenuCreator(creator);
+            }
             adapter = new CustomArrayAdapter(activity, listviewItemId, selectorList);
         }
         swipeMenuListView.setAdapter(adapter);
@@ -142,7 +147,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             // TODO Auto-generated method stub
 
-            if(isStatusChanging) {
+            if(isStatusChanging && !isDataNull) {
                 if(selectableKlasse instanceof Statistik){
                     Intent intent = new Intent(activity, ErgebnistabelleActivity.class);
                     Bundle bundle = new Bundle();
@@ -412,11 +417,14 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
                     ergebnis.setText(ergebnisText);
 
 
-                    if(position%2 == 1){
-                        convertView.setBackgroundResource(R.drawable.red_button);
+                    if(position%3 == 2){
+                        convertView.setBackgroundResource(R.drawable.third_filter);
+                    }
+                    else if(position%3 == 1){
+                        convertView.setBackgroundResource(R.drawable.second_filter);
                     }
                     else{
-                        convertView.setBackgroundResource(R.drawable.green_button);
+                        convertView.setBackgroundResource(R.drawable.first_filter);
                     }
                 }
             }

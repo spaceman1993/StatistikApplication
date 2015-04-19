@@ -1,5 +1,6 @@
 package widgets.table;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +17,7 @@ import database.data.Kategorie;
 import database.data.Spieler;
 import database.data.Statistik;
 import database.data.Statistikwerte;
+import hilfklassen.sorter.SortTrikonummer;
 
 public class Table extends RelativeLayout {
 
@@ -93,9 +95,10 @@ public class Table extends RelativeLayout {
         ArrayList<DataObject> dataObjects = new ArrayList<DataObject>();
 
         for (int i=0; i<spieler.size(); i++){
+            Log.d("ANZAHL", String.valueOf(statistikwerte.get(i).size()));
             DataObject dataObject = new DataObject(activity, spieler.get(i), statistikwerte.get(i));
 
-            if(i == spieler.size()-1){
+            if(i == spieler.size()-1 && spieler.size() > 2){
                 View v =  dataObject.getDataviews().get(0);
                 v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), v.getPaddingBottom()+30);
             }
@@ -116,10 +119,15 @@ public class Table extends RelativeLayout {
         headerObjects = new HeaderObjects(activity, kategorien).getHeaderViews();
 
         spieler = dbHandler.getSpielerDerStatistik(statistik);
+
+        if()
+        Collections.sort(spieler, new SortTrikonummer());
+
         spielerstatistikwerte = new ArrayList<ArrayList<Statistikwerte>>();
 
         for(int i=0; i<spieler.size(); i++){
             spielerstatistikwerte.add(dbHandler.getStatistikwerteDerStatistikDesSpielers(statistik, spieler.get(i)));
+            Log.d("ANFANG ANZAHL", String.valueOf(spielerstatistikwerte.get(i).size()));
         }
 
         dataObjects = dataObjects(activity, spieler, spielerstatistikwerte);

@@ -1,6 +1,8 @@
 package szut.de.statistikapplication.createStatiActivities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ import database.data.Statistik;
 import database.data.Statistikwerte;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.R;
+import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
 import widgets.swipemenu.SwipeMenuEditDelete;
 import widgets.swipemenulistview.SwipeMenuListView;
 
@@ -160,7 +164,55 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
         statistik.setGegner(gegner.getText().toString());
 
         if(isUpdate){
-            dbHandler.update(statistik);
+
+
+            final View v = getLayoutInflater().inflate(R.layout.dialog_ergebnisabfrage, null);
+
+            TextView heimmannschaft = (TextView)v.findViewById(R.id.heimmannschaft);
+            TextView gastmannschaft = (TextView)v.findViewById(R.id.gastmannschaft);
+
+            final EditText heimtore = (EditText)v.findViewById(R.id.heimtore);
+            final EditText gegnertore = (EditText)v.findViewById(R.id.gasttore);
+
+            if(statistik.getHeim() == 1) {
+                heimmannschaft.setText(mannschaft.getVereinsname());
+                heimtore.setText(String.valueOf(statistik.getEigeneTore()));
+                gastmannschaft.setText(statistik.getGegner());
+                gegnertore.setText(String.valueOf(statistik.getGegnerTore()));
+            }
+            else{
+                heimmannschaft.setText(statistik.getGegner());
+                heimtore.setText(String.valueOf(statistik.getGegnerTore()));
+                gastmannschaft.setText(mannschaft.getVereinsname());
+                gegnertore.setText(String.valueOf(statistik.getEigeneTore()));
+            }
+
+            AlertDialog.Builder alert = new AlertDialog.Builder(ErfasseNeueStatiActivity.this);
+            alert.setView(v);
+            alert.setTitle("Endergebnis");
+            alert.setMessage("Tragen Sie das Endergebnis des Spiels ein:");
+            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+                    DBHandler dbHandler = new DBHandler(getApplicationContext(), null, null, 1);
+
+                    if(statistik.getHeim() == 1) {
+                        statistik.setEigeneTore(Integer.parseInt(heimtore.getText().toString()));
+                        statistik.setGegnerTore(Integer.parseInt(gegnertore.getText().toString()));
+                    }
+                    else{
+                        statistik.setEigeneTore(Integer.parseInt(gegnertore.getText().toString()));
+                        statistik.setGegnerTore(Integer.parseInt(heimtore.getText().toString()));
+                    }
+                    dbHandler.update(statistik);
+
+                    dbHandler.close();
+                    finish();
+                }
+            });
+
+            alert.show();
+
         }
         else{
             String fDate = new SimpleDateFormat("dd.MM.yy").format(datum);
@@ -198,7 +250,5 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
             Intent intent = new Intent(this, ErfassungsActivity.class);
             startActivity(intent);
         }
-        dbHandler.close();
-        finish();
     }
 }

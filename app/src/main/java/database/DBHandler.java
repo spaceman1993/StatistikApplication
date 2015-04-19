@@ -36,7 +36,7 @@ import szut.de.statistikapplication.R;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 123;
+    private static final int DATABASE_VERSION = 124;
     private static final String DATABASE_NAME = "statistikDB.db";
     private Context context;
 
