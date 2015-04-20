@@ -17,7 +17,9 @@ import database.data.Kategorie;
 import database.data.Spieler;
 import database.data.Statistik;
 import database.data.Statistikwerte;
-import hilfklassen.sorter.SortTrikonummer;
+import hilfklassen.sorter.spieler.SortName;
+import hilfklassen.sorter.spieler.SortTrikonummer;
+import hilfklassen.sorter.Sorter;
 
 public class Table extends RelativeLayout {
 
@@ -47,6 +49,8 @@ public class Table extends RelativeLayout {
 
     ArrayList<Integer> headerCellsWidth = new ArrayList<Integer>();
 
+    Sorter sorter;
+
     public Table(Activity activity, Statistik statistik) {
 
         super(activity.getApplicationContext());
@@ -72,7 +76,6 @@ public class Table extends RelativeLayout {
 
         // add the components to be part of the main layout
         this.addComponentToMainLayout();
-
 
         // add some table rows
         this.addTableRowToTableA();
@@ -120,8 +123,9 @@ public class Table extends RelativeLayout {
 
         spieler = dbHandler.getSpielerDerStatistik(statistik);
 
-        if()
-        Collections.sort(spieler, new SortTrikonummer());
+        sorter = new SortTrikonummer();
+
+        selectSorter();
 
         spielerstatistikwerte = new ArrayList<ArrayList<Statistikwerte>>();
 
@@ -137,6 +141,14 @@ public class Table extends RelativeLayout {
         }
 
         dbHandler.close();
+    }
+
+    private void selectSorter() {
+        if (sorter instanceof SortTrikonummer) {
+            Collections.sort(spieler, new SortTrikonummer());
+        } else if (sorter instanceof SortName) {
+            Collections.sort(spieler, new SortName());
+        }
     }
 
     // initalized components

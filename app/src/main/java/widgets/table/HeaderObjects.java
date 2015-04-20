@@ -2,6 +2,8 @@ package widgets.table;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import database.data.Kategorie;
+import hilfklassen.sorter.kategorie.SortWert;
 import szut.de.statistikapplication.R;
+import szut.de.statistikapplication.createMannschaftActivities.NewSpielerActivity;
 
 /**
  * Created by roese on 26.03.2015.
@@ -54,7 +58,7 @@ public class HeaderObjects {
         }
     }
 
-    public View getKategorienView(Kategorie kategorie){
+    public View getKategorienView(final Kategorie kategorie){
         LayoutInflater inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.table_kategorien, null);
 
@@ -69,6 +73,13 @@ public class HeaderObjects {
         }
         v.setBackgroundResource(R.drawable.tableheader);
         v.setPadding(v.getPaddingLeft(), v.getPaddingTop()+40, v.getPaddingRight(), v.getPaddingBottom());
+
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Table.sortNachKategorie(kategorie);
+            }
+        });
 
         return v;
     }
