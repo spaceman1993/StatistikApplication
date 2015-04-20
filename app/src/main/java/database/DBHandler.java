@@ -36,7 +36,7 @@ import szut.de.statistikapplication.R;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 124;
+    private static final int DATABASE_VERSION = 126;
     private static final String DATABASE_NAME = "statistikDB.db";
     private Context context;
 
@@ -105,21 +105,21 @@ public class DBHandler extends SQLiteOpenHelper {
         add(new Position("KR", "Kreisläufer", "handball"), db);
 
 
-        add(new Kategorie(0, "Tore", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.tor)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Verworfen", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keintor)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Würfe", "Auto-Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Tore", "Angriff", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.tor)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Verworfen", "Angriff", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keintor)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Würfe", "Angriff", "Auto-Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "handball"), db);
 
-        add(new Kategorie(0, "7 M.-Tor", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.siebenmetertor)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "7 M.-Gehalten", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keinsiebenmetertor)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Fouls", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.foul)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "7 M.-Tor", "Fouls", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.siebenmetertor)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "7 M.-Gehalten", "Fouls", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keinsiebenmetertor)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Fouls", "Fouls", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.foul)).getBitmap(), "handball"), db);
 
-        add(new Kategorie(0, "Paraden", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.gehalten)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Tempos", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.tempos)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Block", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.block)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Paraden", "Verteidigung", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.gehalten)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Tempos", "Weitere", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.tempos)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Block", "Verteidigung", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.block)).getBitmap(), "handball"), db);
 
-        add(new Kategorie(0, "2-Minuten", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.zweiminutenhand)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Gelbe Karte", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.gelbekarte)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Rote Karte", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.rotekarte)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "2-Minuten", "Fouls", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.zweiminutenhand)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Gelbe Karte", "Fouls", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.gelbekarte)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Rote Karte", "Fouls", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.rotekarte)).getBitmap(), "handball"), db);
 
 
 
@@ -437,6 +437,10 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Kategorie> getKategorienDerStatistik(Statistik statistik){
         return kategorien.findByStatistik(statistik);
+    }
+
+    public ArrayList<ArrayList<Kategorie>> getAllKategorienarten(){
+        return kategorien.findByKategorieartAll();
     }
 
     //----------------------------------------------------------------------------------------------

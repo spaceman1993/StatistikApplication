@@ -77,7 +77,7 @@ public class HeaderObjects {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Table.sortNachKategorie(kategorie);
+
             }
         });
 

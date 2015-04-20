@@ -39,15 +39,25 @@ public class GesamtStatiActivity extends Activity {
     private Context context;
 
     //Objekt-Variablen
+    private View view;
     private Mannschaft mannschaft;
     private ArrayList<Spieler> spieler;
     private ArrayList<Kategorie> kategorien;
 
     private ViewFlipper pageFlipper;
     private AdapterViewFlipper spielerFlipper;
+    private AdapterViewFlipper kategorienFlipper;
 
-    private GestureDetector swipeDetector;
-    private View.OnTouchListener switchListener;
+    private GestureDetector swipePage;
+    private View.OnTouchListener switchPageListener;
+
+    private GestureDetector swipeSpieler;
+    View.OnTouchListener switchSpielerListener;
+
+    private GestureDetector swipeKategorie;
+    View.OnTouchListener switchKategorienListener;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +86,7 @@ public class GesamtStatiActivity extends Activity {
         res = context.getResources();
 
         //Objekt
+        view = (View)findViewById(R.id.gesamtstatistik_activity);
         mannschaft = g.getMannschaft();
         spieler = dbHandler.getSpielerDerMannschaft(mannschaft);
         kategorien = dbHandler.getKategorienDerMannschaft(mannschaft);
@@ -86,11 +97,23 @@ public class GesamtStatiActivity extends Activity {
         spielerFlipper = (AdapterViewFlipper) findViewById(R.id.spielerViewFlipper);
 
         //Variablen
-        swipeDetector = new GestureDetector(new SwipeDetector());
-        switchListener = new View.OnTouchListener() {
+        swipePage = new GestureDetector(new SwipePageListener());
+        switchPageListener = new View.OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
-                if (swipeDetector.onTouchEvent(event)) {
+                if (swipePage.onTouchEvent(event)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        };
+
+        swipeSpieler = new GestureDetector(new SwipeSpielerListener());
+        switchSpielerListener = new View.OnTouchListener() {
+
+            public boolean onTouch(View v, MotionEvent event) {
+                if (swipeSpieler.onTouchEvent(event)) {
                     return false;
                 } else {
                     return true;
@@ -100,20 +123,10 @@ public class GesamtStatiActivity extends Activity {
 
         initViews();
 
-        //pageFlipper.setAdapter(new PageFlipperAdapter(this, 0, pages));
-        pageFlipper.setOnTouchListener(switchListener);
-
+        view.setOnTouchListener(switchPageListener);
+        spielerFlipper.setOnTouchListener(switchSpielerListener);
 
         dbHandler.close();
-    }
-
-    public boolean onTouchEvent(MotionEvent event) {
-        // TODO Auto-generated method stub
-        if (swipeDetector.onTouchEvent(event)) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
     public void initViews(){
@@ -147,7 +160,7 @@ public class GesamtStatiActivity extends Activity {
         View page2 = inflater.inflate(R.layout.activity_gesamt_stati_page_spieler, null);
         spielerFlipper = (AdapterViewFlipper) page2.findViewById(R.id.spielerViewFlipper);
         spielerFlipper.setAdapter(new SpielerFlipperAdapter(this, R.layout.swipeview_spieler, spieler));
-        spielerFlipper.setOnTouchListener(switchListener);
+        spielerFlipper.setOnTouchListener(switchPageListener);
         pageFlipper.addView(page2);
     }
 
@@ -172,72 +185,6 @@ public class GesamtStatiActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-    private class SwipeDetector extends GestureDetector.SimpleOnGestureListener {
-
-        private static final int SWIPE_MIN_DISTANCE = 120;
-        private static final int SWIPE_MAX_OFF_PATH = 250;
-        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                               float velocityY) {
-            System.out.println(" in onFling() :: ");
-
-            if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE
-                    && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                if(pageFlipper.getDisplayedChild() < pageFlipper.getChildCount()-1) {
-//                    pageFlipper.setInAnimation(context, R.anim.bottom_in);
-//                    pageFlipper.setOutAnimation(context, R.anim.top_out);
-                    pageFlipper.showNext();
-                }
-
-            } else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE
-                    && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                if(pageFlipper.getDisplayedChild() > 0) {
-                    pageFlipper.showPrevious();
-//                    pageFlipper.setInAnimation(context, R.anim.bottom_out);
-//                    pageFlipper.setOutAnimation(context, R.anim.top_in);
-                }
-            }
-
-            else if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
-                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                spielerFlipper.setInAnimation(context, R.anim.right_in);
-                spielerFlipper.setOutAnimation(context, R.anim.left_out);
-                spielerFlipper.showNext();
-
-            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                spielerFlipper.setInAnimation(context, R.anim.right_out);
-                spielerFlipper.setOutAnimation(context, R.anim.left_in);
-                spielerFlipper.showPrevious();
-            }
-            return super.onFling(e1, e2, velocityX, velocityY);
-        }
-    }
-
-
-//    public class PageFlipperAdapter extends ArrayAdapter<View>{
-//        protected LayoutInflater inflater;
-//        protected int layout;
-//        protected Activity activity;
-//
-//        private PageFlipperAdapter(Activity activity, int resourceId, ArrayList<View> objects){
-//            super(activity, resourceId, objects);
-//            this.activity = activity;
-//            layout = resourceId;
-//        }
-//
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            if (convertView == null) {
-//                convertView = getItem(position);
-//            }
-//            return convertView;
-//        }
-//    }
-
-
 
     public class SpielerFlipperAdapter extends ArrayAdapter<Spieler> {
         protected LayoutInflater inflater;
@@ -264,6 +211,7 @@ public class GesamtStatiActivity extends Activity {
             TextView nachname = (TextView) convertView.findViewById(R.id.nachname);
             TextView trikonummer = (TextView) convertView.findViewById(R.id.trikonummer);
             TextView groesse = (TextView) convertView.findViewById(R.id.groesse);
+            TextView pos = (TextView) convertView.findViewById(R.id.position);
 
             iv.setImageBitmap(spieler.getFoto());
             vorname.setText(spieler.getVorname());
@@ -271,14 +219,81 @@ public class GesamtStatiActivity extends Activity {
             trikonummer.setText(String.valueOf(spieler.getTrikonummer()));
             groesse.setText(String.valueOf(spieler.getGroesse()));
 
+            String positionsText = "Position: ";
+            if(spieler.getPosition().size() > 0) {
+                for (int i = 0; i < spieler.getPosition().size(); i++) {
+                    positionsText += spieler.getPosition().get(i).getNameKurz();
+                    if (i < spieler.getPosition().size() - 1) {
+                        positionsText += ", ";
+                    }
+                }
+            }else{
+                positionsText += "Keine";
+            }
+
+            pos.setText(positionsText);
+
+            DBHandler dbHandler = new DBHandler(activity, null, null, 1);
+            ArrayList<ArrayList<Kategorie>> kategorienartenliste = dbHandler.getAllKategorienarten();
+            dbHandler.close();
+
+            kategorienFlipper = (AdapterViewFlipper) convertView.findViewById(R.id.kategorienViewFlipper);
+
+            swipeKategorie = new GestureDetector(new SwipeKategorieListener());
+            switchKategorienListener = new View.OnTouchListener() {
+
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (swipeKategorie.onTouchEvent(event)) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            };
+
+            kategorienFlipper.setOnTouchListener(switchKategorienListener);
+
+            kategorienFlipper.setAdapter(new KategorienFlipperAdapter(activity, R.layout.swipeview_spielerkategorien, spieler, kategorienartenliste));
+
+
+            return convertView;
+        }
+
+
+    }
+
+    public class KategorienFlipperAdapter extends ArrayAdapter<ArrayList<Kategorie>> {
+        protected LayoutInflater inflater;
+        protected int layout;
+        protected Activity activity;
+        protected Spieler spieler;
+
+        private KategorienFlipperAdapter(Activity activity, int resourceId, Spieler spieler, ArrayList<ArrayList<Kategorie>> objects){
+            super(activity, resourceId, objects);
+            this.activity = activity;
+            layout = resourceId;
+            inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            this.spieler = spieler;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = inflater.inflate(layout, parent, false);
+            }
+
+            ArrayList<Kategorie> kategorien = getItem(position);
+
+            TextView kategorienart = (TextView) convertView.findViewById(R.id.kategorienart);
             GridView kategorientabelle = (GridView) convertView.findViewById(R.id.katView);
 
+            kategorienart.setText(kategorien.get(0).getKategorienart());
             kategorientabelle.setAdapter(new GridViewAdapter(activity, R.layout.gridview_spieler_item, spieler, kategorien));
+            kategorientabelle.setOnTouchListener(switchKategorienListener);
 
             return convertView;
         }
     }
-
 
 
     public class GridViewAdapter extends ArrayAdapter<Kategorie> {
@@ -316,6 +331,96 @@ public class GesamtStatiActivity extends Activity {
             wert.setText(wertBetrag);
 
             return convertView;
+        }
+    }
+
+    private class SwipePageListener extends GestureDetector.SimpleOnGestureListener {
+
+        private static final int SWIPE_MIN_DISTANCE = 120;
+        private static final int SWIPE_MAX_OFF_PATH = 250;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                               float velocityY) {
+            switchPage(e1, e2, velocityX, velocityY);
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+    }
+
+    private void switchPage(MotionEvent e1, MotionEvent e2, float velocityX,
+                            float velocityY){
+        int SWIPE_MIN_DISTANCE = 120;
+        int SWIPE_THRESHOLD_VELOCITY = 200;
+
+        if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE
+                && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+            if(pageFlipper.getDisplayedChild() < pageFlipper.getChildCount()-1) {
+//                    pageFlipper.setInAnimation(context, R.anim.bottom_in);
+//                    pageFlipper.setOutAnimation(context, R.anim.top_out);
+                pageFlipper.showNext();
+            }
+
+        } else if (e2.getY() - e1.getY() > SWIPE_MIN_DISTANCE
+                && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+            if(pageFlipper.getDisplayedChild() > 0) {
+                pageFlipper.showPrevious();
+//                    pageFlipper.setInAnimation(context, R.anim.bottom_out);
+//                    pageFlipper.setOutAnimation(context, R.anim.top_in);
+            }
+        }
+    }
+
+    private class SwipeSpielerListener extends GestureDetector.SimpleOnGestureListener {
+
+        private static final int SWIPE_MIN_DISTANCE = 120;
+        private static final int SWIPE_MAX_OFF_PATH = 250;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                               float velocityY) {
+
+            switchPage(e1, e2, velocityX, velocityY);
+
+            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
+                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                spielerFlipper.setInAnimation(context, R.anim.right_in);
+                spielerFlipper.setOutAnimation(context, R.anim.left_out);
+                spielerFlipper.showNext();
+
+            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
+                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                spielerFlipper.setInAnimation(context, R.anim.right_out);
+                spielerFlipper.setOutAnimation(context, R.anim.left_in);
+                spielerFlipper.showPrevious();
+            }
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+    }
+
+    private class SwipeKategorieListener extends GestureDetector.SimpleOnGestureListener {
+
+        private static final int SWIPE_MIN_DISTANCE = 120;
+        private static final int SWIPE_MAX_OFF_PATH = 250;
+        private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                               float velocityY) {
+
+            switchPage(e1, e2, velocityX, velocityY);
+
+            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
+                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                kategorienFlipper.setInAnimation(context, R.anim.right_in);
+                kategorienFlipper.setOutAnimation(context, R.anim.left_out);
+                kategorienFlipper.showNext();
+
+            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
+                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                kategorienFlipper.setInAnimation(context, R.anim.right_out);
+                kategorienFlipper.setOutAnimation(context, R.anim.left_in);
+                kategorienFlipper.showPrevious();
+            }
+            return super.onFling(e1, e2, velocityX, velocityY);
         }
     }
 }

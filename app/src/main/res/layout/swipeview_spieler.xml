@@ -62,40 +62,10 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <AdapterViewFlipper
+        android:id="@+id/kategorienViewFlipper"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Angriff"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Verteid"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Weitere"/>
-
-    </LinearLayout>
-
-    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/katView"
-        android:numColumns="3"
-        android:listSelector="#00000000"
-        android:gravity="center"
-        android:verticalSpacing="10dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="fill_parent"
+        />
 
 </LinearLayout>
