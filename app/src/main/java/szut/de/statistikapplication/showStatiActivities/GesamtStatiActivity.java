@@ -287,7 +287,7 @@ public class GesamtStatiActivity extends Activity {
             TextView kategorienart = (TextView) convertView.findViewById(R.id.kategorienart);
             GridView kategorientabelle = (GridView) convertView.findViewById(R.id.katView);
 
-            kategorienart.setText(kategorien.get(0).getKategorienart());
+            kategorienart.setText(kategorien.get(0).getKategorisierung());
             kategorientabelle.setAdapter(new GridViewAdapter(activity, R.layout.gridview_spieler_item, spieler, kategorien));
             kategorientabelle.setOnTouchListener(switchKategorienListener);
 

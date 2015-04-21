@@ -3,6 +3,7 @@ package szut.de.statistikapplication.createMannschaftActivities;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,6 +52,11 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
     Boolean isUpdate;
 
     EditText name;
+    ArrayAdapter<String> kategorisierungAdapter;
+    Spinner kategorisierung;
+    Button kategorisierungAdd;
+    String kategorisierungsname;
+    List<String> kategorisierungListe;
     Spinner art;
     List<String> artenListe;
     GridView gridView;
@@ -88,13 +95,16 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         isUpdate = getIntent().getExtras().getBoolean("Update");
 
         //Change-Felder
-        name = ((EditText) findViewById(R.id.kategoriename));
-        art = ((Spinner) findViewById(R.id.kategorieart));
+        name = (EditText) findViewById(R.id.kategoriename);
+        kategorisierung = (Spinner) findViewById(R.id.kategorisierung);
+        kategorisierungAdd = (Button) findViewById(R.id.kategorisierungAdd);
+        art = (Spinner) findViewById(R.id.kategorieart);
         gridView = (GridView) findViewById(R.id.symbolauswahl);
 
         //Ausgabefelder
         imageIDs = new ArrayList<>();
         artenListe = new ArrayList<>();
+        kategorisierungListe = new ArrayList<>();
         rect = new RectShape();
         rectShapeDrawable = new ShapeDrawable(rect);
         paint = rectShapeDrawable.getPaint();
@@ -102,22 +112,55 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         //Default-Werte setzen
         activatedSymbol = -1;
         initSymbole();
-        initArtListe();
+        initListen();
 
         paint.setColor(Color.BLUE);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(7);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
+        kategorisierungAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, kategorisierungListe);
+        kategorisierungAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        kategorisierung.setAdapter(kategorisierungAdapter);
+
+        ArrayAdapter<String> artAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, artenListe);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        art.setAdapter(dataAdapter);
+        artAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        art.setAdapter(artAdapter);
 
         gridView.setAdapter(new ImageAdapter(this));
         gridView.requestFocus();
     }
 
     public void createListener(){
+
+        kategorisierungAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_DARK);
+
+                alert.setTitle("Kategorisierung hinzufügen");
+                alert.setMessage("Kategorisierungsname:");
+
+                final EditText input = new EditText(context);
+                input.setSingleLine(true);
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+                alert.setView(input);
+
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        kategorisierungsname = input.getText().toString();
+
+                        kategorisierungListe.add(kategorisierungsname);
+                        kategorisierungAdapter.notifyDataSetChanged();
+                        kategorisierung.setSelection(kategorisierungListe.size()-1);
+                    }
+                });
+
+                alert.show();
+            }
+        });
+
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent,
                                     View v, int position, long id) {
@@ -144,6 +187,18 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
 
             int i = 0;
             boolean gefunden = false;
+            String kategorisierungSuche = kategorie.getKategorisierung();
+            while(i<kategorisierungListe.size() && !gefunden){
+                if(kategorisierungSuche.equals(kategorisierungListe.get(i))){
+                    gefunden = true;
+                    kategorisierung.setSelection(i);
+                }
+                i++;
+            }
+
+
+            i = 0;
+            gefunden = false;
             String artsuche = kategorie.getArt();
             while(i<artenListe.size() && !gefunden){
                 if(artsuche.equals(artenListe.get(i))){
@@ -229,6 +284,7 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         DBHandler dbHandler = new DBHandler(this, null, null, 1);
 
         kategorie.setName(name.getText().toString());
+        kategorie.setKategorisierung(kategorisierung.getSelectedItem().toString());
         kategorie.setArt(art.getSelectedItem().toString());
         kategorie.setSelected(1);
         kategorie.setEigene(0);
@@ -260,13 +316,17 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         imageIDs.add(((BitmapDrawable)this.getResources().getDrawable(R.drawable.rotekarte)).getBitmap());
     }
 
-    public void initArtListe(){
+    public void initListen(){
         artenListe.add("Zähler");
         artenListe.add("Auto-Zähler");
         artenListe.add("Fließzahleingabe");
         artenListe.add("Checkbox");
         artenListe.add("Timer");
         artenListe.add("Notiz");
+
+        DBHandler dbHandler = new DBHandler(this, null, null, 1);
+
+        kategorisierungListe = dbHandler.getAllKategorisierungsnamen();
     }
 
     public class ImageAdapter extends BaseAdapter

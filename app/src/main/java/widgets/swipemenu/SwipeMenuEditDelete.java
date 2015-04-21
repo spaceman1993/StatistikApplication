@@ -365,7 +365,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
                     iv.setImageBitmap(kategorie.getFoto());
 
                     tv1.setText(kategorie.getName());
-                    tv2.setText(kategorie.getKategorienart());
+                    tv2.setText(kategorie.getKategorisierung());
                     tv3.setText("Art: " + kategorie.getArt());
 
                 } else {

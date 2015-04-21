@@ -25,7 +25,7 @@ public class SQL_Kategorien {
     private final String COLUMN_ID = "_id";
     private final String COLUMN_MANNSCHAFTSID = "_mannschaftsid";
     private final String COLUMN_NAME = "name";
-    private final String COLUMN_KATEGORIEART = "kategorieart";
+    private final String COLUMN_KATEGORISIERUNG = "kategorisierung";
     private final String COLUMN_ART = "art";
     private final String COLUMN_EIGENE = "eigene";
     private final String COLUMN_SPORTART = "sportart";
@@ -50,7 +50,7 @@ public class SQL_Kategorien {
                 + COLUMN_ID + " INTEGER PRIMARY KEY,"
                 + COLUMN_MANNSCHAFTSID + " INTEGER,"
                 + COLUMN_NAME + " TEXT,"
-                + COLUMN_KATEGORIEART + " TEXT,"
+                + COLUMN_KATEGORISIERUNG+ " TEXT,"
                 + COLUMN_ART + " TEXT,"
                 + COLUMN_FOTO + " BLOB,"
                 + COLUMN_SELECTED + " INTEGER,"
@@ -70,7 +70,7 @@ public class SQL_Kategorien {
         ContentValues values = new ContentValues();
         values.put(COLUMN_MANNSCHAFTSID, kategorie.getMannschaftsID());
         values.put(COLUMN_NAME, kategorie.getName());
-        values.put(COLUMN_KATEGORIEART, kategorie.getKategorienart());
+        values.put(COLUMN_KATEGORISIERUNG, kategorie.getKategorisierung());
         values.put(COLUMN_ART, kategorie.getArt());
 
         Bitmap bitmap = kategorie.getFoto();
@@ -90,7 +90,7 @@ public class SQL_Kategorien {
         ContentValues values = new ContentValues();
         values.put(COLUMN_MANNSCHAFTSID, kategorie.getMannschaftsID());
         values.put(COLUMN_NAME, kategorie.getName());
-        values.put(COLUMN_KATEGORIEART, kategorie.getKategorienart());
+        values.put(COLUMN_KATEGORISIERUNG, kategorie.getKategorisierung());
         values.put(COLUMN_ART, kategorie.getArt());
 
         Bitmap bitmap = kategorie.getFoto();
@@ -118,7 +118,7 @@ public class SQL_Kategorien {
             kategorie.setId(Integer.parseInt(cursor.getString(0)));
             kategorie.setMannschaftsID(Integer.parseInt(cursor.getString(1)));
             kategorie.setName(cursor.getString(2));
-            kategorie.setKategorienart(cursor.getString(3));
+            kategorie.setKategorisierung(cursor.getString(3));
             kategorie.setArt(cursor.getString(4));
 
             byte[] blob = cursor.getBlob(5);
@@ -151,7 +151,7 @@ public class SQL_Kategorien {
                 kategorie.setId(Integer.parseInt(cursor.getString(0)));
                 kategorie.setMannschaftsID(Integer.parseInt(cursor.getString(1)));
                 kategorie.setName(cursor.getString(2));
-                kategorie.setKategorienart(cursor.getString(3));
+                kategorie.setKategorisierung(cursor.getString(3));
                 kategorie.setArt(cursor.getString(4));
 
                 byte[] blob = cursor.getBlob(5);
@@ -188,7 +188,7 @@ public class SQL_Kategorien {
                 kategorie.setId(Integer.parseInt(cursor.getString(0)));
                 kategorie.setMannschaftsID(Integer.parseInt(cursor.getString(1)));
                 kategorie.setName(cursor.getString(2));
-                kategorie.setKategorienart(cursor.getString(3));
+                kategorie.setKategorisierung(cursor.getString(3));
                 kategorie.setArt(cursor.getString(4));
 
                 byte[] blob = cursor.getBlob(5);
@@ -226,7 +226,7 @@ public class SQL_Kategorien {
                 kategorie.setId(Integer.parseInt(cursor.getString(0)));
                 kategorie.setMannschaftsID(Integer.parseInt(cursor.getString(1)));
                 kategorie.setName(cursor.getString(2));
-                kategorie.setKategorienart(cursor.getString(3));
+                kategorie.setKategorisierung(cursor.getString(3));
                 kategorie.setArt(cursor.getString(4));
 
                 byte[] blob = cursor.getBlob(5);
@@ -254,7 +254,7 @@ public class SQL_Kategorien {
         ContentValues values = new ContentValues();
         values.put(COLUMN_MANNSCHAFTSID, kategorie.getMannschaftsID());
         values.put(COLUMN_NAME, kategorie.getName());
-        values.put(COLUMN_KATEGORIEART, kategorie.getKategorienart());
+        values.put(COLUMN_KATEGORISIERUNG, kategorie.getKategorisierung());
         values.put(COLUMN_ART, kategorie.getArt());
 
         Bitmap bitmap = kategorie.getFoto();
@@ -302,7 +302,7 @@ public class SQL_Kategorien {
     }
 
     public ArrayList<Kategorie> findByKategorieart(String kategorieart){
-        String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_KATEGORIEART + " =  \"" + kategorieart + "\"";;
+        String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_KATEGORISIERUNG + " =  \"" + kategorieart + "\"";;
 
         Cursor cursor = dbR.rawQuery(query, null);
 
@@ -316,7 +316,7 @@ public class SQL_Kategorien {
                 kategorie.setId(Integer.parseInt(cursor.getString(0)));
                 kategorie.setMannschaftsID(Integer.parseInt(cursor.getString(1)));
                 kategorie.setName(cursor.getString(2));
-                kategorie.setKategorienart(cursor.getString(3));
+                kategorie.setKategorisierung(cursor.getString(3));
                 kategorie.setArt(cursor.getString(4));
 
                 byte[] blob = cursor.getBlob(5);
@@ -337,23 +337,35 @@ public class SQL_Kategorien {
         return kategorienListe;
     }
 
-    public ArrayList<ArrayList<Kategorie>> findByKategorieartAll(){
-
-        String query = "Select DISTINCT " + COLUMN_KATEGORIEART + " FROM " + TABLE_KATEGORIEN;
+    public ArrayList<String> findAllKategorieartbezeichnungen(){
+        String query = "Select DISTINCT " + COLUMN_KATEGORISIERUNG + " FROM " + TABLE_KATEGORIEN;
 
         Cursor cursor = dbR.rawQuery(query, null);
 
-        ArrayList<ArrayList<Kategorie>> kategorienListe = new ArrayList<>();
+        ArrayList<String> kategorienartenbezeichnungen = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                kategorienListe.add(findByKategorieart(cursor.getString(0)));
+                kategorienartenbezeichnungen.add(cursor.getString(0));
                 cursor.moveToNext();
             }
         }
 
         cursor.close();
+
+        return kategorienartenbezeichnungen;
+    }
+
+    public ArrayList<ArrayList<Kategorie>> findByKategorieartAll(){
+
+        ArrayList<ArrayList<Kategorie>> kategorienListe = new ArrayList<>();
+
+        ArrayList<String> kategorieartenbezeichnungen = findAllKategorieartbezeichnungen();
+
+        for(int i=0; i<kategorieartenbezeichnungen.size(); i++){
+            kategorienListe.add(findByKategorieart(kategorieartenbezeichnungen.get(i)));
+        }
 
         return kategorienListe;
     }

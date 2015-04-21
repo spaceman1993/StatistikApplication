@@ -40,16 +40,17 @@
             android:onClick="addKategorie" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/body"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
         android:layout_below="@id/header"
-        android:layout_above="@id/footer"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" >
+        android:layout_above="@id/footer">
 
         <TextView
             android:id="@+id/katname"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="KATEGORIENAME:"
@@ -59,39 +60,65 @@
             android:id="@+id/kategoriename"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/katname"
             android:singleLine="true"
             android:inputType="text|textCapWords"/>
 
         <TextView
-            android:id="@+id/katart"
-            android:paddingTop="20dp"
+            android:id="@+id/katartbezeichnung"
+            android:paddingTop="10dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="ART DER KATEGORIE:"
-            android:layout_below="@id/kategoriename"
+            android:text="KATEGORISIERUNG:"
+            style="@style/body_text"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/kategorisierung"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/kategorisierungAdd"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="+"
+                android:textSize="20sp"/>
+
+            </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/katart"
+            android:paddingTop="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="ART:"
             style="@style/body_text"/>
 
         <Spinner
             android:id="@+id/kategorieart"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/katart"/>
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/kategoriesymbol"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="SYMBOL:"
-            android:layout_below="@id/kategorieart"
             style="@style/body_text"/>
 
        <GridView
            android:id="@+id/symbolauswahl"
            android:layout_width="fill_parent"
            android:layout_height="fill_parent"
-           android:layout_below="@id/kategoriesymbol"
            android:numColumns="5"
            android:verticalSpacing="7dp"
            android:horizontalSpacing="8dp"
@@ -100,7 +127,7 @@
            android:gravity="center"
            android:listSelector="#00000000"/>
 
-    </RelativeLayout>
+    </LinearLayout>>
 
 
 </RelativeLayout>

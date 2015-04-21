@@ -7,7 +7,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Spiele - Übersicht"
+                android:text="Mannschaftsstatistik"
                 android:paddingTop="45dp"
                 android:gravity="left"
                 style="@style/unterueberschrift_text"/>

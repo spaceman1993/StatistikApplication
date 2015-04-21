@@ -36,7 +36,7 @@ import szut.de.statistikapplication.R;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 126;
+    private static final int DATABASE_VERSION = 127;
     private static final String DATABASE_NAME = "statistikDB.db";
     private Context context;
 
@@ -437,6 +437,10 @@ public class DBHandler extends SQLiteOpenHelper {
 
     public ArrayList<Kategorie> getKategorienDerStatistik(Statistik statistik){
         return kategorien.findByStatistik(statistik);
+    }
+
+    public ArrayList<String> getAllKategorisierungsnamen(){
+        return kategorien.findAllKategorieartbezeichnungen();
     }
 
     public ArrayList<ArrayList<Kategorie>> getAllKategorienarten(){

@@ -8,7 +8,7 @@ public class Kategorie extends SelectableItem implements Parcelable {
 
     private int mannschaftsID;
 	private String name;
-    private String kategorienart;
+    private String kategorisierung;
     private String art;
 	private int eigene;
     private String sportart;
@@ -17,10 +17,10 @@ public class Kategorie extends SelectableItem implements Parcelable {
 
     }
 
-    public Kategorie(int mannschaftsID, String name, String kategorienart, String art, int selected, int eigene, Bitmap foto, String sportart) {
+    public Kategorie(int mannschaftsID, String name, String kategorisierung, String art, int selected, int eigene, Bitmap foto, String sportart) {
         this.mannschaftsID = mannschaftsID;
         this.name = name;
-        this.kategorienart = kategorienart;
+        this.kategorisierung = kategorisierung;
         this.art = art;
         this.selected = selected;
         this.eigene = eigene;
@@ -29,11 +29,11 @@ public class Kategorie extends SelectableItem implements Parcelable {
 
     }
 
-	public Kategorie(int id, int mannschaftsID, String name, String kategorienart, String art, int selected, int eigene, Bitmap foto, String sportart) {
+	public Kategorie(int id, int mannschaftsID, String name, String kategorisierung, String art, int selected, int eigene, Bitmap foto, String sportart) {
         this.id = id;
         this.mannschaftsID = mannschaftsID;
 		this.name = name;
-        this.kategorienart = kategorienart;
+        this.kategorisierung = kategorisierung;
         this.art = art;
         this.selected = selected;
 		this.eigene = eigene;
@@ -58,12 +58,12 @@ public class Kategorie extends SelectableItem implements Parcelable {
 		this.name = name;
 	}
 
-    public String getKategorienart() {
-        return kategorienart;
+    public String getKategorisierung() {
+        return kategorisierung;
     }
 
-    public void setKategorienart(String kategorienart) {
-        this.kategorienart = kategorienart;
+    public void setKategorisierung(String kategorisierung) {
+        this.kategorisierung = kategorisierung;
     }
 
     public String getArt() { return art; }
@@ -93,8 +93,8 @@ public class Kategorie extends SelectableItem implements Parcelable {
     protected Kategorie(Parcel in) {
         mannschaftsID = in.readInt();
         name = in.readString();
+        kategorisierung = in.readString();
         art = in.readString();
-        kategorienart = in.readString();
         eigene = in.readInt();
         sportart = in.readString();
         id = in.readInt();
@@ -113,7 +113,7 @@ public class Kategorie extends SelectableItem implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(mannschaftsID);
         dest.writeString(name);
-        dest.writeString(kategorienart);
+        dest.writeString(kategorisierung);
         dest.writeString(art);
         dest.writeInt(eigene);
         dest.writeString(sportart);
