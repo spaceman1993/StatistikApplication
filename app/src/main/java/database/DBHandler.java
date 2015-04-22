@@ -411,7 +411,7 @@ public class DBHandler extends SQLiteOpenHelper {
         kategorien.add(kategorie, db);
     }
 
-    private Kategorie findKategorie(int id) {
+    public Kategorie findKategorie(int id) {
        return kategorien.findById(id);
     }
 

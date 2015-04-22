@@ -227,9 +227,9 @@ public class GesamtStatiActivity extends Activity {
             vorname.setText(spieler.getVorname());
             nachname.setText(spieler.getNachname());
             trikonummer.setText(String.valueOf(spieler.getTrikonummer()));
-            groesse.setText(String.valueOf(spieler.getGroesse()));
+            groesse.setText(String.valueOf(spieler.getGroesse())+ " cm");
 
-            String positionsText = "Position: ";
+            String positionsText = "";
             if(spieler.getPosition().size() > 0) {
                 for (int i = 0; i < spieler.getPosition().size(); i++) {
                     positionsText += spieler.getPosition().get(i).getNameKurz();

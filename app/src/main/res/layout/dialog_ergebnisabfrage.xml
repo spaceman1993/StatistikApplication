@@ -8,8 +8,10 @@
 
     <TextView
         android:id="@+id/heimmannschaft"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:gravity="right"
         android:text="Heimmannschaft"
         android:paddingRight="10dp"
         android:textColor="#FFFFFF"
@@ -44,7 +46,8 @@
 
     <TextView
         android:id="@+id/gastmannschaft"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="Gastmannschaft"
         android:paddingLeft="10dp"

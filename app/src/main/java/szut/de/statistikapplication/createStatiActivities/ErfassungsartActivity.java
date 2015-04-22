@@ -48,21 +48,24 @@ public class ErfassungsartActivity extends Activity {
 
     public void live_click(View view){
 
+        Intent intent = new Intent(this, ErfasseNeueStatiActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("Update", false);
+        bundle.putBoolean("Bearbeiten", false);
+        intent.putExtras(bundle);
+        startActivity(intent);
 
-        weiterleiten();
     }
 
     public void nachträglich_click(View view){
 
-
-        weiterleiten();
-    }
-
-    public void weiterleiten(){
         Intent intent = new Intent(this, ErfasseNeueStatiActivity.class);
         Bundle bundle = new Bundle();
         bundle.putBoolean("Update", false);
+        bundle.putBoolean("Bearbeiten", true);
         intent.putExtras(bundle);
         startActivity(intent);
+
     }
+
 }

@@ -131,7 +131,7 @@ public class NewSpielerActivity extends OnTouchCloseKeyboardActivity {
         groesse.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                groesseTV.setText(String.valueOf(progress+120));
+                groesseTV.setText(String.valueOf(progress+120) + " cm");
             }
 
             @Override
@@ -326,7 +326,7 @@ public class NewSpielerActivity extends OnTouchCloseKeyboardActivity {
         spieler.setVorname(vorname.getText().toString());
         spieler.setNachname(nachname.getText().toString());
         spieler.setTrikonummer(Integer.parseInt(((TextView) findViewById(R.id.spielerTrikonummer)).getText().toString()));
-        spieler.setGroesse(Integer.parseInt(((TextView) findViewById(R.id.spielerGroesse)).getText().toString()));
+        spieler.setGroesse(Integer.parseInt(((TextView) findViewById(R.id.spielerGroesse)).getText().toString().replace(" cm", "")));
         spieler.setPosition(selectedPositionen);
         spieler.setFoto(foto);
         spieler.setSelected(1);

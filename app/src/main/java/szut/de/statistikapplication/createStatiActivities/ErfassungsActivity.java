@@ -303,7 +303,7 @@ public class ErfassungsActivity extends Activity {
                             gastmannschaft.setText(mannschaft.getVereinsname());
                         }
 
-                        AlertDialog.Builder alert = new AlertDialog.Builder(ErfassungsActivity.this);
+                        AlertDialog.Builder alert = new AlertDialog.Builder(ErfassungsActivity.this, AlertDialog.THEME_HOLO_DARK);
                         alert.setView(v);
                         alert.setTitle("Endergebnis");
                         alert.setMessage("Tragen Sie das Endergebnis des Spiels ein:");
