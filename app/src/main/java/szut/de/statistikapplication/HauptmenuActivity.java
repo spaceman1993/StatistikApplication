@@ -110,6 +110,10 @@ public class HauptmenuActivity extends Activity {
 
     public void gesamtstatistik_click(View view){
         Intent intent = new Intent(this, GesamtStatiActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("Show", false);
+
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 

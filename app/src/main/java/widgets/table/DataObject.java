@@ -1,7 +1,10 @@
 package widgets.table;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +22,7 @@ import database.data.Spieler;
 import database.data.Statistikwerte;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.createMannschaftActivities.NewSpielerActivity;
+import szut.de.statistikapplication.showStatiActivities.GesamtStatiActivity;
 
 public class DataObject {
 
@@ -77,15 +81,43 @@ public class DataObject {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, NewSpielerActivity.class);
+                Intent intent = new Intent(activity, GesamtStatiActivity.class);
 
                 Bundle bundle = new Bundle();
-                bundle.putBoolean("Update", true);
+                bundle.putBoolean("Show", true);
                 bundle.putParcelable("Spieler", spieler);
 
                 intent.putExtras(bundle);
                 activity.startActivity(intent);
             }
+        });
+
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+             @Override
+             public boolean onLongClick(View v) {
+
+                 Dialog d = new AlertDialog.Builder(activity, AlertDialog.THEME_HOLO_DARK)
+                         .setTitle("Hinweis")
+                         .setMessage("Wollen Sie den Spieler " + spieler.getVorname() + " " + spieler.getNachname() + " bearbeiten?")
+                         .setPositiveButton("JA", new DialogInterface.OnClickListener() {
+                             @Override
+                             public void onClick(DialogInterface dialog, int id) {
+                                 Intent intent = new Intent(activity, NewSpielerActivity.class);
+
+                                 Bundle bundle = new Bundle();
+                                 bundle.putBoolean("Update", true);
+                                 bundle.putParcelable("Spieler", spieler);
+
+                                 intent.putExtras(bundle);
+                                 activity.startActivity(intent);
+                             }
+                         })
+                         .setNegativeButton("NEIN", null)
+                         .create();
+                 d.show();
+
+                 return false;
+             }
         });
 
         return v;

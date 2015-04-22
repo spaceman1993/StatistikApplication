@@ -17,6 +17,7 @@ import android.widget.AdapterViewFlipper;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -43,10 +44,12 @@ public class GesamtStatiActivity extends Activity {
     private Mannschaft mannschaft;
     private ArrayList<Spieler> spieler;
     private ArrayList<Kategorie> kategorien;
+    private boolean isSpielerShow;
 
     private ViewFlipper pageFlipper;
     private AdapterViewFlipper spielerFlipper;
     private AdapterViewFlipper kategorienFlipper;
+    private GridView kategorientabelle;
 
     private GestureDetector swipePage;
     private View.OnTouchListener switchPageListener;
@@ -90,6 +93,11 @@ public class GesamtStatiActivity extends Activity {
         mannschaft = g.getMannschaft();
         spieler = dbHandler.getSpielerDerMannschaft(mannschaft);
         kategorien = dbHandler.getKategorienDerMannschaft(mannschaft);
+        isSpielerShow = getIntent().getExtras().getBoolean("Show");
+        if(isSpielerShow) {
+            spieler.removeAll(spieler);
+            spieler.add((Spieler) getIntent().getExtras().getParcelable("Spieler"));
+        }
 
 
         //Ausgabefelder
@@ -133,29 +141,31 @@ public class GesamtStatiActivity extends Activity {
 
         LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View page1 = inflater.inflate(R.layout.activity_gesamt_stati_page_spiele, null);
-        TextView anzahl = (TextView) page1.findViewById(R.id.anzahlspiele);
-        TextView gewonnen = (TextView) page1.findViewById(R.id.gewonnen);
-        TextView verloren = (TextView) page1.findViewById(R.id.verloren);
-        TextView unentschieden = (TextView) page1.findViewById(R.id.unentschieden);
-        TextView tore = (TextView) page1.findViewById(R.id.tore);
-        TextView gegentore = (TextView) page1.findViewById(R.id.gegentore);
-        TextView durchschnittTore = (TextView) page1.findViewById(R.id.schnittTore);
-        TextView durchschnittGegentore = (TextView) page1.findViewById(R.id.schnittGegentore);
+        if(!isSpielerShow) {
+            View page1 = inflater.inflate(R.layout.activity_gesamt_stati_page_spiele, null);
+            TextView anzahl = (TextView) page1.findViewById(R.id.anzahlspiele);
+            TextView gewonnen = (TextView) page1.findViewById(R.id.gewonnen);
+            TextView verloren = (TextView) page1.findViewById(R.id.verloren);
+            TextView unentschieden = (TextView) page1.findViewById(R.id.unentschieden);
+            TextView tore = (TextView) page1.findViewById(R.id.tore);
+            TextView gegentore = (TextView) page1.findViewById(R.id.gegentore);
+            TextView durchschnittTore = (TextView) page1.findViewById(R.id.schnittTore);
+            TextView durchschnittGegentore = (TextView) page1.findViewById(R.id.schnittGegentore);
 
-        DBHandler dbHandler = new DBHandler(this, null, null, 1);
+            DBHandler dbHandler = new DBHandler(this, null, null, 1);
 
-        ArrayList<String> übersicht = dbHandler.getStatistikübersichtDerMannschaft(mannschaft);
-        anzahl.setText(übersicht.get(0));
-        gewonnen.setText(übersicht.get(1));
-        verloren.setText(übersicht.get(2));
-        unentschieden.setText(übersicht.get(3));
-        tore.setText(übersicht.get(4));
-        gegentore.setText(übersicht.get(5));
-        durchschnittTore.setText(übersicht.get(6));
-        durchschnittGegentore.setText(übersicht.get(7));
+            ArrayList<String> übersicht = dbHandler.getStatistikübersichtDerMannschaft(mannschaft);
+            anzahl.setText(übersicht.get(0));
+            gewonnen.setText(übersicht.get(1));
+            verloren.setText(übersicht.get(2));
+            unentschieden.setText(übersicht.get(3));
+            tore.setText(übersicht.get(4));
+            gegentore.setText(übersicht.get(5));
+            durchschnittTore.setText(übersicht.get(6));
+            durchschnittGegentore.setText(übersicht.get(7));
 
-        pageFlipper.addView(page1);
+            pageFlipper.addView(page1);
+        }
 
         View page2 = inflater.inflate(R.layout.activity_gesamt_stati_page_spieler, null);
         spielerFlipper = (AdapterViewFlipper) page2.findViewById(R.id.spielerViewFlipper);
@@ -285,7 +295,7 @@ public class GesamtStatiActivity extends Activity {
             ArrayList<Kategorie> kategorien = getItem(position);
 
             TextView kategorienart = (TextView) convertView.findViewById(R.id.kategorienart);
-            GridView kategorientabelle = (GridView) convertView.findViewById(R.id.katView);
+            kategorientabelle = (GridView) convertView.findViewById(R.id.katView);
 
             kategorienart.setText(kategorien.get(0).getKategorisierung());
             kategorientabelle.setAdapter(new GridViewAdapter(activity, R.layout.gridview_spieler_item, spieler, kategorien));
@@ -406,7 +416,7 @@ public class GesamtStatiActivity extends Activity {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
                                float velocityY) {
 
-            switchPage(e1, e2, velocityX, velocityY);
+            //switchPage(e1, e2, velocityX, velocityY);
 
             if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
                     && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
