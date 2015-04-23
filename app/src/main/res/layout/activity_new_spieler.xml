@@ -20,8 +20,8 @@
             android:id="@+id/überschrift"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/spieler"
-            style="@style/ueberschrift_text" />
+            android:text="@string/ueberschrift_new_spieler"
+            style="@style/seitenueberschrift" />
     </RelativeLayout>
 
 
@@ -34,21 +34,26 @@
         android:orientation="horizontal">
 
         <Button
-            android:text="FOTO"
-            android:layout_height="fill_parent"
+            android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_gravity="center"
+            android:layout_height="match_parent"
+            android:text="@string/foto"
             android:onClick="spielerFoto_click"
-            android:layout_width="0dp" />
+            android:background="@drawable/default_button"
+            android:textSize="18sp"
+            android:layout_marginRight="10dp"
+            style="@style/defaultButtonStyle"/>
 
         <Button
             android:id="@+id/addbutton"
-            android:text="Spieler hinzufügen"
             android:layout_width="0dp"
             android:layout_weight="1.5"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="spielerAdd_click" />
+            android:layout_height="match_parent"
+            android:text="@string/spielerErstellen"
+            android:onClick="spielerAdd_click"
+            android:background="@drawable/default_button"
+            android:textSize="18sp"
+            style="@style/defaultButtonStyle"/>
     </LinearLayout>
 
 
@@ -86,10 +91,8 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:text="VORNAME:"
-                android:gravity="bottom"
-                android:paddingTop="10dp"
-                style="@style/body_text"/>
+                android:text="@string/vorname"
+                style="@style/unterueberschrift"/>
 
             <EditText
                 android:id="@+id/spielerVorname"
@@ -102,10 +105,8 @@
 
             <TextView
                 android:layout_height="wrap_content"
-                android:text="NACHNAME:"
-                android:gravity="bottom"
-                android:paddingTop="10dp"
-                style="@style/body_text"/>
+                android:text="@string/nachname"
+                style="@style/unterueberschrift"/>
 
             <EditText
                 android:id="@+id/spielerNachname"
@@ -125,18 +126,19 @@
 
                 <TextView
                     android:layout_height="wrap_content"
-                    android:text="POSITION:"
+                    android:text="@string/position"
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    style="@style/body_text"/>
+                    style="@style/unterueberschrift"/>
 
                 <Button
                     android:id="@+id/wählen_click"
-                    android:text="Wählen"
+                    android:text="@string/waehlen"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.78"
                     android:onClick="positionWählen_click"
-                    android:layout_width="0dp" />
+                    android:layout_width="0dp"
+                    />
 
             </LinearLayout>
 
@@ -158,22 +160,15 @@
 
                     <TextView
                         android:layout_height="0dp"
-                        android:text="GRÖßE:"
                         android:layout_weight="1"
-                        android:layout_width="fill_parent"
-                        android:textSize="15sp"
+                        android:text="@string/groesse"
                         android:gravity="start|bottom"
-                        style="@style/body_text"/>
+                        style="@style/unterueberschrift"/>
 
                     <TextView
                         android:id="@+id/spielerGroesse"
-                        android:layout_height="0dp"
-                        android:text="150"
-                        android:layout_weight="1"
-                        android:layout_width="fill_parent"
-                        android:textSize="15sp"
-                        android:gravity="start|top"
-                        style="@style/body_text"/>
+                        android:text="@string/defaultGroesse"
+                        style="@style/unterueberschrift"/>
 
                 </LinearLayout>
 
@@ -186,22 +181,16 @@
 
                     <TextView
                         android:layout_height="0dp"
-                        android:text="TRIKONR:"
-                        android:layout_weight="1"
-                        android:layout_width="fill_parent"
-                        android:textSize="15sp"
+                        android:layout_weight="@string/defaultTrikonummer"
+                        android:text="@string/trikonummer"
                         android:gravity="end|bottom"
-                        style="@style/body_text"/>
+                        style="@style/unterueberschrift"/>
 
                     <TextView
                         android:id="@+id/spielerTrikonummer"
-                        android:layout_height="0dp"
-                        android:text="1"
-                        android:layout_weight="1"
-                        android:layout_width="fill_parent"
-                        android:textSize="15sp"
+                        android:text="@string/platzhalterInteger"
                         android:gravity="end|top"
-                        style="@style/body_text"/>
+                        style="@style/unterueberschrift"/>
 
                 </LinearLayout>
             </LinearLayout>

@@ -5,12 +5,9 @@
     android:orientation="vertical" >
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mannschaftsstatistik"
+                android:text="@string/mannschaftsstatistik"
                 android:paddingTop="45dp"
-                android:gravity="left"
-                style="@style/unterueberschrift_text"/>
+                style="@style/ueberschrift"/>
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -22,12 +19,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:text="Anzahl Spiele:"
+                        android:text="@string/anzahlSpiele"
                         android:layout_weight="2"
                         />
                     <TextView
                         android:id="@+id/anzahlspiele"
-                        android:text="123"
                         android:layout_weight="1"
                         />
                 </TableRow>
@@ -38,7 +34,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:text="Gewonnen:"
+                        android:text="@string/gewonnen"
                         android:layout_weight="2"
                         />
                     <TextView
@@ -54,7 +50,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:text="Verloren:"
+                        android:text="@string/verloren"
                         android:layout_weight="2"
                         />
                     <TextView
@@ -70,7 +66,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:text="Unentschieden:"
+                        android:text="@string/unentschieden"
                         android:layout_weight="2"
                         />
                     <TextView
@@ -86,7 +82,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:text="Tore:"
+                        android:text="@string/tore"
                         android:layout_weight="2"
                         />
                     <TextView
@@ -102,7 +98,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:text="Gegentore:"
+                        android:text="@string/gegnertore"
                         android:layout_weight="2"
                         />
                     <TextView
@@ -118,7 +114,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:text="Durchschnitt Tore/Spiel:"
+                        android:text="@string/durschnittToreSpiel"
                         android:layout_weight="2"
                         />
                     <TextView
@@ -134,7 +130,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:text="Durchschnitt Gegentore/Spiel:"
+                        android:text="@string/durschnittGegentoreSpiel"
                         android:layout_weight="2"
                         />
                     <TextView

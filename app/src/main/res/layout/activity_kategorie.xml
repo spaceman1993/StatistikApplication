@@ -25,10 +25,8 @@
 
         <TextView
             android:id="@+id/kategorieÜberschrift"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kategorienauswahl"
-            style="@style/ueberschrift_text" />
+            android:text="@string/ueberschrift_kategorie"
+            style="@style/seitenueberschrift" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -43,20 +41,18 @@
 
         <Button
             android:id="@+id/addbutton"
-            android:text="Kategorie erzeugen"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="addKategorie" />
+            android:text="@string/kategorieErzeugen"
+            android:onClick="addKategorie"
+            android:background="@drawable/default_button"
+            style="@style/defaultButtonStyle"/>
 
         <Button
             android:id="@+id/fertig"
             android:text="@string/fertig"
             android:layout_below="@id/addbutton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="fertig_Click" />
+            android:onClick="fertig_Click"
+            android:background="@drawable/default_button"
+            style="@style/defaultButtonStyle"/>
     </RelativeLayout>
 
     <LinearLayout

@@ -27,7 +27,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Spieler:"
+                    android:text="@string/spieler"
                     android:paddingRight="10dp"
                     android:textSize="20dp"
                     android:textColor="#FFFFFF"
@@ -36,7 +36,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kategorie:"
+                    android:text="@string/kategorie"
                     android:paddingRight="10dp"
                     android:textSize="20dp"
                     android:textColor="#FFFFFF"
@@ -55,7 +55,6 @@
                     android:id="@+id/spieler"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vorname Nachname"
                     android:paddingRight="0dp"
                     android:textSize="20dp"
                     android:textColor="#FFFFFF"
@@ -65,7 +64,6 @@
                     android:id="@+id/kategorie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bezeichnung"
                     android:textSize="20dp"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"/>
@@ -79,6 +77,6 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:minEms="4"
-        android:text="0"/>
+        android:text="@string/platzhalterInteger"/>
 
 </LinearLayout>

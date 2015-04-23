@@ -12,12 +12,10 @@
 
        <TextView
            android:id="@+id/kategorienart"
-           android:layout_width="fill_parent"
-           android:layout_height="fill_parent"
-           android:text="Angriff"
+           android:text="@string/beschreibung"
            android:gravity="center"
            android:textSize="25dp"
-           android:textStyle="bold"/>
+           style="@style/bigtext"/>
     </LinearLayout>
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"

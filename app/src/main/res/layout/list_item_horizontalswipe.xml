@@ -10,12 +10,9 @@
         <TextView
             android:id="@+id/trikonummerErfassung"
             android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:text="12"
-            android:textSize="35sp"
-            android:gravity="center|center_vertical"
-            android:textStyle="bold"
-            android:lineSpacingExtra="-14dp"/>
+            android:text="@string/platzhalterInteger"
+            android:lineSpacingExtra="-14dp"
+            style="@style/bigtext"/>
 
         <ImageView
             android:id="@+id/image_view"

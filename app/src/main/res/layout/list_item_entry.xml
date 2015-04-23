@@ -29,22 +29,15 @@
 
             <TextView
                 android:id="@+id/list_item_entry_title"
-                android:text="Vereinsname"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceLarge">
+                android:text="@string/vereinsname"
+                style="@style/text">
             </TextView>
 
             <TextView
                 android:id="@+id/list_item_entry_summary"
-                android:text="Mannschaftsname"
-                android:layout_alignLeft="@id/list_item_entry_title"
+                android:text="@string/mannschaftsname"
                 android:layout_below="@id/list_item_entry_title"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceSmall">
+                style="@style/smalltext">
 
             </TextView>
         </RelativeLayout>

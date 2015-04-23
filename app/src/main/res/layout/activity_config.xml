@@ -18,10 +18,8 @@
 
         <TextView
             android:id="@+id/mannschaftÜberschrift"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Einstellungen"
-            style="@style/ueberschrift_text" />
+            android:text="@string/ueberschrift_einstellungen"
+            style="@style/seitenueberschrift" />
     </RelativeLayout>
 
     <LinearLayout
@@ -31,20 +29,6 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:paddingBottom="6dp">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="start|center">
-
-            <Button
-                android:id="@+id/Mannschaftauswahl"
-                android:background= "@drawable/ic_zurueck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="fertig_click" />
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -62,30 +46,24 @@
 
         <Button
             android:id="@+id/einstellungenMannschaft"
-            android:text="Mannschaft"
-            android:background="@drawable/red_button"
+            android:text="@string/mannschaft"
             android:onClick="mannschaft_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            android:background="@drawable/red_button"
+            style="@style/bigButtonStyle"/>
 
         <Button
             android:id="@+id/einstellungenKader"
-            android:text="Kader"
-            android:background="@drawable/green_button"
+            android:text="@string/kader"
             android:onClick="kader_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            android:background="@drawable/green_button"
+            style="@style/bigButtonStyle"/>
 
         <Button
             android:id="@+id/einstellungenKategorien"
-            android:text="Kategorien"
-            android:background="@drawable/blue_button"
+            android:text="@string/kategorien"
             android:onClick="kategorien_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            android:background="@drawable/blue_button"
+            style="@style/bigButtonStyle"/>
 
     </LinearLayout>
 

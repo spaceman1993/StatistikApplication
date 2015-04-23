@@ -22,34 +22,39 @@
             android:paddingLeft="10dp">
 
             <TextView
-                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Vorname:"/>
+                android:text="@string/vorname"
+                android:textStyle="bold"
+                style="@style/smalltext"/>
 
             <TextView
-                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Nachname:"/>
+                android:text="@string/nachname"
+                android:textStyle="bold"
+                style="@style/smalltext"/>
 
             <TextView
-                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Trikonummer:"/>
+                android:text="@string/trikonummer"
+                android:textStyle="bold"
+                style="@style/smalltext"/>
 
             <TextView
-                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Größe:"/>
+                android:text="@string/groesse"
+                android:textStyle="bold"
+                style="@style/smalltext"/>
 
             <TextView
-                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Position:"/>
+                android:text="@string/position"
+                android:textStyle="bold"
+                style="@style/smalltext"/>
 
         </LinearLayout>
 
@@ -61,38 +66,38 @@
 
             <TextView
                 android:id="@+id/vorname"
-                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Vorname"/>
+                android:text="@string/platzhalterString"
+                style="@style/smalltext"/>
 
             <TextView
                 android:id="@+id/nachname"
-                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Nachname"/>
+                android:text="@string/platzhalterString"
+                style="@style/smalltext"/>
 
             <TextView
                 android:id="@+id/trikonummer"
-                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Trikonummer"/>
+                android:text="@string/platzhalterString"
+                style="@style/smalltext"/>
 
             <TextView
                 android:id="@+id/groesse"
-                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Größe"/>
+                android:text="@string/platzhalterString"
+                style="@style/smalltext"/>
 
             <TextView
                 android:id="@+id/position"
-                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="Position"/>
+                android:text="@string/platzhalterString"
+                style="@style/smalltext"/>
 
 
 

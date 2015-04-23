@@ -19,10 +19,8 @@
 
         <TextView
             android:id="@+id/kaderÜberschrift"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Neue Statistik"
-            style="@style/ueberschrift_text" />
+            android:text="@string/ueberschrift_erfasse_neue_stati"
+            style="@style/seitenueberschrift" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -34,11 +32,10 @@
 
         <Button
             android:id="@+id/stati_Anlegen"
-            android:text="Statistik anlegen"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="stati_Anlegen" />
+            android:text="@string/statistikAnlegen"
+            android:onClick="stati_Anlegen"
+            android:background="@drawable/default_button"
+            style="@style/defaultButtonStyle"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -71,7 +68,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
-                        android:text="HEIM"
+                        android:text="@string/heim"
                         android:checked="true"/>
 
                     <RadioButton
@@ -79,7 +76,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.0"
-                        android:text="AUSWÄRTS"/>
+                        android:text="@string/auswaerts"/>
 
                     </RadioGroup>
 
@@ -94,8 +91,8 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Gegnerbezeichnung"
-                    style="@style/unterueberschrift_text"/>
+                    android:text="@string/gegnerbezeichnung"
+                    style="@style/ueberschrift"/>
 
                 <EditText
                     android:id="@+id/gegnerbezeichnung"
@@ -116,10 +113,8 @@
             android:paddingBottom="10dp">
 
             <TextView
-                android:layout_width="fill_parent"
-                android:text="Teilnehmer"
-                android:layout_height="wrap_content"
-                style="@style/unterueberschrift_text"/>
+                android:text="@string/teilnehmer"
+                style="@style/ueberschrift"/>
 
             <widgets.swipemenulistview.SwipeMenuListView
                 android:id="@+id/spielerList"

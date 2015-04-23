@@ -9,7 +9,7 @@
         android:id="@+id/counterText"
         android:layout_width="75dp"
         android:layout_height="wrap_content"
-        android:text="0"
+        android:text="@string/platzhalterInteger"
         android:textStyle="bold"
         android:textSize="20sp"
         android:gravity="center"

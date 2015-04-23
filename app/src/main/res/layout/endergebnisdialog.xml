@@ -7,7 +7,7 @@
         android:id="@+id/heimmannschaft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Heimmannschaft"
+        android:text="@string/heimmannschaft"
         android:paddingRight="5dp"
         android:paddingLeft="10dp"/>
 
@@ -16,12 +16,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minEms="2"
-        android:text="0"/>
+        android:text="@string/platzhalterInteger"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=":"
+        android:text="@string/doppelpunkt"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"/>
 
@@ -30,13 +30,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minEms="2"
-        android:text="0"/>
+        android:text="@string/platzhalterInteger"/>
 
     <TextView
         android:id="@+id/gastmannschaft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gastmannschaft"
+        android:text="@string/gastmannschaft"
         android:paddingRight="10dp"
         android:paddingLeft="5dp"/>
 

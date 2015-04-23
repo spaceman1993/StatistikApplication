@@ -5,13 +5,10 @@
     android:orientation="vertical" >
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Spielerstatistik"
+            android:text="@string/spielerstatistik"
             android:paddingTop="45dp"
             android:paddingBottom="5dp"
-            android:gravity="left"
-            style="@style/unterueberschrift_text"/>
+            style="@style/ueberschrift"/>
 
         <AdapterViewFlipper
             android:id="@+id/spielerViewFlipper"

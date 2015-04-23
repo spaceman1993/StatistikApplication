@@ -14,14 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:gravity="center" >
+        >
 
         <TextView
             android:id="@+id/ueberschrift"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Aufnahmemodus"
-            style="@style/ueberschrift_text" />
+            android:text="@string/ueberschrift_erfassungsart"
+            style="@style/seitenueberschrift" />
     </RelativeLayout>
 
     <LinearLayout
@@ -33,21 +31,17 @@
 
         <Button
             android:id="@+id/handball"
-            android:text="LAUFENDER BETRIEB"
-            android:background="@drawable/green_button"
+            android:text="@string/laufenderBetrieb"
             android:onClick="live_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            android:background="@drawable/green_button"
+            style="@style/bigButtonStyle"/>
 
         <Button
             android:id="@+id/fussball"
-            android:text="NACHTRÄGLICH"
-            android:background="@drawable/red_button"
+            android:text="@string/nachtraeglich"
             android:onClick="nachträglich_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            android:background="@drawable/red_button"
+            style="@style/bigButtonStyle"/>
 
     </LinearLayout>
 

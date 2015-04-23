@@ -25,10 +25,8 @@ android:orientation="vertical" >
 
     <TextView
         android:id="@+id/einzelSpielÜberschrift"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Einzelspielstatistik"
-        style="@style/ueberschrift_text" />
+        android:text="@string/ueberschrift_einzel_stati"
+        style="@style/seitenueberschrift" />
 </RelativeLayout>
 
 

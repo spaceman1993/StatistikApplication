@@ -42,7 +42,7 @@
         android:id="@+id/beschreibung"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Beschreibung"
+        android:text="@string/beschreibung"
         android:textStyle="bold"
         android:textSize="10sp"
         android:textColor="@color/abc_primary_text_disable_only_material_dark"

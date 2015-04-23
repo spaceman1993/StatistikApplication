@@ -20,8 +20,8 @@
             android:id="@+id/überschrift"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kategorienauswahl"
-            style="@style/ueberschrift_text" />
+            android:text="@string/ueberschrift_kategorie"
+            style="@style/seitenueberschrift" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -33,11 +33,10 @@
 
         <Button
             android:id="@+id/addbutton"
-            android:text="Kategorie hinzufügen"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="addKategorie" />
+            android:text="@string/kategorieErzeugen"
+            android:onClick="addKategorie"
+            android:background="@drawable/default_button"
+            style="@style/defaultButtonStyle"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -50,11 +49,8 @@
 
         <TextView
             android:id="@+id/katname"
-            android:paddingTop="10dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="KATEGORIENAME:"
-            style="@style/body_text"/>
+            android:text="@string/kategoriename"
+            style="@style/unterueberschrift"/>
 
         <EditText
             android:id="@+id/kategoriename"
@@ -65,11 +61,8 @@
 
         <TextView
             android:id="@+id/katartbezeichnung"
-            android:paddingTop="10dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="KATEGORISIERUNG:"
-            style="@style/body_text"/>
+            android:text="@string/kategorisierung"
+            style="@style/unterueberschrift"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -96,11 +89,8 @@
 
         <TextView
             android:id="@+id/katart"
-            android:paddingTop="10dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="ART:"
-            style="@style/body_text"/>
+            android:text="@string/art"
+            style="@style/unterueberschrift"/>
 
         <Spinner
             android:id="@+id/kategorieart"
@@ -109,11 +99,8 @@
 
         <TextView
             android:id="@+id/kategoriesymbol"
-            android:paddingTop="10dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
             android:text="SYMBOL:"
-            style="@style/body_text"/>
+            style="@style/unterueberschrift"/>
 
        <GridView
            android:id="@+id/symbolauswahl"

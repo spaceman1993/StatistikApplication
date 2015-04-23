@@ -18,10 +18,8 @@
 
         <TextView
             android:id="@+id/ueberschrift"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/firststart_ueberschrift"
-            style="@style/ueberschrift_text" />
+            android:text="@string/ueberschrift_first_start"
+            style="@style/seitenueberschrift" />
     </RelativeLayout>
 
     <LinearLayout
@@ -34,44 +32,36 @@
         <Button
             android:id="@+id/handball"
             android:text="@string/handball"
+            android:onClick="sport_click"
             android:drawableStart="@drawable/ic_handball"
             android:drawableLeft="@drawable/ic_handball"
             android:background="@drawable/red_button"
-            android:onClick="sport_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            style="@style/bigButtonStyle" />
 
         <Button
             android:id="@+id/fussball"
             android:text="@string/fussball"
+            android:onClick="sport_click"
             android:drawableStart="@drawable/ic_fussball"
             android:drawableLeft="@drawable/ic_fussball"
             android:background="@drawable/green_button"
-            android:onClick="sport_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            style="@style/bigButtonStyle"/>
 
         <Button
             android:id="@+id/basketball"
             android:text="@string/basketball"
+            android:onClick="sport_click"
             android:drawableStart="@drawable/ic_basketball"
             android:drawableLeft="@drawable/ic_basketball"
             android:background="@drawable/blue_button"
-            android:onClick="sport_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            style="@style/bigButtonStyle"/>
 
         <Button
             android:id="@+id/eigene"
             android:text="@string/eigene"
-            android:background="@drawable/yellow_button"
             android:onClick="sport_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            android:background="@drawable/yellow_button"
+            style="@style/bigButtonStyle"/>
 
     </LinearLayout>
 

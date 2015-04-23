@@ -19,17 +19,14 @@
 
         <TextView
             android:id="@+id/vereinsname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Vereinsname"
-            style="@style/ueberschrift_text" />
+            android:text="@string/vereinsname"
+            style="@style/seitenueberschrift" />
 
         <TextView
             android:id="@+id/mannschaftsname"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mannschaftsname"
-            style="@style/unterueberschrift_text" />
+            android:text="@string/mannschaftsname"
+            style="@style/ueberschrift" />
     </LinearLayout>
 
     <LinearLayout
@@ -38,20 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="start|center">
-
-            <Button
-                android:id="@+id/Mannschaftauswahl"
-                android:background= "@drawable/ic_zurueck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="mannschaftsauswahl_click" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -84,27 +67,21 @@
             android:text="@string/gesamtstatistik"
             android:background="@drawable/red_button"
             android:onClick="gesamtstatistik_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            style="@style/bigButtonStyle"/>
 
         <Button
             android:id="@+id/einzelstatistiken"
             android:text="@string/einzelstatistiken"
             android:background="@drawable/green_button"
             android:onClick="einzelstatistik_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            style="@style/bigButtonStyle"/>
 
         <Button
             android:id="@+id/neuestatistik"
-            android:text="Neue Statistik"
+            android:text="@string/neueStatistik"
             android:background="@drawable/blue_button"
             android:onClick="neuestatistik_click"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            style="@style/button_text"/>
+            style="@style/bigButtonStyle"/>
 
     </LinearLayout>
 

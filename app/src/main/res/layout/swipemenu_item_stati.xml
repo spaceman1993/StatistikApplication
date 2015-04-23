@@ -19,28 +19,21 @@
 
             <TextView
                 android:id="@+id/heim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="HSG Vegesack"
-                android:layout_gravity="left"
-                style="@style/body_text"/>
+                android:text="@string/platzhalterString"
+                style="@style/text"/>
 
             <TextView
                 android:id="@+id/datum"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="99.99.99"
-                android:gravity="right"/>
+                android:text="@string/platzhalterDatum"
+                android:gravity="right"
+                style="@style/smalltext"/>
 
 
         </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="vs."
-            android:layout_gravity="center"
-            style="@style/body_text"/>
+            android:text="@string/vs"
+            style="@style/text"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -49,25 +42,18 @@
 
             <TextView
                 android:id="@+id/ergebnis"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="31:33"
-                android:gravity="left"
-                style="@style/body_text"/>
+                android:text="@string/platzhalterInteger"
+                style="@style/text"/>
 
             <TextView
                 android:id="@+id/gast"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="HSG Lesum"
+                android:text="@string/platzhalterString"
                 android:gravity="right"
-                style="@style/body_text"/>
+                style="@style/text"/>
 
 
         </LinearLayout>
-
-
-
 
         </LinearLayout>
 

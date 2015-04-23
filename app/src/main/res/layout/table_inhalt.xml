@@ -8,12 +8,8 @@
     <TextView
         android:id="@+id/wert"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@android:color/transparent"
-        android:text="0"
-        android:editable="false"
-        android:textSize="30sp" >
+        android:text="@string/platzhalterInteger"
+        style="@style/bigtext">
     </TextView>
 
 </LinearLayout>

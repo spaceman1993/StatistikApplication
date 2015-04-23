@@ -44,31 +44,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center|left"
-                android:layout_toRightOf="@+id/image_view"
-                android:text="1. Bezeichnung"
-                android:textColor="@android:color/black"
-                android:textSize="25sp" />
+                android:text="@string/beschreibung"
+                android:textSize="25sp"
+                style="@style/text"/>
 
             <TextView
                 android:id="@+id/bezeichnungZwei"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center|left"
-                android:text="2. Bezeichnung"
-                android:textColor="@android:color/black"
-                android:textSize="25sp" />
+                android:text="@string/beschreibung"
+                android:textSize="25sp"
+                style="@style/text"/>
 
             <TextView
                 android:id="@+id/bezeichnungDrei"
-                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="bottom|left"
-                android:text="3. Bezeichnung"
-                android:textColor="@android:color/black"
-                android:textSize="13sp" />
+                android:gravity="bottom"
+                android:text="@string/beschreibung"
+                style="@style/smalltext"/>
 
             </LinearLayout>
 

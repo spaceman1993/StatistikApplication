@@ -19,10 +19,8 @@
 
         <TextView
             android:id="@+id/auswahlÜberschrift"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="WÄHLE DEINE MANNSCHAFT"
-            style="@style/ueberschrift_text" />
+            android:text="@string/ueberschrift_auswahl_mannschaft"
+            style="@style/seitenueberschrift" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -34,11 +32,11 @@
 
         <Button
             android:id="@+id/fertig"
-            android:text="Neue Mannschaft"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="addMannschaft" />
+            android:text="@string/neueMannschaft"
+            android:onClick="addMannschaft"
+            android:background="@drawable/default_button"
+            style="@style/defaultButtonStyle"/>
+
     </RelativeLayout>
 
     <LinearLayout

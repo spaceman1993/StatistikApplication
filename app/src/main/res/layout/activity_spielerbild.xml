@@ -20,8 +20,8 @@
             android:id="@+id/überschrift"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Spielerbild verwalten"
-            style="@style/ueberschrift_text" />
+            android:text="@string/ueberschrift_spielerbild"
+            style="@style/seitenueberschrift" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -33,20 +33,18 @@
 
         <Button
             android:id="@+id/fotowaehlen"
-            android:text="Foto auswählen"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="foto_click" />
+            android:text="@string/fotoAuswaehlen"
+            android:onClick="foto_click"
+            android:background="@drawable/default_button"
+            style="@style/defaultButtonStyle"/>
 
         <Button
             android:id="@+id/fertig"
-            android:text="Fertig"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:text="@string/fertig"
             android:layout_below="@id/fotowaehlen"
-            android:onClick="fertig_click" />
+            android:onClick="fertig_click"
+            android:background="@drawable/default_button"
+            style="@style/defaultButtonStyle"/>
     </RelativeLayout>
 
     <LinearLayout

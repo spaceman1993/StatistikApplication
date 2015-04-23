@@ -25,10 +25,8 @@
 
             <TextView
                 android:id="@+id/kaderÜberschrift"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kaderauswahl"
-                style="@style/ueberschrift_text" />
+                android:text="@string/ueberschrift_kader"
+                style="@style/seitenueberschrift" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -43,20 +41,18 @@
 
             <Button
                 android:id="@+id/addbutton"
-                android:text="Spieler erstellen"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:onClick="addSpieler" />
+                android:text="@string/spielerErstellen"
+                android:onClick="addSpieler"
+                android:background="@drawable/default_button"
+                style="@style/defaultButtonStyle"/>
 
             <Button
                 android:id="@+id/fertig"
                 android:text="@string/fertig"
                 android:layout_below="@id/addbutton"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:onClick="fertig_Click" />
+                android:onClick="fertig_Click"
+                android:background="@drawable/default_button"
+                style="@style/defaultButtonStyle"/>
         </RelativeLayout>
 
 
