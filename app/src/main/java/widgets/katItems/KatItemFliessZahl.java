@@ -16,52 +16,25 @@ import szut.de.statistikapplication.R;
 /**
  * Created by roese on 24.03.2015.
  */
-public class KatItemFliessZahl extends LinearLayout{
-
-    private Context context;
+public class KatItemFliessZahl extends KatItem{
 
     private EditText fliesszahlEdit;
 
-    private Statistikwerte statistikwert;
-
     public KatItemFliessZahl(Context context, Statistik statistik, Spieler spieler, Kategorie kategorie) {
-        super(context);
-        init(context, statistik, spieler, kategorie);
+        super(context, statistik, spieler, kategorie);
     }
 
     public KatItemFliessZahl(Context context, AttributeSet attrs, Statistik statistik, Spieler spieler, Kategorie kategorie) {
-        super(context, attrs);
-        init(context, statistik, spieler, kategorie);
+        super(context, attrs, statistik, spieler, kategorie);
     }
 
-    public void init(Context context, Statistik statistik, Spieler spieler, Kategorie kategorie){
-
-        this.context = context;
-
-        DBHandler dbHandler = new DBHandler(context, null, null, 1);
-
-        statistikwert = dbHandler.findStatistikwert(statistik.getId(), spieler.getId(), kategorie.getId());
-        statistikwert.setWert("0,00");
-        dbHandler.update(statistikwert);
-
-        dbHandler.close();
-
-        initView(context);
-        createListener();
-    }
-
-    private void initView(Context context) {
+    public void initView(Context context) {
 
         LayoutInflater.from(context).inflate(R.layout.build_fliesszahleingabe, this);
 
         fliesszahlEdit = (EditText) this.findViewById(R.id.fliesszahlText);
 
+        findViewById(R.id.katItemView).setOnClickListener(this);
+        findViewById(R.id.katItemView).setOnLongClickListener(this);
     }
-
-    private void createListener() {
-
-
-    }
-
-
 }

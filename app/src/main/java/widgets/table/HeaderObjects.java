@@ -44,7 +44,7 @@ public class HeaderObjects {
     public void initHeaderViews(){
 
         TextView firstHeader = new TextView(activity.getApplicationContext());
-        firstHeader.setMinimumWidth(275);
+        firstHeader.setMinimumWidth(280);
         firstHeader.setBackgroundResource(R.drawable.tableheader);
         headerViews.add(firstHeader);
 
@@ -53,7 +53,7 @@ public class HeaderObjects {
 //            if(i == kategorien.size()-1) {
 //                v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight() + 250, v.getPaddingBottom());
 //            }
-            v.setMinimumWidth(145);
+            v.setMinimumWidth(155);
             headerViews.add(v);
         }
     }

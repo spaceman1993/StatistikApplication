@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,9 +17,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,11 +29,11 @@ import java.util.ArrayList;
 import database.DBHandler;
 import database.data.Kategorie;
 import database.data.Mannschaft;
+import database.data.SelectableItem;
 import database.data.Spieler;
 import database.data.Statistik;
 import database.data.Statistikwerte;
 import szut.de.statistikapplication.Globals;
-import szut.de.statistikapplication.HauptmenuActivity;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
 import widgets.horizontalListView.HorizontalListView;
@@ -58,20 +58,23 @@ public class ErfassungsActivity extends Activity {
     private ArrayList<Statistikwerte> statistikwerte;
 
     //Widget-Variablen
-    private ListView listview;
+    private TextView benennung;
+    private GridView gridview;
+    private SpielerViewAdapter spielerGridView;
+    private KategorisierungsViewAdapter kategorisierungsView;
+    private KategorienViewAdapter kategorienView;
 
     //Variablen
     private ArrayList<Spieler> spieler;
     private ArrayList<Kategorie> kategorien;
+    private Spieler aktSpieler;
 
-    ArrayList<Erfassungsaufbau> erfassungsListe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_erfassungs);
@@ -102,18 +105,34 @@ public class ErfassungsActivity extends Activity {
         kategorien = dbHandler.getAktiveKategorienDerMannschaft(mannschaft);
 
         //Widgets
-        listview = (ListView) findViewById(R.id.erfassungsListe);
+        benennung = (TextView) findViewById(R.id.benennung);
+        gridview = (GridView) findViewById(R.id.gridview);
 
-        //Default-Werte setzen
-        erfassungsListe = new ArrayList<Erfassungsaufbau>();
+        spielerGridView = new SpielerViewAdapter(this, R.layout.table_spieler, spieler);
+        kategorisierungsView = new KategorisierungsViewAdapter(this, android.R.layout.simple_list_item_1, dbHandler.getAllKategorisierungsnamen());
 
 
-        for(int i=0; i<spieler.size(); i++){
-            Spieler einzelspieler = spieler.get(i);
-            erfassungsListe.add(new Erfassungsaufbau(einzelspieler.getTrikonummer(), einzelspieler.getFoto(), new KategorienAdapter(this, R.layout.list_item_button, einzelspieler, kategorien)));
-        }
+        showSpieler();
 
-        listview.setAdapter(new SpielerAdapter(this, R.layout.list_item_horizontalswipe, erfassungsListe));
+    }
+
+    public void showSpieler(){
+        benennung.setText("Spieler wählen");
+        gridview.setNumColumns(2);
+        gridview.setAdapter(spielerGridView);
+    }
+
+    public void showKategorisierung(){
+        benennung.setText("Oberkategorie wählen");
+        gridview.setNumColumns(1);
+        gridview.setAdapter(kategorisierungsView);
+    }
+
+    public void showKategorien(ArrayList<Kategorie> kategorien){
+        kategorienView = new KategorienViewAdapter(this, R.layout.list_item_button, aktSpieler, kategorien);
+        benennung.setText("Kategorie wählen");
+        gridview.setNumColumns(1);
+        gridview.setAdapter(kategorienView);
     }
 
     @Override
@@ -138,50 +157,88 @@ public class ErfassungsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class SpielerAdapter extends ArrayAdapter<Erfassungsaufbau> {
-
+    public class SpielerViewAdapter extends ArrayAdapter<Spieler> {
         protected LayoutInflater inflater;
         protected int layout;
-        protected ArrayList<Erfassungsaufbau> items;
 
-        public SpielerAdapter(Activity activity,int resourceId,
-                             ArrayList<Erfassungsaufbau> list) {
-            super(activity,resourceId,list);
-
+        public SpielerViewAdapter(Activity activity, int resourceId, ArrayList<Spieler> objects){
+            super(activity, resourceId, objects);
             layout = resourceId;
             inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            items = list;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View v = inflater.inflate(layout, parent, false);
-            TextView trikonummer = (TextView) v.findViewById(R.id.trikonummerErfassung);
-            ImageView picture = (ImageView) v.findViewById(R.id.image_view);
-            HorizontalListView kategorien = (HorizontalListView) v.findViewById(R.id.horizontalListView);
+            final Spieler item = getItem(position);
 
-
-            trikonummer.setText(String.valueOf(getItem(position).getTrikonummer()));
-            picture.setImageBitmap(getItem(position).getPicture());
-            kategorien.setAdapter(getItem(position).getKategorienListe());
-
-            //ViewGroup.LayoutParams p = (ViewGroup.LayoutParams)v.getLayoutParams();
-
-            if(position == 0){
-                //p.setMargins(p.leftMargin, p.topMargin+100, p.rightMargin, p.bottomMargin);
-            }
-            else if(position == items.size()-1){
-                //p.setMargins(p.leftMargin, p.topMargin, p.rightMargin, p.bottomMargin+100);
+            if(convertView == null) {
+                convertView = inflater.inflate(layout, parent, false);
             }
 
-            return v;
+            TextView trikonummer = (TextView) convertView.findViewById(R.id.trikonummerErfassung);
+            ImageView foto = (ImageView) convertView.findViewById(R.id.image_view);
+            TextView vorname = (TextView) convertView.findViewById(R.id.vorname);
+            TextView nachname = (TextView) convertView.findViewById(R.id.nachname);
+
+            trikonummer.setText(String.valueOf(item.getTrikonummer()));
+            foto.setImageBitmap(item.getFoto());
+            vorname.setText(item.getVorname());
+            nachname.setText(item.getNachname());
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    aktSpieler = item;
+                    showKategorisierung();
+                }
+            });
+
+            return convertView;
         }
-
     }
 
-    public class KategorienAdapter extends ArrayAdapter<Kategorie> {
+    public class KategorisierungsViewAdapter extends ArrayAdapter<String> {
+        protected LayoutInflater inflater;
+        protected int layout;
+        protected Activity activity;
+
+        public KategorisierungsViewAdapter(Activity activity, int resourceId, ArrayList<String> objects){
+            super(activity, resourceId, objects);
+            layout = resourceId;
+            inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            this.activity = activity;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            final String item = getItem(position);
+
+            if(convertView == null) {
+                convertView = inflater.inflate(layout, parent, false);
+            }
+
+            TextView text = (TextView) convertView.findViewById(android.R.id.text1);
+
+            text.setText(item);
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DBHandler dbHandler = new DBHandler(activity, null, null, 1);
+                    ArrayList<Kategorie> kategorien = dbHandler.findKategorienByKategorisierung(item);
+                    dbHandler.close();
+                    showKategorien(kategorien);
+                }
+            });
+
+            return convertView;
+        }
+    }
+
+
+    public class KategorienViewAdapter extends ArrayAdapter<Kategorie> {
 
         protected LayoutInflater inflater;
         protected int layout;
@@ -190,7 +247,7 @@ public class ErfassungsActivity extends Activity {
         protected ArrayList<Kategorie> items;
 
 
-        public KategorienAdapter(Activity activity,int resourceId, Spieler spieler, ArrayList<Kategorie> list) {
+        public KategorienViewAdapter(Activity activity,int resourceId, Spieler spieler, ArrayList<Kategorie> list) {
             super(activity,resourceId,list);
 
             layout = resourceId;

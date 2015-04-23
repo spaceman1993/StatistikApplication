@@ -301,7 +301,7 @@ public class SQL_Kategorien {
         return kategorienListe;
     }
 
-    public ArrayList<Kategorie> findByKategorieart(String kategorieart){
+    public ArrayList<Kategorie> findByKategorisierung(String kategorieart){
         String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_KATEGORISIERUNG + " =  \"" + kategorieart + "\"";;
 
         Cursor cursor = dbR.rawQuery(query, null);
@@ -364,7 +364,7 @@ public class SQL_Kategorien {
         ArrayList<String> kategorieartenbezeichnungen = findAllKategorieartbezeichnungen();
 
         for(int i=0; i<kategorieartenbezeichnungen.size(); i++){
-            kategorienListe.add(findByKategorieart(kategorieartenbezeichnungen.get(i)));
+            kategorienListe.add(findByKategorisierung(kategorieartenbezeichnungen.get(i)));
         }
 
         return kategorienListe;

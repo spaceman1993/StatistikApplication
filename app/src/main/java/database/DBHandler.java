@@ -447,6 +447,10 @@ public class DBHandler extends SQLiteOpenHelper {
         return kategorien.findByKategorieartAll();
     }
 
+    public ArrayList<Kategorie> findKategorienByKategorisierung(String name){
+        return kategorien.findByKategorisierung(name);
+    }
+
     //----------------------------------------------------------------------------------------------
     //---------MANNSCHAFTS-STATEMENTS---------------------------------------------------------------
     //----------------------------------------------------------------------------------------------
