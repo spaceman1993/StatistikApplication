@@ -26,6 +26,11 @@ public class ConfigActivity extends Activity {
         setContentView(R.layout.activity_config);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HauptmenuActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,9 +70,5 @@ public class ConfigActivity extends Activity {
         Intent intent = new Intent(this, KategorieActivity.class);
         intent.putExtra("Update", true);
         startActivity(intent);
-    }
-
-    public void fertig_click(View view){
-        finish();
     }
 }

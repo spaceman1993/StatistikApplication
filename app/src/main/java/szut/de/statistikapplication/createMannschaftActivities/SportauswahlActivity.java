@@ -13,7 +13,9 @@ import android.view.WindowManager;
 
 import database.DBHandler;
 import database.data.Mannschaft;
+import szut.de.statistikapplication.AuswahlMannschaftActivity;
 import szut.de.statistikapplication.Globals;
+import szut.de.statistikapplication.HauptmenuActivity;
 import szut.de.statistikapplication.R;
 
 
@@ -93,6 +95,12 @@ public class SportauswahlActivity extends Activity {
         Bundle bundle = new Bundle();
         bundle.putBoolean("Update", false);
         intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, AuswahlMannschaftActivity.class);
         startActivity(intent);
     }
 

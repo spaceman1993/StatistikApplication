@@ -260,8 +260,29 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addKategorie(View view){
+    @Override
+    public void onBackPressed() {
+        String fehlermeldung = "Wollen Sie die Erfassung ohne zu Speichern beenden?";
 
+        Dialog d = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_DARK)
+                .setTitle("Achtung")
+                .setMessage(fehlermeldung)
+                .setPositiveButton("JA", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("NEIN", null)
+                .create();
+        d.show();
+    }
+
+    public void addKategorie(View view){
+        beenden();
+    }
+
+    public void beenden(){
         String kategorienameText = name.getText().toString();
 
         if(kategorienameText.isEmpty()){
@@ -277,7 +298,6 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         else {
             fortfahren();
         }
-
     }
 
     public void fortfahren(){

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +13,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import database.data.Mannschaft;
-import szut.de.statistikapplication.createStatiActivities.ErfassungsartActivity;
+import szut.de.statistikapplication.createStatiActivities.AufnahmemodusActivity;
 import szut.de.statistikapplication.showStatiActivities.EinzelStatiActivity;
 import szut.de.statistikapplication.showStatiActivities.GesamtStatiActivity;
 
@@ -99,7 +98,7 @@ public class HauptmenuActivity extends Activity {
     }
 
     public void neuestatistik_click(View view){
-        Intent intent = new Intent(this, ErfassungsartActivity.class);
+        Intent intent = new Intent(this, AufnahmemodusActivity.class);
         startActivity(intent);
     }
 
@@ -126,4 +125,6 @@ public class HauptmenuActivity extends Activity {
         Intent intent = new Intent(this, AuswahlMannschaftActivity.class);
         startActivity(intent);
     }
+
+
 }

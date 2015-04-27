@@ -31,7 +31,9 @@ import java.util.List;
 import database.DBHandler;
 import database.data.Mannschaft;
 import hilfklassen.OnTouchCloseKeyboardActivity;
+import szut.de.statistikapplication.ConfigActivity;
 import szut.de.statistikapplication.Globals;
+import szut.de.statistikapplication.HauptmenuActivity;
 import szut.de.statistikapplication.R;
 import widgets.cropOption.CropOption;
 import widgets.cropOption.CropOptionAdapter;
@@ -322,6 +324,21 @@ public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
 
                 alert.show();
             }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(!isUpdate){
+            DBHandler dbHandler =  new DBHandler(context, null, null, 1);
+            dbHandler.delete(mannschaft);
+            Intent intent = new Intent(this, SportauswahlActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(this, ConfigActivity.class);
+            startActivity(intent);
         }
     }
 

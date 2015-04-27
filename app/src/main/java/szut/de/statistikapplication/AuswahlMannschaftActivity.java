@@ -2,6 +2,7 @@ package szut.de.statistikapplication;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -277,4 +278,20 @@ public class AuswahlMannschaftActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        Dialog d = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_DARK)
+                .setTitle("Beenden")
+                .setMessage("Wollen Sie die App beenden?")
+                .setPositiveButton("JA", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        moveTaskToBack(true);
+                        finish();
+                    }
+                })
+                .setNegativeButton("NEIN", null)
+                .create();
+        d.show();
+    }
 }

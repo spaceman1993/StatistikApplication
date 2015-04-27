@@ -27,6 +27,7 @@ import database.data.Mannschaft;
 import hilfklassen.OnTouchCloseKeyboardActivity;
 import database.data.Position;
 import database.data.Spieler;
+import szut.de.statistikapplication.AuswahlMannschaftActivity;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.R;
 
@@ -262,8 +263,29 @@ public class NewSpielerActivity extends OnTouchCloseKeyboardActivity {
         }
     }
 
-    public void spielerAdd_click(View view){
+    @Override
+    public void onBackPressed() {
+        String fehlermeldung = "Wollen Sie die Erfassung ohne zu Speichern beenden?";
 
+        Dialog d = new AlertDialog.Builder(context,AlertDialog.THEME_HOLO_DARK)
+                .setTitle("Achtung")
+                .setMessage(fehlermeldung)
+                .setPositiveButton("JA", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("NEIN", null)
+                .create();
+        d.show();
+    }
+
+    public void spielerAdd_click(View view){
+        beenden();
+    }
+
+    public void beenden(){
         String vornameText = vorname.getText().toString();
         String nachnameText = nachname.getText().toString();
 
@@ -285,28 +307,28 @@ public class NewSpielerActivity extends OnTouchCloseKeyboardActivity {
         else if (i == isCheck.length || foto.sameAs(BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.ic_unbekannt))){
 
-                String fehlermeldung = "Wollen Sie die nachfolgenden Angaben des Spielers ändern?\n";
-                if (i == isCheck.length) {
-                    fehlermeldung += "\nPosition";
-                }
-                if (foto.sameAs(BitmapFactory.decodeResource(context.getResources(),
-                        R.drawable.ic_unbekannt))) {
-                    fehlermeldung += "\nFoto";
-                }
-
-                Dialog d = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_DARK)
-                        .setTitle("Hinweis")
-                        .setMessage(fehlermeldung)
-                        .setPositiveButton("JA", null)
-                        .setNegativeButton("NEIN", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                fortfahren();
-                            }
-                        })
-                        .create();
-                d.show();
+            String fehlermeldung = "Wollen Sie die nachfolgenden Angaben des Spielers ändern?\n";
+            if (i == isCheck.length) {
+                fehlermeldung += "\nPosition";
             }
+            if (foto.sameAs(BitmapFactory.decodeResource(context.getResources(),
+                    R.drawable.ic_unbekannt))) {
+                fehlermeldung += "\nFoto";
+            }
+
+            Dialog d = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_DARK)
+                    .setTitle("Hinweis")
+                    .setMessage(fehlermeldung)
+                    .setPositiveButton("JA", null)
+                    .setNegativeButton("NEIN", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            fortfahren();
+                        }
+                    })
+                    .create();
+            d.show();
+        }
         else {
             fortfahren();
         }

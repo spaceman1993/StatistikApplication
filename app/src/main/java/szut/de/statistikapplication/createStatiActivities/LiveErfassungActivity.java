@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,11 +16,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,21 +26,19 @@ import java.util.ArrayList;
 import database.DBHandler;
 import database.data.Kategorie;
 import database.data.Mannschaft;
-import database.data.SelectableItem;
 import database.data.Spieler;
 import database.data.Statistik;
 import database.data.Statistikwerte;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
-import widgets.horizontalListView.HorizontalListView;
 import widgets.katItems.KatItemCheckbox;
 import widgets.katItems.KatItemCounter;
 import widgets.katItems.KatItemFliessZahl;
 import widgets.katItems.KatItemNotiz;
 import widgets.katItems.KatItemTimer;
 
-public class ErfassungsActivity extends Activity {
+public class LiveErfassungActivity extends Activity {
 
     //Global-Varaiblen
     Globals g;
@@ -68,6 +63,8 @@ public class ErfassungsActivity extends Activity {
     private ArrayList<Spieler> spieler;
     private ArrayList<Kategorie> kategorien;
     private Spieler aktSpieler;
+    private boolean isSpielerbild;
+    private boolean isKategorisierungsbild;
 
 
     @Override
@@ -117,22 +114,41 @@ public class ErfassungsActivity extends Activity {
     }
 
     public void showSpieler(){
+        isSpielerbild = true;
+        isKategorisierungsbild = false;
         benennung.setText("Spieler wählen");
         gridview.setNumColumns(2);
         gridview.setAdapter(spielerGridView);
     }
 
     public void showKategorisierung(){
+        isSpielerbild = false;
+        isKategorisierungsbild = true;
         benennung.setText("Oberkategorie wählen");
         gridview.setNumColumns(1);
         gridview.setAdapter(kategorisierungsView);
     }
 
     public void showKategorien(ArrayList<Kategorie> kategorien){
+        isSpielerbild = false;
+        isKategorisierungsbild = false;
         kategorienView = new KategorienViewAdapter(this, R.layout.list_item_button, aktSpieler, kategorien);
         benennung.setText("Kategorie wählen");
         gridview.setNumColumns(1);
         gridview.setAdapter(kategorienView);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isSpielerbild){
+            finish();
+        }
+        else if(isKategorisierungsbild){
+            showSpieler();
+        }
+        else{
+            showSpieler();
+        }
     }
 
     @Override
@@ -160,10 +176,12 @@ public class ErfassungsActivity extends Activity {
     public class SpielerViewAdapter extends ArrayAdapter<Spieler> {
         protected LayoutInflater inflater;
         protected int layout;
+        protected ArrayList<Spieler> spieler;
 
         public SpielerViewAdapter(Activity activity, int resourceId, ArrayList<Spieler> objects){
             super(activity, resourceId, objects);
             layout = resourceId;
+            spieler = objects;
             inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -174,6 +192,9 @@ public class ErfassungsActivity extends Activity {
 
             if(convertView == null) {
                 convertView = inflater.inflate(layout, parent, false);
+                if(position == spieler.size()-1) {
+                    convertView.setPadding(convertView.getPaddingLeft(), convertView.getPaddingTop(), convertView.getRight(), convertView.getPaddingBottom() + 60);
+                }
             }
 
             TextView trikonummer = (TextView) convertView.findViewById(R.id.trikonummerErfassung);
@@ -202,10 +223,12 @@ public class ErfassungsActivity extends Activity {
         protected LayoutInflater inflater;
         protected int layout;
         protected Activity activity;
+        protected ArrayList<String> objects;
 
         public KategorisierungsViewAdapter(Activity activity, int resourceId, ArrayList<String> objects){
             super(activity, resourceId, objects);
             layout = resourceId;
+            this.objects = objects;
             inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             this.activity = activity;
         }
@@ -217,6 +240,9 @@ public class ErfassungsActivity extends Activity {
 
             if(convertView == null) {
                 convertView = inflater.inflate(layout, parent, false);
+                if(position == objects.size()-1) {
+                    convertView.setPadding(convertView.getPaddingLeft(), convertView.getPaddingTop(), convertView.getRight(), convertView.getPaddingBottom() + 160);
+                }
             }
 
             TextView text = (TextView) convertView.findViewById(android.R.id.text1);
@@ -259,28 +285,27 @@ public class ErfassungsActivity extends Activity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            View v = null;
+            if(convertView == null) {
+                if (getItem(position).getArt().equals("Zähler")) {
+                    convertView = createCounterView(position);
+                } else if (getItem(position).getArt().equals("Fließzahleingabe")) {
+                    convertView = createFließzahlView(position);
+                } else if (getItem(position).getArt().equals("Checkbox")) {
+                    convertView = createCheckboxView(position);
+                } else if (getItem(position).getArt().equals("Timer")) {
+                    convertView = createTimerView(position);
+                } else if (getItem(position).getArt().equals("Notiz")) {
+                    convertView = createNotizView(position);
+                } else {
+                    convertView = inflater.inflate(layout, parent, false);
+                }
 
-            if(getItem(position).getArt().equals("Zähler")){
-                v = createCounterView(position);
-            }
-            else if(getItem(position).getArt().equals("Fließzahleingabe")){
-                v = createFließzahlView(position);
-            }
-            else if(getItem(position).getArt().equals("Checkbox")){
-                v = createCheckboxView(position);
-            }
-            else if(getItem(position).getArt().equals("Timer")){
-                v = createTimerView(position);
-            }
-            else if(getItem(position).getArt().equals("Notiz")){
-                v = createNotizView(position);
-            }
-            else {
-                v = inflater.inflate(layout, parent, false);
+                if(position == items.size()-1) {
+                    convertView.setPadding(convertView.getPaddingLeft(), convertView.getPaddingTop(), convertView.getRight(), convertView.getPaddingBottom() + 160);
+                }
             }
 
-            return v;
+            return convertView;
         }
 
 
@@ -337,8 +362,7 @@ public class ErfassungsActivity extends Activity {
         }
     }
 
-    public void stati_Fertig_Click(View view){
-
+    public void finish(){
 
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -360,7 +384,7 @@ public class ErfassungsActivity extends Activity {
                             gastmannschaft.setText(mannschaft.getVereinsname());
                         }
 
-                        AlertDialog.Builder alert = new AlertDialog.Builder(ErfassungsActivity.this, AlertDialog.THEME_HOLO_DARK);
+                        AlertDialog.Builder alert = new AlertDialog.Builder(LiveErfassungActivity.this, AlertDialog.THEME_HOLO_DARK);
                         alert.setView(v);
                         alert.setTitle("Endergebnis");
                         alert.setMessage("Tragen Sie das Endergebnis des Spiels ein:");

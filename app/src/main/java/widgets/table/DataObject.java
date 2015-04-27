@@ -6,17 +6,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -26,9 +22,6 @@ import database.data.Spieler;
 import database.data.Statistikwerte;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.createMannschaftActivities.NewSpielerActivity;
-import szut.de.statistikapplication.createStatiActivities.ErfassungsActivity;
-import szut.de.statistikapplication.showStatiActivities.EinzelStatiActivity;
-import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
 import szut.de.statistikapplication.showStatiActivities.GesamtStatiActivity;
 
 public class DataObject {

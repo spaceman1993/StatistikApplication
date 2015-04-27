@@ -34,7 +34,7 @@ import hilfklassen.sorter.spieler.SortTrikonummer;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.createMannschaftActivities.NewKategorieActivity;
 import szut.de.statistikapplication.createMannschaftActivities.NewSpielerActivity;
-import szut.de.statistikapplication.createStatiActivities.ErfasseNeueStatiActivity;
+import szut.de.statistikapplication.createStatiActivities.ErfassungsoptionenActivity;
 import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
 import widgets.swipemenulistview.SwipeMenu;
 import widgets.swipemenulistview.SwipeMenuCreator;
@@ -221,7 +221,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
 
                     if(selectableKlasse instanceof Statistik){
                         Statistik statistik = (Statistik) object;
-                        intent = new Intent(activity, ErfasseNeueStatiActivity.class);
+                        intent = new Intent(activity, ErfassungsoptionenActivity.class);
 
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("Update", true);

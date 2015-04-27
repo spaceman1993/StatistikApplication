@@ -26,6 +26,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import szut.de.statistikapplication.HauptmenuActivity;
 import szut.de.statistikapplication.R;
 import widgets.cropOption.CropOption;
 import widgets.cropOption.CropOptionAdapter;
@@ -209,8 +210,16 @@ public class SpielerbildActivity extends Activity {
         }
     }
 
-    public void fertig_click(View view){
+    @Override
+    public void onBackPressed() {
+        beenden();
+    }
 
+    public void fertig_click(View view){
+        beenden();
+    }
+
+    public void beenden(){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         foto.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();

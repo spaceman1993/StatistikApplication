@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import szut.de.statistikapplication.HauptmenuActivity;
 import szut.de.statistikapplication.R;
 
-public class ErfassungsartActivity extends Activity {
+public class AufnahmemodusActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,11 @@ public class ErfassungsartActivity extends Activity {
         setContentView(R.layout.activity_erfassungsart);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HauptmenuActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,7 +54,7 @@ public class ErfassungsartActivity extends Activity {
 
     public void live_click(View view){
 
-        Intent intent = new Intent(this, ErfasseNeueStatiActivity.class);
+        Intent intent = new Intent(this, ErfassungsoptionenActivity.class);
         Bundle bundle = new Bundle();
         bundle.putBoolean("Update", false);
         bundle.putBoolean("Bearbeiten", false);
@@ -59,7 +65,7 @@ public class ErfassungsartActivity extends Activity {
 
     public void nachträglich_click(View view){
 
-        Intent intent = new Intent(this, ErfasseNeueStatiActivity.class);
+        Intent intent = new Intent(this, ErfassungsoptionenActivity.class);
         Bundle bundle = new Bundle();
         bundle.putBoolean("Update", false);
         bundle.putBoolean("Bearbeiten", true);
