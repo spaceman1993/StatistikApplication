@@ -36,7 +36,9 @@
             android:clickable="true"
             android:verticalSpacing="20dp"
             android:gravity="center"
-            android:numColumns="2">
+            android:numColumns="2"
+            android:paddingBottom="60dp"
+            android:clipToPadding="false">
 
         </GridView>
 

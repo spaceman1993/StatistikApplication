@@ -20,11 +20,14 @@
         android:layout_height="fill_parent"
         android:text="@string/beschreibung"
         android:layout_toRightOf="@id/icon"
+        android:layout_toLeftOf="@+id/wert"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:gravity="left|center"
         style="@style/button_textsmall"/>
 
     <CheckBox
-        android:id="@+id/checkbox"
+        android:id="@+id/wert"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:saveEnabled="false"

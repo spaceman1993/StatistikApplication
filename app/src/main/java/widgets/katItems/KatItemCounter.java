@@ -41,12 +41,15 @@ public class KatItemCounter extends KatItem{
         LayoutInflater.from(context).inflate(R.layout.build_counter, this);
 
         icon = (ImageView) this.findViewById(R.id.icon);
-        zaehler = (TextView) this.findViewById(R.id.zaehler);
+        zaehler = (TextView) this.findViewById(R.id.wert);
         beschreibung = (TextView) this.findViewById(R.id.beschreibung);
+
+        icon.setImageBitmap(kategorie.getFoto());
+        beschreibung.setText(kategorie.getName());
+        zaehler.setText(statistikwert.getWert());
 
         findViewById(R.id.katItemView).setOnClickListener(this);
         findViewById(R.id.katItemView).setOnLongClickListener(this);
-
     }
 
     @Override

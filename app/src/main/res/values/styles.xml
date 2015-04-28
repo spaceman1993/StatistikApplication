@@ -43,6 +43,8 @@
         <item name="android:shadowDy" >1</item>
         <item name="android:shadowRadius" >2</item>
         <item name="android:gravity" >left</item>
+        <item name="android:ellipsize" >end</item>
+        <item name="android:singleLine" >true</item>
     </style>
 
     <style name="unterueberschrift" >
@@ -58,6 +60,8 @@
         <item name="android:shadowRadius" >2</item>
         <item name="android:gravity" >left</item>
         <item name="android:paddingTop" >10dp</item>
+        <item name="android:ellipsize" >end</item>
+        <item name="android:singleLine" >true</item>
     </style>
 
     <style name="bigButtonStyle">
@@ -81,6 +85,8 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity" >center</item>
+        <item name="android:ellipsize" >end</item>
+        <item name="android:singleLine" >true</item>
     </style>
 
     <style name="button_text" >
@@ -96,6 +102,8 @@
         <item name="android:shadowDx" >1</item>
         <item name="android:shadowDy" >1</item>
         <item name="android:shadowRadius" >2</item>
+        <item name="android:ellipsize" >end</item>
+        <item name="android:singleLine" >true</item>
     </style>
 
     <style name="button_textsmall" >
@@ -111,6 +119,8 @@
         <item name="android:shadowDx" >1</item>
         <item name="android:shadowDy" >1</item>
         <item name="android:shadowRadius" >2</item>
+        <item name="android:ellipsize" >end</item>
+        <item name="android:singleLine" >true</item>
     </style>
 
     <style name="text" >
@@ -123,6 +133,8 @@
         <item name="android:shadowDy" >1</item>
         <item name="android:shadowRadius" >2</item>
         <item name="android:layout_gravity" >center</item>
+        <item name="android:ellipsize" >end</item>
+        <item name="android:singleLine" >true</item>
     </style>
 
     <style name="smalltext" >
@@ -131,6 +143,8 @@
         <item name="android:textColor" >#000000</item>
         <item name="android:textSize" >14sp</item>
         <item name="android:layout_gravity" >center</item>
+        <item name="android:ellipsize" >end</item>
+        <item name="android:singleLine" >true</item>
     </style>
 
     <style name="bigtext" >
@@ -144,6 +158,8 @@
         <item name="android:shadowDy" >1</item>
         <item name="android:shadowRadius" >2</item>
         <item name="android:layout_gravity" >center</item>
+        <item name="android:ellipsize" >end</item>
+        <item name="android:singleLine" >true</item>
     </style>
 
 </resources>

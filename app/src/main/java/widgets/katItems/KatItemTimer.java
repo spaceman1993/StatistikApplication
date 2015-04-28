@@ -56,8 +56,12 @@ public class KatItemTimer extends KatItem{
         LayoutInflater.from(context).inflate(R.layout.build_timer, this);
 
         icon = (ImageView) this.findViewById(R.id.icon);
-        timerText = (TextView) this.findViewById(R.id.timerTextView);
+        timerText = (TextView) this.findViewById(R.id.wert);
         beschreibung = (TextView) this.findViewById(R.id.beschreibung);
+
+        icon.setImageBitmap(kategorie.getFoto());
+        beschreibung.setText(kategorie.getName());
+        timerText.setText(statistikwert.getWert());
 
         findViewById(R.id.katItemView).setOnClickListener(this);
         findViewById(R.id.katItemView).setOnLongClickListener(this);

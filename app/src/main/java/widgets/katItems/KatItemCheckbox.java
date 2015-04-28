@@ -39,8 +39,19 @@ public class KatItemCheckbox extends KatItem{
         LayoutInflater.from(context).inflate(R.layout.build_checkbox, this, true);
 
         icon = (ImageView) this.findViewById(R.id.icon);
-        checkBox = (CheckBox) this.findViewById(R.id.checkbox);
+        checkBox = (CheckBox) this.findViewById(R.id.wert);
         beschreibung = (TextView) this.findViewById(R.id.beschreibung);
+
+        icon.setImageBitmap(kategorie.getFoto());
+        beschreibung.setText(kategorie.getName());
+        if(statistikwert.getWert().equals("1")) {
+            checkBox.setChecked(true);
+        }
+        else{
+            checkBox.setChecked(false);
+        }
+
+
         findViewById(R.id.katItemView).setOnClickListener(this);
         findViewById(R.id.katItemView).setOnLongClickListener(this);
     }

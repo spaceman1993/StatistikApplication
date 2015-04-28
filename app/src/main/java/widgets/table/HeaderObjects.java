@@ -53,7 +53,7 @@ public class HeaderObjects {
 //            if(i == kategorien.size()-1) {
 //                v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight() + 250, v.getPaddingBottom());
 //            }
-            v.setMinimumWidth(155);
+            v.setMinimumWidth(180);
             headerViews.add(v);
         }
     }

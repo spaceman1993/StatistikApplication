@@ -46,6 +46,9 @@ public class KatItemNotiz extends KatItem{
         icon = (ImageView) this.findViewById(R.id.icon);
         beschreibung = (TextView) this.findViewById(R.id.beschreibung);
 
+        icon.setImageBitmap(kategorie.getFoto());
+        beschreibung.setText(kategorie.getName());
+
         findViewById(R.id.katItemView).setOnClickListener(this);
         findViewById(R.id.katItemView).setOnLongClickListener(this);
     }

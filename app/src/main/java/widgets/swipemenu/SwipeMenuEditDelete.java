@@ -415,15 +415,14 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
 
                     ergebnis.setText(ergebnisText);
 
-
-                    if(position%3 == 2){
-                        convertView.setBackgroundResource(R.drawable.third_filter);
+                    if(statistik.getEigeneTore() > statistik.getGegnerTore()){
+                        convertView.setBackgroundResource(R.drawable.gewonnen_filter);
                     }
-                    else if(position%3 == 1){
-                        convertView.setBackgroundResource(R.drawable.second_filter);
+                    else if(statistik.getEigeneTore() < statistik.getGegnerTore()){
+                        convertView.setBackgroundResource(R.drawable.verloren_filter);
                     }
                     else{
-                        convertView.setBackgroundResource(R.drawable.first_filter);
+                        convertView.setBackgroundResource(R.drawable.unentschieden_filter);
                     }
                 }
             }
@@ -560,6 +559,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
             sortListe.addAll((ArrayList<T>)inaktiv);
         }
         else{
+            Collections.reverse(liste);
             sortListe = liste;
         }
 

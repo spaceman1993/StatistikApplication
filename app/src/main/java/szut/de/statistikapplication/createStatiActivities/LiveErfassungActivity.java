@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -106,8 +108,7 @@ public class LiveErfassungActivity extends Activity {
         gridview = (GridView) findViewById(R.id.gridview);
 
         spielerGridView = new SpielerViewAdapter(this, R.layout.table_spieler, spieler);
-        kategorisierungsView = new KategorisierungsViewAdapter(this, android.R.layout.simple_list_item_1, dbHandler.getAllKategorisierungsnamen());
-
+        kategorisierungsView = new KategorisierungsViewAdapter(this, android.R.layout.simple_list_item_2, dbHandler.getAllKategorisierungsnamen());
 
         showSpieler();
 
@@ -176,12 +177,10 @@ public class LiveErfassungActivity extends Activity {
     public class SpielerViewAdapter extends ArrayAdapter<Spieler> {
         protected LayoutInflater inflater;
         protected int layout;
-        protected ArrayList<Spieler> spieler;
 
         public SpielerViewAdapter(Activity activity, int resourceId, ArrayList<Spieler> objects){
             super(activity, resourceId, objects);
             layout = resourceId;
-            spieler = objects;
             inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
@@ -192,9 +191,6 @@ public class LiveErfassungActivity extends Activity {
 
             if(convertView == null) {
                 convertView = inflater.inflate(layout, parent, false);
-                if(position == spieler.size()-1) {
-                    convertView.setPadding(convertView.getPaddingLeft(), convertView.getPaddingTop(), convertView.getRight(), convertView.getPaddingBottom() + 60);
-                }
             }
 
             TextView trikonummer = (TextView) convertView.findViewById(R.id.trikonummerErfassung);
@@ -223,12 +219,10 @@ public class LiveErfassungActivity extends Activity {
         protected LayoutInflater inflater;
         protected int layout;
         protected Activity activity;
-        protected ArrayList<String> objects;
 
         public KategorisierungsViewAdapter(Activity activity, int resourceId, ArrayList<String> objects){
             super(activity, resourceId, objects);
             layout = resourceId;
-            this.objects = objects;
             inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             this.activity = activity;
         }
@@ -240,14 +234,12 @@ public class LiveErfassungActivity extends Activity {
 
             if(convertView == null) {
                 convertView = inflater.inflate(layout, parent, false);
-                if(position == objects.size()-1) {
-                    convertView.setPadding(convertView.getPaddingLeft(), convertView.getPaddingTop(), convertView.getRight(), convertView.getPaddingBottom() + 160);
-                }
             }
 
             TextView text = (TextView) convertView.findViewById(android.R.id.text1);
-
+            text.setGravity(Gravity.CENTER);
             text.setText(item);
+
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -268,10 +260,7 @@ public class LiveErfassungActivity extends Activity {
 
         protected LayoutInflater inflater;
         protected int layout;
-
         protected Spieler spieler;
-        protected ArrayList<Kategorie> items;
-
 
         public KategorienViewAdapter(Activity activity,int resourceId, Spieler spieler, ArrayList<Kategorie> list) {
             super(activity,resourceId,list);
@@ -279,7 +268,6 @@ public class LiveErfassungActivity extends Activity {
             layout = resourceId;
             inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             this.spieler = spieler;
-            items = list;
         }
 
         @Override
@@ -299,10 +287,6 @@ public class LiveErfassungActivity extends Activity {
                 } else {
                     convertView = inflater.inflate(layout, parent, false);
                 }
-
-                if(position == items.size()-1) {
-                    convertView.setPadding(convertView.getPaddingLeft(), convertView.getPaddingTop(), convertView.getRight(), convertView.getPaddingBottom() + 160);
-                }
             }
 
             return convertView;
@@ -312,7 +296,6 @@ public class LiveErfassungActivity extends Activity {
         public View createCounterView(int position){
 
             View v = new KatItemCounter(context, statistik, spieler, getItem(position));
-            setImageAndText(v, position);
 
             return v;
         }
@@ -320,7 +303,6 @@ public class LiveErfassungActivity extends Activity {
         public View createFließzahlView(int position) {
 
             View v = new KatItemFliessZahl(context, statistik, spieler, getItem(position));
-            setImageAndText(v, position);
 
             return v;
         }
@@ -328,7 +310,6 @@ public class LiveErfassungActivity extends Activity {
         public View createCheckboxView(int position) {
 
             View v = new KatItemCheckbox(context, statistik, spieler, getItem(position));
-            setImageAndText(v, position);
 
             return v;
         }
@@ -336,7 +317,6 @@ public class LiveErfassungActivity extends Activity {
         public View createTimerView(int position) {
 
             View v = new KatItemTimer(context, statistik, spieler, getItem(position));
-            setImageAndText(v, position);
 
             return v;
         }
@@ -344,21 +324,8 @@ public class LiveErfassungActivity extends Activity {
         public View createNotizView(int position) {
 
             View v = new KatItemNotiz(context, statistik, spieler, getItem(position));
-            setImageAndText(v, position);
 
             return v;
-        }
-
-        public void setImageAndText(View v, int position){
-
-            Kategorie kategorie = getItem(position);
-
-            ImageView icon = (ImageView) v.findViewById(R.id.icon);
-            TextView beschreibung = (TextView) v.findViewById(R.id.beschreibung);
-
-            icon.setImageBitmap(kategorie.getFoto());
-            beschreibung.setText(kategorie.getName());
-
         }
     }
 

@@ -21,16 +21,25 @@ public abstract class KatItem extends RelativeLayout implements RelativeLayout.O
 
     protected Statistikwerte statistikwert;
     protected Context context;
+    protected Statistik statistik;
+    protected Spieler spieler;
+    protected Kategorie kategorie;
 
     public KatItem(Context context, Statistik statistik, Spieler spieler, Kategorie kategorie){
         super(context);
         this.context = context;
+        this.statistik = statistik;
+        this.spieler = spieler;
+        this.kategorie = kategorie;
         init(context, statistik, spieler, kategorie);
     }
 
     public KatItem(Context context, AttributeSet attrs, Statistik statistik, Spieler spieler, Kategorie kategorie) {
         super(context, attrs);
         this.context = context;
+        this.statistik = statistik;
+        this.spieler = spieler;
+        this.kategorie = kategorie;
         init(context, statistik, spieler, kategorie);
     }
 
@@ -39,8 +48,6 @@ public abstract class KatItem extends RelativeLayout implements RelativeLayout.O
         DBHandler dbHandler = new DBHandler(context, null, null, 1);
 
         statistikwert = dbHandler.findStatistikwert(statistik.getId(), spieler.getId(), kategorie.getId());
-        statistikwert.setWert("0");
-        dbHandler.update(statistikwert);
 
         dbHandler.close();
 
