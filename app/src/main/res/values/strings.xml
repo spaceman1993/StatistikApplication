@@ -33,8 +33,8 @@
     <string name="unentschieden">Unentschieden:</string>
     <string name="tore">Tore:</string>
     <string name="gegnertore">Gegentore:</string>
-    <string name="durschnittToreSpiel">Durchschnitt Tore/Spiel:</string>
-    <string name="durschnittGegentoreSpiel">Durchschnitt Gegentore/Spiel:</string>
+    <string name="durschnittToreSpiel">Ø Tore/Spiel:</string>
+    <string name="durschnittGegentoreSpiel">Ø Gegentore/Spiel:</string>
     <string name="spielerstatistik">Spielerstatistik</string>
     <string name="vereinsname">Vereinsname</string>
     <string name="mannschaftsname">Mannschaftsname</string>

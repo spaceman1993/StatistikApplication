@@ -23,7 +23,9 @@ import szut.de.statistikapplication.R;
 import widgets.swipemenu.SwipeMenuEditDelete;
 import widgets.swipemenulistview.SwipeMenuListView;
 
-
+/**
+ * Eine Activity, die die Spieler einer Mannschaft verwaltet
+ */
 public class KaderActivity extends Activity {
 
     //Global-Varaiblen
@@ -41,6 +43,9 @@ public class KaderActivity extends Activity {
     private SwipeMenuEditDelete spielerListView;
 
 
+    /**
+     * Erzeugt eine Activity ohne Titleanzeige
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -134,14 +139,20 @@ public class KaderActivity extends Activity {
         else{
             fortfahren();
         }
-
-
     }
 
+
+    /**
+     * Überprüft, wie weiter fortgefahren werden muss, um den Fluss der App nicht zu stören
+     */
     public void fortfahren(){
+        //Wenn die Einstellungen des Kaders überarbeitet werden, wird die Activity einfach geschlossen
+        //und man befindet sich zurück im Einstellungsmenü
         if(isUpdate){
             finish();
         }
+        //Das ist der Fall, wenn eine neue Mannschaft erstellt wird und der Fluss der Erstellung einer
+        //neuen Mannschaft weiter vorangetrieben werden muss
         else {
             Intent intent = new Intent(this, KategorieActivity.class);
             Bundle bundle = new Bundle();

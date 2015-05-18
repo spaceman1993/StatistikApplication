@@ -15,6 +15,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import java.util.ArrayList;
+
+import database.DBHandler;
 import database.data.Kategorie;
 import database.data.Mannschaft;
 import szut.de.statistikapplication.Globals;
@@ -23,7 +26,9 @@ import szut.de.statistikapplication.R;
 import widgets.swipemenu.SwipeMenuEditDelete;
 import widgets.swipemenulistview.SwipeMenuListView;
 
-
+/**
+ * Eine Activity, die die Kategorien einer Mannschaft verwaltet
+ */
 public class KategorieActivity extends Activity {
 
     //Global-Varaiblen
@@ -40,7 +45,9 @@ public class KategorieActivity extends Activity {
     //Widget-Variablen
     private SwipeMenuEditDelete kategorienListView;
 
-
+    /**
+     * Erzeugt eine Activity ohne Titleanzeige
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -68,6 +75,19 @@ public class KategorieActivity extends Activity {
         //Objekt
         mannschaft = g.getMannschaft();
         isUpdate = getIntent().getExtras().getBoolean("Update");
+
+        if(!isUpdate) {
+            DBHandler dbHandler = new DBHandler(context, null, null, 1);
+            ArrayList<Kategorie> kats = dbHandler.getAllDefaultKategorienDerSportart(mannschaft.getSportart());
+
+            for (int i = 0; i < kats.size(); i++) {
+                kats.get(i).setMannschaftsID(mannschaft.getId());
+                dbHandler.add(kats.get(i));
+            }
+
+            dbHandler.close();
+        }
+
 
         //Ausgabefelder
         kategorienListView = new SwipeMenuEditDelete(this, mannschaft, (SwipeMenuListView)findViewById(R.id.kategorienList), new Kategorie(), R.layout.swipemenu_item, true, true, true, true);

@@ -37,7 +37,9 @@ import hilfklassen.OnTouchCloseKeyboardActivity;
 import szut.de.statistikapplication.Globals;
 import szut.de.statistikapplication.R;
 
-
+/**
+ * Eine Activity, die eine neue Kategorie erzeugt
+ */
 public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
 
     //Global-Varaiblen
@@ -68,6 +70,9 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
     int activatedSymbol;
 
 
+    /**
+     * Erzeugt eine Activity ohne Titleanzeige
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -83,6 +88,10 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         checkKategorieUpdating();
     }
 
+
+    /**
+     * Initialisiert die Variablen der Activity und belegt sie mit Default-Werten
+     */
     public void initWidgets(){
 
         g = (Globals)getApplication();
@@ -132,6 +141,10 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         gridView.requestFocus();
     }
 
+
+    /**
+     * Erstellung der Listener für die Activity
+     */
     public void createListener(){
 
         kategorisierungAdd.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +190,10 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         });
     }
 
+
+    /**
+     * Überprüfung, ob Activity anders reagieren muss
+     */
     public void checkKategorieUpdating(){
 
         if(isUpdate){
@@ -221,6 +238,11 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         }
     }
 
+
+    /**
+     * Beim Wechsel des Fokus wird überprüft welches
+     * Symbol aktiv ist und dieses wird umrandet
+     */
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         if(hasFocus){
@@ -260,6 +282,11 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    /**
+     * Beim Drücken der Zurück-Taste wird die Meldung erzeugt, ob die Erfassung der Daten abgebrochen werden soll.
+     * Wenn ja, wird zurückgeleitet zur Kategorien-Activitybei.
+     */
     @Override
     public void onBackPressed() {
         String fehlermeldung = "Wollen Sie die Erfassung ohne zu Speichern beenden?";
@@ -278,10 +305,17 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         d.show();
     }
 
+    /**
+     * Beim Drücken der ADD-Taste wird die Erfassung gespeichert und beendet
+     */
     public void addKategorie(View view){
         beenden();
     }
 
+
+    /**
+     * Überprüfung, ob Erfassung Inordnung ist
+     */
     public void beenden(){
         String kategorienameText = name.getText().toString();
 
@@ -300,6 +334,10 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         }
     }
 
+    /**
+     * Entscheidung, wie die App weiter verlaufen soll. Beim Updaten einer Kategorie wird diese aktualisiert.
+     * Bei Neuerfassung hinzufügt. Dann wird die Activity beendet und leitet zurück zur Kategorie-Activity
+     */
     public void fortfahren(){
         DBHandler dbHandler = new DBHandler(this, null, null, 1);
 
@@ -320,6 +358,10 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         finish();
     }
 
+
+    /**
+     * Erzeugung der Symbole für die Kategorien
+     */
     public void initSymbole(){
         imageIDs.add(((BitmapDrawable)this.getResources().getDrawable(R.drawable.tor)).getBitmap());
         imageIDs.add(((BitmapDrawable)this.getResources().getDrawable(R.drawable.keintor)).getBitmap());
@@ -336,19 +378,24 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
         imageIDs.add(((BitmapDrawable)this.getResources().getDrawable(R.drawable.rotekarte)).getBitmap());
     }
 
+
+    /**
+     * Erzeugung der Kategoriearten und Auflistung aller Kategorisierungen
+     */
     public void initListen(){
         artenListe.add("Zähler");
-        artenListe.add("Auto-Zähler");
         artenListe.add("Fließzahleingabe");
         artenListe.add("Checkbox");
-        artenListe.add("Timer");
-        artenListe.add("Notiz");
 
         DBHandler dbHandler = new DBHandler(this, null, null, 1);
 
-        kategorisierungListe = dbHandler.getAllKategorisierungsnamen();
+        kategorisierungListe = dbHandler.getAllKategorisierungsnamen(mannschaft);
     }
 
+
+    /**
+     * Aufbereitung der Anzeige der Symbole für die Kategorien
+     */
     public class ImageAdapter extends BaseAdapter
     {
         private Context context;
@@ -358,12 +405,10 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
             context = c;
         }
 
-        //---returns the number of images---
         public int getCount() {
             return imageIDs.size();
         }
 
-        //---returns the ID of an item---
         public Object getItem(int position) {
             return position;
         }
@@ -372,7 +417,6 @@ public class NewKategorieActivity extends OnTouchCloseKeyboardActivity {
             return position;
         }
 
-        //---returns an ImageView view---
         public View getView(int position, View convertView, ViewGroup parent)
         {
             ImageView imageView;

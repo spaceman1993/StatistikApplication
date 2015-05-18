@@ -19,7 +19,7 @@ import database.data.Spieler;
 import database.data.Statistik;
 
 /**
- * Created by Spaceman on 01.04.2015.
+ * Hier sind alle notwendigen SQL-Statements gesammelt, die für die Spieler notwenidig sind
  */
 public class SQL_Spieler {
 
@@ -35,7 +35,9 @@ public class SQL_Spieler {
     private final String COLUMN_SELECTED = "selected";
     private final String COLUMN_SPORTART = "sportart";
 
+    //Datenbankzugriff mit Schreibrechten
     private SQLiteDatabase dbW;
+    //Datenbankzugriff mit Leserechten
     private SQLiteDatabase dbR;
 
     public SQL_Spieler(SQLiteOpenHelper db){
@@ -47,6 +49,9 @@ public class SQL_Spieler {
         this.dbW = dbW;
     }
 
+    /**
+     * Erzeugt die Spieler-Tabelle in der Datenbank
+     */
     public void createTable(){
 
         String CREATE_SPIELER_TABLE = "CREATE TABLE " +
@@ -66,11 +71,17 @@ public class SQL_Spieler {
         dbW.execSQL(CREATE_SPIELER_TABLE);
     }
 
+    /**
+     * Löscht die Spieler-Tabelle in der Datenbank
+     */
     public void deleteTable(){
         dbW.execSQL("DROP TABLE IF EXISTS " + TABLE_SPIELER);
     }
 
 
+    /**
+     * Fügt einen neuen Eintrag in die Tabelle ein
+     */
     public void add(Spieler spieler) {
 
         Gson gson = new Gson();
@@ -93,6 +104,10 @@ public class SQL_Spieler {
         dbW.insert(TABLE_SPIELER, null, values);
     }
 
+
+    /**
+     * Liefert sämtliche Datensätze zurück die die Sportart aufweisen
+     */
     public ArrayList<Spieler> findBySportart(String sportart){
 
         Gson gson = new Gson();
@@ -134,6 +149,10 @@ public class SQL_Spieler {
         return spielerListe;
     }
 
+
+    /**
+     * Liefert den Datensatz mit einer bestimmten ID zurück
+     */
     public Spieler findById(int id) {
         Gson gson = new Gson();
         String query = "Select * FROM " + TABLE_SPIELER + " WHERE " + COLUMN_ID + " =  \"" + id + "\"";
@@ -171,6 +190,10 @@ public class SQL_Spieler {
         return spieler;
     }
 
+
+    /**
+     * Aktualisiert einen Datensatz
+     */
     public void update(Spieler spieler) {
 
         Gson gson = new Gson();
@@ -194,12 +217,20 @@ public class SQL_Spieler {
         dbW.close();
     }
 
+
+    /**
+     * Löscht einen Datensatz
+     */
     public void delete(Spieler spieler) {
 
         dbW.delete(TABLE_SPIELER, COLUMN_ID + " = " + spieler.getId(), null);
         dbW.close();
     }
 
+
+    /**
+     * Liefert sämtliche Datensätze zurück die die Mannschaft aufweisen
+     */
     public ArrayList<Spieler> findByMannschaft(Mannschaft mannschaft){
         Gson gson = new Gson();
         String query = "Select * FROM " + TABLE_SPIELER + " WHERE " + COLUMN_MANNSCHAFTSID + " = " + mannschaft.getId();
@@ -240,7 +271,9 @@ public class SQL_Spieler {
         return spielerListe;
     }
 
-
+    /**
+     * Liefert sämtliche Datensätze zurück die die Mannschaft aufweisen und aktiv sind
+     */
     public ArrayList<Spieler> findByMannschaftAndAktiv(Mannschaft mannschaft){
         Gson gson = new Gson();
         String query = "Select * FROM " + TABLE_SPIELER + " WHERE " + COLUMN_MANNSCHAFTSID + " = " + mannschaft.getId() + " AND " + COLUMN_SELECTED + " = 1";
@@ -282,6 +315,9 @@ public class SQL_Spieler {
     }
 
 
+    /**
+     * Liefert sämtliche Datensätze einer Statistik zurück
+     */
     public ArrayList<Spieler> findByStatistik(Statistik statistik){
 
         String TABLE_STATISTIKWERTE = "statistikwerte";

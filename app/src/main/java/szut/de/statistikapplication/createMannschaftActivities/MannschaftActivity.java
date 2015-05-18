@@ -38,7 +38,9 @@ import szut.de.statistikapplication.R;
 import widgets.cropOption.CropOption;
 import widgets.cropOption.CropOptionAdapter;
 
-
+/**
+ * Eine Activity, die die Mannschaftseinstellungen einer Mannschaft verwaltet
+ */
 public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
 
     //Global-Varaiblen
@@ -68,6 +70,9 @@ public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
     private Bitmap foto;
 
 
+    /**
+     * Erzeugt eine Activity ohne Titleanzeige
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -179,8 +184,6 @@ public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
      */
     public void fertig_Click(View view) {
 
-
-
         String vereinsnameText = vereinsname.getText().toString();
         String mannschaftsnameText = mannschaftsname.getText().toString();
 
@@ -221,10 +224,12 @@ public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
                 startActivity(intent);
             }
         }
-
-
     }
 
+
+    /**
+     * Auswahl zwischen einem Foto vom Handy und das Erstellen eines Fotos mit der Kamera
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) return;
@@ -255,6 +260,10 @@ public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
         }
     }
 
+
+    /**
+     * Wählt ein Schneideapp aus und skaliert damit das gewählte Foto für das Vereinslogo
+     */
     private void doCrop() {
         final ArrayList<CropOption> cropOptions = new ArrayList<CropOption>();
 
@@ -327,6 +336,11 @@ public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
         }
     }
 
+
+    /**
+     * Beim Drücken der Zurück-Taste wird bei einem Update der Mannschaft zurück zum Config-Menü geleitet,
+     * ansonsten wird die erstellte Mannschaft gelöscht, die man bis dahin erstellt hat
+     */
     @Override
     public void onBackPressed() {
 

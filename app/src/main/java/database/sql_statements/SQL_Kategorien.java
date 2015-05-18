@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import database.data.Kategorie;
@@ -17,7 +18,7 @@ import database.data.Mannschaft;
 import database.data.Statistik;
 
 /**
- * Created by Spaceman on 01.04.2015.
+ * Hier sind alle notwendigen SQL-Statements gesammelt, die für die Kategorien notwenidig sind
  */
 public class SQL_Kategorien {
 
@@ -32,7 +33,9 @@ public class SQL_Kategorien {
     private final String COLUMN_FOTO = "foto";
     private final String COLUMN_SELECTED = "selected";
 
+    //Datenbankzugriff mit Schreibrechten
     private SQLiteDatabase dbW;
+    //Datenbankzugriff mit Leserechten
     private SQLiteDatabase dbR;
 
     public SQL_Kategorien(SQLiteOpenHelper db){
@@ -44,6 +47,9 @@ public class SQL_Kategorien {
         this.dbW = dbW;
     }
 
+    /**
+     * Erzeugt die Kategorien-Tabelle in der Datenbank
+     */
     public void createTable(){
         String CREATE_KATEGORIEN_TABLE = "CREATE TABLE " +
                 TABLE_KATEGORIEN + "("
@@ -61,10 +67,16 @@ public class SQL_Kategorien {
         dbW.execSQL(CREATE_KATEGORIEN_TABLE);
     }
 
+    /**
+     * Löscht die Kategorien-Tabelle in der Datenbank
+     */
     public void deleteTable(){
         dbW.execSQL("DROP TABLE IF EXISTS " + TABLE_KATEGORIEN);
     }
 
+    /**
+     * Fügt einen neuen Eintrag in die Kategorien-Tabelle ein
+     */
     public void add(Kategorie kategorie) {
 
         ContentValues values = new ContentValues();
@@ -85,6 +97,9 @@ public class SQL_Kategorien {
         dbW.insert(TABLE_KATEGORIEN, null, values);
     }
 
+    /**
+     * Fügt einen neuen Eintrag in die Kategorien-Tabelle ein
+     */
     public void add(Kategorie kategorie, SQLiteDatabase db) {
 
         ContentValues values = new ContentValues();
@@ -106,6 +121,9 @@ public class SQL_Kategorien {
 
     }
 
+    /**
+     * Liefert den Datensatz mit einer bestimmten ID zurück
+     */
     public Kategorie findById(int id) {
         String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_ID + " =  \"" + id + "\"";
 
@@ -135,6 +153,9 @@ public class SQL_Kategorien {
         return kategorie;
     }
 
+    /**
+     * Liefert sämtliche Datensätze zurück die die Sportart aufweisen
+     */
     public ArrayList<Kategorie> findBySportart(String sportart) {
 
         String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_SPORTART + " =  \"" + sportart + "\"";
@@ -172,9 +193,12 @@ public class SQL_Kategorien {
         return kategorienListe;
     }
 
+    /**
+     * Liefert sämtliche Datensätze zurück die die Mannschaft aufweisen
+     */
     public ArrayList<Kategorie> findByMannschaft(Mannschaft mannschaft) {
 
-        String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_MANNSCHAFTSID + " = " + mannschaft.getId() + " OR " + COLUMN_MANNSCHAFTSID + " = 0";
+        String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_MANNSCHAFTSID + " = " + mannschaft.getId();
 
         Cursor cursor = dbR.rawQuery(query, null);
 
@@ -209,10 +233,53 @@ public class SQL_Kategorien {
         return kategorienListe;
     }
 
+    /**
+     * Liefert sämtliche Datensätze zurück die dem Defaultwert einer Sportart aufweisen
+     */
+    public ArrayList<Kategorie> findAllDefaultKategorienBySportart(String sportart){
 
+        String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_MANNSCHAFTSID + " = 0 AND " + COLUMN_SPORTART + " = '" + sportart + "'";
+
+        Cursor cursor = dbR.rawQuery(query, null);
+
+        ArrayList<Kategorie> kategorienListe = new ArrayList<Kategorie>();
+
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Kategorie kategorie = new Kategorie();
+
+                kategorie.setId(Integer.parseInt(cursor.getString(0)));
+                kategorie.setMannschaftsID(Integer.parseInt(cursor.getString(1)));
+                kategorie.setName(cursor.getString(2));
+                kategorie.setKategorisierung(cursor.getString(3));
+                kategorie.setArt(cursor.getString(4));
+
+                byte[] blob = cursor.getBlob(5);
+                Bitmap foto = BitmapFactory.decodeByteArray(blob, 0, blob.length);
+                kategorie.setFoto(foto);
+
+                kategorie.setSelected(Integer.parseInt(cursor.getString(6)));
+                kategorie.setEigene(Integer.parseInt(cursor.getString(7)));
+                kategorie.setSportart(cursor.getString(8));
+
+                kategorienListe.add(kategorie);
+                cursor.moveToNext();
+            }
+        }
+
+        cursor.close();
+
+        return kategorienListe;
+
+    };
+
+    /**
+     * Liefert sämtliche Datensätze zurück die die Mannschaft aufweisen und aktiv sind
+     */
     public ArrayList<Kategorie> findByMannschaftAndAktiv(Mannschaft mannschaft) {
 
-        String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE ( " + COLUMN_MANNSCHAFTSID + " = " + mannschaft.getId() + " OR " + COLUMN_MANNSCHAFTSID + " = 0 ) AND " + COLUMN_SELECTED + " = 1";
+        String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_MANNSCHAFTSID + " = " + mannschaft.getId() + " AND " + COLUMN_SELECTED + " = 1";
 
         Cursor cursor = dbR.rawQuery(query, null);
 
@@ -247,7 +314,9 @@ public class SQL_Kategorien {
         return kategorienListe;
     }
 
-
+    /**
+     * Aktualisiert einen Datensatz
+     */
     public void update(Kategorie kategorie) {
 
         Gson gson = new Gson();
@@ -270,12 +339,18 @@ public class SQL_Kategorien {
         dbW.close();
     }
 
+    /**
+     * Löscht einen Datensatz
+     */
     public void delete(Kategorie kategorie) {
 
         dbW.delete(TABLE_KATEGORIEN, COLUMN_ID + " = " + kategorie.getId(), null);
         dbW.close();
     }
 
+    /**
+     * Liefert sämtliche Kategorien einer Statistik zurück
+     */
     public ArrayList<Kategorie> findByStatistik(Statistik statistik){
 
         String TABLE_STATISTIKWERTE = "statistikwerte";
@@ -301,8 +376,11 @@ public class SQL_Kategorien {
         return kategorienListe;
     }
 
-    public ArrayList<Kategorie> findByKategorisierung(String kategorieart){
-        String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_KATEGORISIERUNG + " =  \"" + kategorieart + "\"";;
+    /**
+     * Liefert sämtliche Datensätze zurück die die Kategorisierung aufweisen
+     */
+    public ArrayList<Kategorie> findByKategorisierung(String kategorieart, Mannschaft mannschaft){
+        String query = "Select * FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_SELECTED + " = 1 AND " + COLUMN_KATEGORISIERUNG + " =  \"" + kategorieart + "\" AND " + COLUMN_MANNSCHAFTSID + " = " + mannschaft.getId();
 
         Cursor cursor = dbR.rawQuery(query, null);
 
@@ -337,8 +415,11 @@ public class SQL_Kategorien {
         return kategorienListe;
     }
 
-    public ArrayList<String> findAllKategorieartbezeichnungen(){
-        String query = "Select DISTINCT " + COLUMN_KATEGORISIERUNG + " FROM " + TABLE_KATEGORIEN;
+    /**
+     * Liefert sämtliche Datensätze zurück die die Kategorienartbezeichnung einer Mannschaft aufweisen
+     */
+    public ArrayList<String> findAllKategorieartbezeichnungenByMannschaft(Mannschaft mannschaft){
+        String query = "Select DISTINCT " + COLUMN_KATEGORISIERUNG + " FROM " + TABLE_KATEGORIEN + " WHERE " + COLUMN_MANNSCHAFTSID + " = " + mannschaft.getId() + " AND " + COLUMN_SELECTED + " = 1";
 
         Cursor cursor = dbR.rawQuery(query, null);
 
@@ -357,14 +438,17 @@ public class SQL_Kategorien {
         return kategorienartenbezeichnungen;
     }
 
-    public ArrayList<ArrayList<Kategorie>> findByKategorieartAll(){
+    /**
+     * Liefert sämtliche Datensätze zurück die die Kategorieart einer Mannschaft aufweisen
+     */
+    public ArrayList<ArrayList<Kategorie>> findByKategorieartAll(Mannschaft mannschaft){
 
         ArrayList<ArrayList<Kategorie>> kategorienListe = new ArrayList<>();
 
-        ArrayList<String> kategorieartenbezeichnungen = findAllKategorieartbezeichnungen();
+        ArrayList<String> kategorieartenbezeichnungen = findAllKategorieartbezeichnungenByMannschaft(mannschaft);
 
         for(int i=0; i<kategorieartenbezeichnungen.size(); i++){
-            kategorienListe.add(findByKategorisierung(kategorieartenbezeichnungen.get(i)));
+            kategorienListe.add(findByKategorisierung(kategorieartenbezeichnungen.get(i), mannschaft));
         }
 
         return kategorienListe;

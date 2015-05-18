@@ -244,7 +244,7 @@ public class GesamtStatiActivity extends Activity {
             pos.setText(positionsText);
 
             DBHandler dbHandler = new DBHandler(activity, null, null, 1);
-            ArrayList<ArrayList<Kategorie>> kategorienartenliste = dbHandler.getAllKategorienarten();
+            ArrayList<ArrayList<Kategorie>> kategorienartenliste = dbHandler.getAllKategorienarten(mannschaft);
             dbHandler.close();
 
             kategorienFlipper = (AdapterViewFlipper) convertView.findViewById(R.id.kategorienViewFlipper);

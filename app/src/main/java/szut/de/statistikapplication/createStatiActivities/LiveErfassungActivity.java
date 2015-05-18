@@ -108,7 +108,7 @@ public class LiveErfassungActivity extends Activity {
         gridview = (GridView) findViewById(R.id.gridview);
 
         spielerGridView = new SpielerViewAdapter(this, R.layout.table_spieler, spieler);
-        kategorisierungsView = new KategorisierungsViewAdapter(this, android.R.layout.simple_list_item_2, dbHandler.getAllKategorisierungsnamen());
+        kategorisierungsView = new KategorisierungsViewAdapter(this, android.R.layout.simple_list_item_2, dbHandler.getAllKategorisierungsnamen(mannschaft));
 
         showSpieler();
 
@@ -245,7 +245,7 @@ public class LiveErfassungActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     DBHandler dbHandler = new DBHandler(activity, null, null, 1);
-                    ArrayList<Kategorie> kategorien = dbHandler.findKategorienByKategorisierung(item);
+                    ArrayList<Kategorie> kategorien = dbHandler.findAktivKategorienByKategorisierungAndMannschaft(item, mannschaft);
                     dbHandler.close();
                     showKategorien(kategorien);
                 }
@@ -275,57 +275,21 @@ public class LiveErfassungActivity extends Activity {
 
             if(convertView == null) {
                 if (getItem(position).getArt().equals("Zähler")) {
-                    convertView = createCounterView(position);
+                    convertView = new KatItemCounter(context, statistik, spieler, getItem(position));
                 } else if (getItem(position).getArt().equals("Fließzahleingabe")) {
-                    convertView = createFließzahlView(position);
+                    convertView = new KatItemFliessZahl(context, statistik, spieler, getItem(position));
                 } else if (getItem(position).getArt().equals("Checkbox")) {
-                    convertView = createCheckboxView(position);
+                    convertView = new KatItemCheckbox(context, statistik, spieler, getItem(position));
                 } else if (getItem(position).getArt().equals("Timer")) {
-                    convertView = createTimerView(position);
+                    convertView = new KatItemTimer(context, statistik, spieler, getItem(position));
                 } else if (getItem(position).getArt().equals("Notiz")) {
-                    convertView = createNotizView(position);
+                    convertView = new KatItemNotiz(context, statistik, spieler, getItem(position));
                 } else {
                     convertView = inflater.inflate(layout, parent, false);
                 }
             }
 
             return convertView;
-        }
-
-
-        public View createCounterView(int position){
-
-            View v = new KatItemCounter(context, statistik, spieler, getItem(position));
-
-            return v;
-        }
-
-        public View createFließzahlView(int position) {
-
-            View v = new KatItemFliessZahl(context, statistik, spieler, getItem(position));
-
-            return v;
-        }
-
-        public View createCheckboxView(int position) {
-
-            View v = new KatItemCheckbox(context, statistik, spieler, getItem(position));
-
-            return v;
-        }
-
-        public View createTimerView(int position) {
-
-            View v = new KatItemTimer(context, statistik, spieler, getItem(position));
-
-            return v;
-        }
-
-        public View createNotizView(int position) {
-
-            View v = new KatItemNotiz(context, statistik, spieler, getItem(position));
-
-            return v;
         }
     }
 

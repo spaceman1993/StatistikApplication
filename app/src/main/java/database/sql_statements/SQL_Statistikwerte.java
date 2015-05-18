@@ -20,7 +20,7 @@ import database.data.Statistikwerte;
 import szut.de.statistikapplication.Globals;
 
 /**
- * Created by Spaceman on 01.04.2015.
+ * Hier sind alle notwendigen SQL-Statements gesammelt, die für die Statistikwerte notwenidig sind
  */
 public class SQL_Statistikwerte {
 
@@ -31,7 +31,9 @@ public class SQL_Statistikwerte {
     private final String COLUMN_KATEGORIEID = "_kategorieid";
     private final String COLUMN_WERT = "wert";
 
+    //Datenbankzugriff mit Schreibrechten
     private SQLiteDatabase dbW;
+    //Datenbankzugriff mit Leserechten
     private SQLiteDatabase dbR;
 
     public SQL_Statistikwerte(SQLiteOpenHelper db){
@@ -43,8 +45,10 @@ public class SQL_Statistikwerte {
         this.dbW = dbW;
     }
 
+    /**
+     * Erzeugt die Statistikwerte-Tabelle in der Datenbank
+     */
     public void createTable(){
-
         String CREATE_STATISTIKWERTE_TABLE = "CREATE TABLE " +
                 TABLE_STATISTIKWERTE + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY,"
@@ -57,11 +61,17 @@ public class SQL_Statistikwerte {
         dbW.execSQL(CREATE_STATISTIKWERTE_TABLE);
     }
 
+    /**
+     * Löscht die Statistikwerte-Tabelle in der Datenbank
+     */
     public void deleteTable(){
         dbW.execSQL("DROP TABLE IF EXISTS " + TABLE_STATISTIKWERTE);
     }
 
 
+    /**
+     * Fügt einen neuen Eintrag in die Tabelle ein
+     */
     public void add(Statistikwerte statistikwerte) {
 
         ContentValues values = new ContentValues();
@@ -73,6 +83,10 @@ public class SQL_Statistikwerte {
         dbW.insert(TABLE_STATISTIKWERTE, null, values);
     }
 
+
+    /**
+     * Aktualisiert einen Datensatz
+     */
     public void update(Statistikwerte statistikwerte) {
 
         ContentValues values = new ContentValues();
@@ -84,10 +98,18 @@ public class SQL_Statistikwerte {
         dbW.update(TABLE_STATISTIKWERTE, values, COLUMN_ID + " = " + statistikwerte.getId(), null);
     }
 
+
+    /**
+     * Löscht einen Datensatz
+     */
     public void delete(Statistikwerte statistikwerte) {
         dbW.delete(TABLE_STATISTIKWERTE, COLUMN_ID + " = " + statistikwerte.getId(), null);
     }
 
+
+    /**
+     * Liefert sämtliche Datensätze einer Statistik zurück
+     */
     public ArrayList<Statistikwerte> findByStatistik(Statistik statistik){
 
         String query = "Select * FROM " + TABLE_STATISTIKWERTE + " WHERE " + COLUMN_STATISTIKID + " = " + statistik.getId();
@@ -116,6 +138,9 @@ public class SQL_Statistikwerte {
     }
 
 
+    /**
+     * Liefert sämtliche Datensätze einer Statistik eines Spielers zurück
+     */
     public ArrayList<Statistikwerte> findByStatistikOfSpieler(Statistik statistik, Spieler spieler){
 
         String query = "Select * FROM " + TABLE_STATISTIKWERTE + " WHERE " + COLUMN_STATISTIKID + " = " + statistik.getId() + " AND " + COLUMN_SPIELERID + " = " + spieler.getId();
@@ -147,6 +172,10 @@ public class SQL_Statistikwerte {
         return statistikwerteListe;
     }
 
+
+    /**
+     * Liefert sämtliche Datensätze einer Spielers einer Kategorie zurück
+     */
     public ArrayList<Statistikwerte> findBySpielerAndKategorie(Spieler spieler, Kategorie kategorie){
 
         String query = "Select * FROM " + TABLE_STATISTIKWERTE + " WHERE " + COLUMN_SPIELERID + " = " + spieler.getId() + " AND " + COLUMN_KATEGORIEID + " = " + kategorie.getId();
@@ -174,6 +203,9 @@ public class SQL_Statistikwerte {
         return statistikwerteListe;
     }
 
+    /**
+     * Liefert sämtliche Datensätze einer Statistik einer Kategorie zurück
+     */
     public ArrayList<Statistikwerte> findByStatistikOfKategorie(Statistik statistik, int kategorieId){
 
         String query = "Select * FROM " + TABLE_STATISTIKWERTE + " WHERE " + COLUMN_STATISTIKID + " = " + statistik.getId() + " AND " + COLUMN_KATEGORIEID + " = " + kategorieId;
@@ -201,6 +233,10 @@ public class SQL_Statistikwerte {
         return statistikwerteListe;
     }
 
+
+    /**
+     * Liefert den Datensatz mit einer bestimmten ID zurück
+     */
     public Statistikwerte findById(int statistikId, int spielerId, int kategorieId) {
 
         String query = "Select * FROM " + TABLE_STATISTIKWERTE + " WHERE " + COLUMN_STATISTIKID + " = " + statistikId + " AND " + COLUMN_SPIELERID + " = " + spielerId + " AND " + COLUMN_KATEGORIEID + " = " + kategorieId;
@@ -225,6 +261,10 @@ public class SQL_Statistikwerte {
         return statistikwert;
     }
 
+
+    /**
+     * Liefert die Anzahl aller gefallenen Tore in einer Statistik zurück
+     */
     public int getToreByStatistik(Statistik statistik){
 
         int tore = 0;
@@ -238,12 +278,16 @@ public class SQL_Statistikwerte {
         return tore;
     }
 
+
+    /**
+     * Liefert den Gesamtwert einer Kategorie eines Spielers zurück
+     */
     public String getGesamtwertOfKategorieOfSpieler(Spieler spieler, Kategorie kategorie){
         String wert = "";
 
         ArrayList<Statistikwerte> statistikwerte = findBySpielerAndKategorie(spieler, kategorie);
 
-        if(kategorie.getArt().equals("Zähler") || kategorie.getArt().equals("Auto-Zähler")){
+        if(kategorie.getArt().equals("Zähler")){
             int wertInt = 0;
 
             for (int i=0; i<statistikwerte.size(); i++){
@@ -271,12 +315,6 @@ public class SQL_Statistikwerte {
             }
 
             wert = String.valueOf(wertInt);
-        }
-        else if(kategorie.getArt().equals("Timer")) {
-
-            for (int i = 0; i < statistikwerte.size(); i++) {
-
-            }
         }
 
         return wert;
