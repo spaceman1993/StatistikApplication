@@ -174,28 +174,6 @@ public class GesamtStatiActivity extends Activity {
         pageFlipper.addView(page2);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_gesamt_stati, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     public class SpielerFlipperAdapter extends ArrayAdapter<Spieler> {
         protected LayoutInflater inflater;
         protected int layout;
@@ -365,8 +343,6 @@ public class GesamtStatiActivity extends Activity {
         if (e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE
                 && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
             if(pageFlipper.getDisplayedChild() < pageFlipper.getChildCount()-1) {
-//                    pageFlipper.setInAnimation(context, R.anim.bottom_in);
-//                    pageFlipper.setOutAnimation(context, R.anim.top_out);
                 pageFlipper.showNext();
             }
 
@@ -374,8 +350,6 @@ public class GesamtStatiActivity extends Activity {
                 && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
             if(pageFlipper.getDisplayedChild() > 0) {
                 pageFlipper.showPrevious();
-//                    pageFlipper.setInAnimation(context, R.anim.bottom_out);
-//                    pageFlipper.setOutAnimation(context, R.anim.top_in);
             }
         }
     }
