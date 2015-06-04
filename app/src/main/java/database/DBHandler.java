@@ -36,7 +36,7 @@ import szut.de.statistikapplication.R;
  */
 public class DBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 127;
+    private static final int DATABASE_VERSION = 132;
     private static final String DATABASE_NAME = "statistikDB.db";
     private Context context;
 
@@ -51,6 +51,7 @@ public class DBHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
         this.context = context;
 
+        //Überprüfung, ob die SQL-Klassen schon verbunden sind, wenn nicht alle öffnen
         if(spieler == null){
             spieler = new SQL_Spieler(this);
             kategorien = new SQL_Kategorien(this);
@@ -70,6 +71,10 @@ public class DBHandler extends SQLiteOpenHelper {
 
     }
 
+
+    /**
+     * Erzeugt beim Erstellen von jeder Tabelle einen Eintrag in der Datenbank
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -93,6 +98,9 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Beim Erzeugen der Tabellen werden Standard-Datensätze in die Tabellen übernommen
+     */
     public void fülleTabellen(SQLiteDatabase db){
 
         //Handball-Einstellungen
@@ -104,10 +112,9 @@ public class DBHandler extends SQLiteOpenHelper {
         add(new Position("RA", "Rechtsaußen", "handball"), db);
         add(new Position("KR", "Kreisläufer", "handball"), db);
 
-
         add(new Kategorie(0, "Tore", "Angriff", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.tor)).getBitmap(), "handball"), db);
         add(new Kategorie(0, "Verworfen", "Angriff", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keintor)).getBitmap(), "handball"), db);
-        add(new Kategorie(0, "Würfe", "Angriff", "Auto-Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "handball"), db);
+        add(new Kategorie(0, "Würfe", "Angriff", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "handball"), db);
 
         add(new Kategorie(0, "7 M.-Tor", "Fouls", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.siebenmetertor)).getBitmap(), "handball"), db);
         add(new Kategorie(0, "7 M.-Gehalten", "Fouls", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keinsiebenmetertor)).getBitmap(), "handball"), db);
@@ -121,11 +128,64 @@ public class DBHandler extends SQLiteOpenHelper {
         add(new Kategorie(0, "Gelbe Karte", "Fouls", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.gelbekarte)).getBitmap(), "handball"), db);
         add(new Kategorie(0, "Rote Karte", "Fouls", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.rotekarte)).getBitmap(), "handball"), db);
 
+        //Fußball-Einstellungen
+        add(new Position("TW", "Torwart", "fussball"), db);
+        add(new Position("LV", "Linker Verteidiger", "fussball"), db);
+        add(new Position("IV", "Innen Verteidiger", "fussball"), db);
+        add(new Position("RV", "Rechter Verteidiger", "fussball"), db);
+        add(new Position("LM", "Linkes Mittelfeld", "fussball"), db);
+        add(new Position("ZM", "Zentrales Mittelfeld", "fussball"), db);
+        add(new Position("RM", "Rechts Mittelfeld", "fussball"), db);
+        add(new Position("LF", "Linker Flügel", "fussball"), db);
+        add(new Position("LS", "Linker Stürmer", "fussball"), db);
+        add(new Position("RS", "Rechter Stürmer", "fussball"), db);
+        add(new Position("RF", "Rechter Flügel", "fussball"), db);
+        add(new Position("ST", "Stürmer", "fussball"), db);
+
+        add(new Kategorie(0, "Tore", "Angriff", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.tor)).getBitmap(), "fussball"), db);
+        add(new Kategorie(0, "Torschüsse", "Angriff", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keintor)).getBitmap(), "fussball"), db);
+        add(new Kategorie(0, "Vorlagen", "Angriff", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "fussball"), db);
+        add(new Kategorie(0, "Pässe", "Angriff", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "fussball"), db);
+        add(new Kategorie(0, "Flanken", "Angriff", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "fussball"), db);
+
+        add(new Kategorie(0, "Fouls", "Fouls", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.siebenmetertor)).getBitmap(), "fussball"), db);
+        add(new Kategorie(0, "11-Meter-Tore", "Fouls", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.siebenmetertor)).getBitmap(), "fussball"), db);
+        add(new Kategorie(0, "Gelbe-Karte", "Fouls", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keinsiebenmetertor)).getBitmap(), "fussball"), db);
+        add(new Kategorie(0, "Rote-Karte", "Fouls", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.foul)).getBitmap(), "fussball"), db);
+
+        add(new Kategorie(0, "Zweikämpfe", "Verteidigung", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.gehalten)).getBitmap(), "fussball"), db);
+        add(new Kategorie(0, "Grätschen", "Verteidigung", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.gehalten)).getBitmap(), "fussball"), db);
+        add(new Kategorie(0, "Block", "Verteidigung", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.block)).getBitmap(), "fussball"), db);
+
+        add(new Kategorie(0, "Ballkontakt", "Sonstiges", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.zweiminutenhand)).getBitmap(), "fussball"), db);
+        add(new Kategorie(0, "Ecken", "Sonstiges", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.zweiminutenhand)).getBitmap(), "fussball"), db);
 
 
+
+        //Basketball-Einstellungen
+        add(new Position("PG", "Point Guard", "basketball"), db);
+        add(new Position("SG", "Shooting Guard", "basketball"), db);
+        add(new Position("SF", "Small Forward", "basketball"), db);
+        add(new Position("PF", "Power Forward", "basketball"), db);
+        add(new Position("C", "Center", "basketball"), db);
+
+        add(new Kategorie(0, "Tore", "Angriff", "Zähler", 1, 1, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.tor)).getBitmap(), "basketball"), db);
+        add(new Kategorie(0, "Freiwürfe", "Angriff", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keintor)).getBitmap(), "basketball"), db);
+        add(new Kategorie(0, "Rebounds", "Angriff", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "basketball"), db);
+        add(new Kategorie(0, "3-Pt Field Goals", "Angriff", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "basketball"), db);
+        add(new Kategorie(0, "Flanken", "Angriff", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.wuerfe)).getBitmap(), "basketball"), db);
+
+        add(new Kategorie(0, "Blocks", "Verteidigung", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.siebenmetertor)).getBitmap(), "basketball"), db);
+        add(new Kategorie(0, "Assists", "Verteidigung", "Zähler", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.siebenmetertor)).getBitmap(), "basketball"), db);
+        add(new Kategorie(0, "Steals", "Verteidigung", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.keinsiebenmetertor)).getBitmap(), "basketball"), db);
+        add(new Kategorie(0, "Turnovers", "Verteidigung", "Checkbox", 1, 0, ((BitmapDrawable)context.getResources().getDrawable(R.drawable.foul)).getBitmap(), "basketball"), db);
 
     }
 
+
+    /**
+     * Beim Upgraden werden die alten Tabellen gelöscht und neue erstellt
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -148,6 +208,10 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
+    /**
+     * Fügt den Tabellen ein Objekt hinzu, dass automatisch bestimmt wird
+     */
     public void add(Object klasse){
         if(klasse instanceof Statistikwerte){
             addStatistikwerte((Statistikwerte) klasse);
@@ -169,6 +233,10 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
+
+    /**
+     * Fügt den Tabellen ein Objekt hinzu, dass automatisch bestimmt wird
+     */
     public void add(Object klasse, SQLiteDatabase db){
         if(klasse instanceof Kategorie){
             addKategorie((Kategorie)klasse, db);
@@ -178,12 +246,16 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
+
+    /**
+     * Gibt ein Objekt zurück, dass anhand der ID und der Klasse gesucht wird
+     */
     public Object find(int id, Object klasse){
 
         if(klasse instanceof Statistik){
             return findStatistik(id);
         }
-        if(klasse instanceof Spieler){
+        else if(klasse instanceof Spieler){
             return findSpieler(id);
         }
         else if (klasse instanceof Kategorie){
@@ -199,6 +271,10 @@ public class DBHandler extends SQLiteOpenHelper {
         return null;
     }
 
+
+    /**
+     * Aktualisiert ein Objekt, das automatisch an der Klasse zugeteilt wird
+     */
     public void update(Object klasse){
         if(klasse instanceof Statistikwerte){
             updateStatistikwerte((Statistikwerte) klasse);
@@ -220,6 +296,10 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
+
+    /**
+     * Gibt Objekte zurück, die der Klasse entsprechen, die einer Sportart angehören
+     */
     public ArrayList<? extends Object> findObjectsDerSportart(Object klasse, String sportart){
 
         if(klasse instanceof Spieler){
@@ -239,6 +319,10 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
+
+    /**
+     * Löscht ein Objekt einer Klasse automatisch aus der Tabelle
+     */
     public void delete(Object klasse){
         if(klasse instanceof Statistikwerte){
             deleteStatistikwerte((Statistikwerte) klasse);
@@ -427,6 +511,10 @@ public class DBHandler extends SQLiteOpenHelper {
         return kategorien.findByMannschaftAndAktiv(mannschaft);
     }
 
+    public ArrayList<Kategorie> getAllDefaultKategorienDerSportart(String sportart) {
+        return kategorien.findAllDefaultKategorienBySportart(sportart);
+    }
+
     private void updateKategorie(Kategorie kategorie) {
         kategorien.update(kategorie);
     }
@@ -439,12 +527,16 @@ public class DBHandler extends SQLiteOpenHelper {
         return kategorien.findByStatistik(statistik);
     }
 
-    public ArrayList<String> getAllKategorisierungsnamen(){
-        return kategorien.findAllKategorieartbezeichnungen();
+    public ArrayList<String> getAllKategorisierungsnamen(Mannschaft mannschaft){
+        return kategorien.findAllKategorieartbezeichnungenByMannschaft(mannschaft);
     }
 
-    public ArrayList<ArrayList<Kategorie>> getAllKategorienarten(){
-        return kategorien.findByKategorieartAll();
+    public ArrayList<ArrayList<Kategorie>> getAllKategorienarten(Mannschaft mannschaft){
+        return kategorien.findByKategorieartAll(mannschaft);
+    }
+
+    public ArrayList<Kategorie> findAktivKategorienByKategorisierungAndMannschaft(String name, Mannschaft mannschaft){
+        return kategorien.findByKategorisierung(name, mannschaft);
     }
 
     //----------------------------------------------------------------------------------------------

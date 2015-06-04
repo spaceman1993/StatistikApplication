@@ -26,6 +26,34 @@ public class ConfigActivity extends Activity {
         setContentView(R.layout.activity_config);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, HauptmenuActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_config, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public void mannschaft_click(View view){
         Intent intent = new Intent(this, MannschaftActivity.class);
         intent.putExtra("Update", true);
@@ -42,9 +70,5 @@ public class ConfigActivity extends Activity {
         Intent intent = new Intent(this, KategorieActivity.class);
         intent.putExtra("Update", true);
         startActivity(intent);
-    }
-
-    public void fertig_click(View view){
-        finish();
     }
 }

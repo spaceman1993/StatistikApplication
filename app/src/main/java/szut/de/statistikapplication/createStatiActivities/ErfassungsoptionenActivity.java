@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
@@ -30,12 +29,13 @@ import database.data.Spieler;
 import database.data.Statistik;
 import database.data.Statistikwerte;
 import szut.de.statistikapplication.Globals;
+import szut.de.statistikapplication.HauptmenuActivity;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
 import widgets.swipemenu.SwipeMenuEditDelete;
 import widgets.swipemenulistview.SwipeMenuListView;
 
-public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
+public class ErfassungsoptionenActivity extends OnTouchCloseKeyboardActivity {
 
     //Global-Varaiblen
     Globals g;
@@ -129,6 +129,34 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, AufnahmemodusActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_erfasse_neue_stati, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     public void stati_Anlegen(View view){
 
         DBHandler dbHandler =  new DBHandler(context, null, null, 1);
@@ -167,7 +195,7 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
                 gegnertore.setText(String.valueOf(statistik.getEigeneTore()));
             }
 
-            AlertDialog.Builder alert = new AlertDialog.Builder(ErfasseNeueStatiActivity.this);
+            AlertDialog.Builder alert = new AlertDialog.Builder(ErfassungsoptionenActivity.this);
             alert.setView(v);
             alert.setTitle("Endergebnis");
             alert.setMessage("Tragen Sie das Endergebnis des Spiels ein:");
@@ -237,7 +265,7 @@ public class ErfasseNeueStatiActivity extends OnTouchCloseKeyboardActivity {
                 startActivity(intent);
             }
             else {
-                Intent intent = new Intent(this, ErfassungsActivity.class);
+                Intent intent = new Intent(this, LiveErfassungActivity.class);
 
                 dbHandler.close();
                 startActivity(intent);

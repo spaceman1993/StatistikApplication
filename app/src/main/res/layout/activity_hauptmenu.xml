@@ -20,6 +20,8 @@
         <TextView
             android:id="@+id/vereinsname"
             android:text="@string/vereinsname"
+            android:ellipsize="end"
+            android:singleLine="true"
             style="@style/seitenueberschrift" />
 
         <TextView

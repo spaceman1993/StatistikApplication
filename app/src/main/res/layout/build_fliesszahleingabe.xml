@@ -1,46 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/counterView"
-    android:layout_width="80dp"
-    android:layout_height="100dp"
-    android:orientation="vertical"
-    android:gravity="bottom"
-    android:background="@drawable/red_button"
-    android:padding="5dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/katItemView"
+    android:layout_width="fill_parent"
+    android:layout_height="85dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/red_button">
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
         android:src="@drawable/tor"
-        android:paddingBottom="3dp"
-        />
-
-    <EditText
-        android:id="@+id/fliesszahlText"
-        android:inputType="numberDecimal"
-        android:layout_width="fill_parent"
-        android:layout_height="25dp"
-        android:text="@string/platzhalterInteger"
-        android:textStyle="bold"
-        android:textSize="15sp"
-        android:gravity="center"
-        android:paddingBottom="4dp"
-        android:paddingRight="1dp"
-        android:paddingLeft="1dp"
-        android:digits="0123456789.,"/>
+        android:layout_alignParentLeft="true"/>
 
     <TextView
         android:id="@+id/beschreibung"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
         android:text="@string/beschreibung"
-        android:textStyle="bold"
-        android:textSize="10sp"
-        android:textColor="@color/abc_primary_text_disable_only_material_dark"
-        android:gravity="center"
-        />
+        android:layout_toRightOf="@id/icon"
+        android:layout_toLeftOf="@+id/wert"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:gravity="left|center"
+        style="@style/button_textsmall"/>
 
-    </LinearLayout>
+    <EditText
+        android:id="@+id/wert"
+        android:inputType="numberDecimal"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:text="@string/platzhalterInteger"
+        android:ems="3"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:textColor="#000000"
+        style="@style/button_textsmall"/>
+
+
+</RelativeLayout>

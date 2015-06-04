@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/table_spieler"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true"
     android:orientation="vertical">
@@ -15,7 +15,8 @@
 
         <TextView
             android:id="@+id/kategorie"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity="center"
             android:text="@string/beschreibung"
             style="@style/smalltext"/>
 

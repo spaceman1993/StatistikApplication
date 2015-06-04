@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import database.data.Position;
 
 /**
- * Created by Spaceman on 01.04.2015.
+ * Hier sind alle notwendigen SQL-Statements gesammelt, die für die Position notwenidig sind
  */
 public class SQL_Position {
 
@@ -20,7 +20,9 @@ public class SQL_Position {
     private final String COLUMN_NAMELANG = "nachname";
     private final String COLUMN_SPORTART = "sportart";
 
+    //Datenbankzugriff mit Schreibrechten
     private SQLiteDatabase dbW;
+    //Datenbankzugriff mit Leserechten
     private SQLiteDatabase dbR;
 
     public SQL_Position(SQLiteOpenHelper db){
@@ -32,6 +34,9 @@ public class SQL_Position {
         this.dbW = dbW;
     }
 
+    /**
+     * Erzeugt die Position-Tabelle in der Datenbank
+     */
     public void createTable(){
 
         String CREATE_POSITION_TABLE = "CREATE TABLE " +
@@ -45,10 +50,17 @@ public class SQL_Position {
         dbW.execSQL(CREATE_POSITION_TABLE);
     }
 
+    /**
+     * Löscht die Position-Tabelle in der Datenbank
+     */
     public void deleteTable(){
         dbW.execSQL("DROP TABLE IF EXISTS " + TABLE_POSITION);
     }
 
+
+    /**
+     * Fügt einen neuen Eintrag in die Tabelle ein
+     */
     public void add(Position position) {
 
         ContentValues values = new ContentValues();
@@ -59,6 +71,10 @@ public class SQL_Position {
         dbW.insert(TABLE_POSITION, null, values);
     }
 
+
+    /**
+     * Fügt einen neuen Eintrag in die Tabelle ein
+     */
     public void add(Position position, SQLiteDatabase db) {
 
         ContentValues values = new ContentValues();
@@ -69,6 +85,10 @@ public class SQL_Position {
         db.insert(TABLE_POSITION, null, values);
     }
 
+
+    /**
+     * Liefert den Datensatz mit einer bestimmten ID zurück
+     */
     public Position findById(int id) {
         String query = "Select * FROM " + TABLE_POSITION + " WHERE " + COLUMN_ID + " =  \"" + id + "\"";
 
@@ -91,6 +111,10 @@ public class SQL_Position {
         return position;
     }
 
+
+    /**
+     * Liefert sämtliche Datensätze zurück die die Sportart aufweisen
+     */
     public ArrayList<Position> findBySportart(String sportart){
 
         String query = "Select * FROM " + TABLE_POSITION + " WHERE " + COLUMN_SPORTART + " =  \"" + sportart + "\"";
@@ -118,6 +142,10 @@ public class SQL_Position {
         return positionsListe;
     }
 
+
+    /**
+     * Aktualisiert einen Datensatz
+     */
     public void update(Position position) {
 
         ContentValues values = new ContentValues();
@@ -128,6 +156,10 @@ public class SQL_Position {
         dbW.update(TABLE_POSITION, values, COLUMN_ID + " = " + position.getId(), null);
     }
 
+
+    /**
+     * Löscht einen Datensatz
+     */
     public void deletePosition(Position position) {
 
         dbW.delete(TABLE_POSITION, COLUMN_ID + " = " + position.getId(), null);

@@ -31,12 +31,16 @@ import java.util.List;
 import database.DBHandler;
 import database.data.Mannschaft;
 import hilfklassen.OnTouchCloseKeyboardActivity;
+import szut.de.statistikapplication.ConfigActivity;
 import szut.de.statistikapplication.Globals;
+import szut.de.statistikapplication.HauptmenuActivity;
 import szut.de.statistikapplication.R;
 import widgets.cropOption.CropOption;
 import widgets.cropOption.CropOptionAdapter;
 
-
+/**
+ * Eine Activity, die die Mannschaftseinstellungen einer Mannschaft verwaltet
+ */
 public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
 
     //Global-Varaiblen
@@ -66,6 +70,9 @@ public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
     private Bitmap foto;
 
 
+    /**
+     * Erzeugt eine Activity ohne Titleanzeige
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -177,8 +184,6 @@ public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
      */
     public void fertig_Click(View view) {
 
-
-
         String vereinsnameText = vereinsname.getText().toString();
         String mannschaftsnameText = mannschaftsname.getText().toString();
 
@@ -219,10 +224,12 @@ public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
                 startActivity(intent);
             }
         }
-
-
     }
 
+
+    /**
+     * Auswahl zwischen einem Foto vom Handy und das Erstellen eines Fotos mit der Kamera
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode != RESULT_OK) return;
@@ -253,6 +260,10 @@ public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
         }
     }
 
+
+    /**
+     * Wählt ein Schneideapp aus und skaliert damit das gewählte Foto für das Vereinslogo
+     */
     private void doCrop() {
         final ArrayList<CropOption> cropOptions = new ArrayList<CropOption>();
 
@@ -323,6 +334,48 @@ public class MannschaftActivity extends OnTouchCloseKeyboardActivity {
                 alert.show();
             }
         }
+    }
+
+
+    /**
+     * Beim Drücken der Zurück-Taste wird bei einem Update der Mannschaft zurück zum Config-Menü geleitet,
+     * ansonsten wird die erstellte Mannschaft gelöscht, die man bis dahin erstellt hat
+     */
+    @Override
+    public void onBackPressed() {
+
+        if(!isUpdate){
+            DBHandler dbHandler =  new DBHandler(context, null, null, 1);
+            dbHandler.delete(mannschaft);
+            Intent intent = new Intent(this, SportauswahlActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(this, ConfigActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_mannschaft, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

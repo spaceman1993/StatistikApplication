@@ -34,7 +34,7 @@ import hilfklassen.sorter.spieler.SortTrikonummer;
 import szut.de.statistikapplication.R;
 import szut.de.statistikapplication.createMannschaftActivities.NewKategorieActivity;
 import szut.de.statistikapplication.createMannschaftActivities.NewSpielerActivity;
-import szut.de.statistikapplication.createStatiActivities.ErfasseNeueStatiActivity;
+import szut.de.statistikapplication.createStatiActivities.ErfassungsoptionenActivity;
 import szut.de.statistikapplication.showStatiActivities.ErgebnistabelleActivity;
 import widgets.swipemenulistview.SwipeMenu;
 import widgets.swipemenulistview.SwipeMenuCreator;
@@ -221,7 +221,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
 
                     if(selectableKlasse instanceof Statistik){
                         Statistik statistik = (Statistik) object;
-                        intent = new Intent(activity, ErfasseNeueStatiActivity.class);
+                        intent = new Intent(activity, ErfassungsoptionenActivity.class);
 
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("Update", true);
@@ -415,15 +415,14 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
 
                     ergebnis.setText(ergebnisText);
 
-
-                    if(position%3 == 2){
-                        convertView.setBackgroundResource(R.drawable.third_filter);
+                    if(statistik.getEigeneTore() > statistik.getGegnerTore()){
+                        convertView.setBackgroundResource(R.drawable.gewonnen_filter);
                     }
-                    else if(position%3 == 1){
-                        convertView.setBackgroundResource(R.drawable.second_filter);
+                    else if(statistik.getEigeneTore() < statistik.getGegnerTore()){
+                        convertView.setBackgroundResource(R.drawable.verloren_filter);
                     }
                     else{
-                        convertView.setBackgroundResource(R.drawable.first_filter);
+                        convertView.setBackgroundResource(R.drawable.unentschieden_filter);
                     }
                 }
             }
@@ -560,6 +559,7 @@ public class SwipeMenuEditDelete <T extends SelectableItem>{
             sortListe.addAll((ArrayList<T>)inaktiv);
         }
         else{
+            Collections.reverse(liste);
             sortListe = liste;
         }
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import database.DBHandler;
 import database.data.Kategorie;
@@ -19,95 +20,64 @@ import szut.de.statistikapplication.R;
 /**
  * Created by roese on 24.03.2015.
  */
-public class KatItemCounter extends LinearLayout{
+public class KatItemCounter extends KatItem{
 
     private Context context;
 
     private ImageView icon;
     private TextView zaehler;
     private TextView beschreibung;
-
-    private Statistikwerte statistikwert;
     
     public KatItemCounter(Context context, Statistik statistik, Spieler spieler, Kategorie kategorie) {
-        super(context);
-        init(context, statistik, spieler, kategorie);
+        super(context, statistik, spieler, kategorie);
     }
 
     public KatItemCounter(Context context, AttributeSet attrs, Statistik statistik, Spieler spieler, Kategorie kategorie) {
-        super(context, attrs);
-        init(context, statistik, spieler, kategorie);
+        super(context, attrs, statistik, spieler, kategorie);
     }
 
-
-
-    public void init(Context context, Statistik statistik, Spieler spieler, Kategorie kategorie){
-
-        this.context = context;
-
-        DBHandler dbHandler = new DBHandler(context, null, null, 1);
-
-        statistikwert = dbHandler.findStatistikwert(statistik.getId(), spieler.getId(), kategorie.getId());
-        statistikwert.setWert("0");
-        dbHandler.update(statistikwert);
-
-        dbHandler.close();
-
-        initView(context);
-        createListener();
-    }
-
-    private void initView(Context context) {
+    public void initView(Context context) {
 
         LayoutInflater.from(context).inflate(R.layout.build_counter, this);
 
         icon = (ImageView) this.findViewById(R.id.icon);
-        zaehler = (TextView) this.findViewById(R.id.zaehler);
+        zaehler = (TextView) this.findViewById(R.id.wert);
         beschreibung = (TextView) this.findViewById(R.id.beschreibung);
+
+        icon.setImageBitmap(kategorie.getFoto());
+        beschreibung.setText(kategorie.getName());
+        zaehler.setText(statistikwert.getWert());
+
+        findViewById(R.id.katItemView).setOnClickListener(this);
+        findViewById(R.id.katItemView).setOnLongClickListener(this);
     }
 
+    @Override
+    public void onClick(View v) {
+        DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+        int wert = Integer.parseInt(zaehler.getText().toString());
+        wert++;
+        zaehler.setText(Integer.toString(wert));
+        statistikwert.setWert(String.valueOf(wert));
+        dbHandler.update(statistikwert);
+        dbHandler.close();
 
-    private void createListener(){
+    }
 
-        View.OnClickListener onClickListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DBHandler dbHandler = new DBHandler(context, null, null, 1);
-                int wert = Integer.parseInt(zaehler.getText().toString());
-                wert++;
-                zaehler.setText(Integer.toString(wert));
-                statistikwert.setWert(String.valueOf(wert));
-                dbHandler.update(statistikwert);
-                dbHandler.close();
-            }
-        };
+    @Override
+    public boolean onLongClick(View v) {
 
-        icon.setOnClickListener(onClickListener);
-        zaehler.setOnClickListener(onClickListener);
-        beschreibung.setOnClickListener(onClickListener);
+        DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+        int wert = Integer.parseInt(zaehler.getText().toString());
+        if(wert > 0) {
+            wert--;
+        }
+        zaehler.setText(Integer.toString(wert));
+        statistikwert.setWert(String.valueOf(wert));
+        dbHandler.update(statistikwert);
+        dbHandler.close();
 
-
-        View.OnLongClickListener onLongClickListener = new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                DBHandler dbHandler = new DBHandler(context, null, null, 1);
-                int wert = Integer.parseInt(zaehler.getText().toString());
-                if(wert > 0) {
-                    wert--;
-                }
-                zaehler.setText(Integer.toString(wert));
-                statistikwert.setWert(String.valueOf(wert));
-                dbHandler.update(statistikwert);
-                dbHandler.close();
-
-                return true;
-            }
-        };
-
-        icon.setOnLongClickListener(onLongClickListener);
-        zaehler.setOnLongClickListener(onLongClickListener);
-        beschreibung.setOnLongClickListener(onLongClickListener);
-
+        return true;
     }
 
     public void setIconImage(Drawable image){

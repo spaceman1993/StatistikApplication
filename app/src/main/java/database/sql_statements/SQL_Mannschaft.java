@@ -20,7 +20,7 @@ import database.data.Position;
 import szut.de.statistikapplication.R;
 
 /**
- * Created by Spaceman on 01.04.2015.
+ * Hier sind alle notwendigen SQL-Statements gesammelt, die für die Mannschaft notwenidig sind
  */
 public class SQL_Mannschaft {
 
@@ -31,7 +31,9 @@ public class SQL_Mannschaft {
     private final String COLUMN_VEREINLOGO = "vereinslogo";
     private final String COLUMN_SPORTART = "sportart";
 
+    //Datenbankzugriff mit Schreibrechten
     private SQLiteDatabase dbW;
+    //Datenbankzugriff mit Leserechten
     private SQLiteDatabase dbR;
 
     public SQL_Mannschaft(SQLiteOpenHelper db){
@@ -43,9 +45,10 @@ public class SQL_Mannschaft {
         this.dbW = dbW;
     }
 
+    /**
+     * Erzeugt die Mannschaft-Tabelle in der Datenbank
+     */
     public void createTable(){
-
-
         String CREATE_MANNSCHAFT_TABLE = "CREATE TABLE " +
                 TABLE_MANNSCHAFT + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY,"
@@ -58,9 +61,14 @@ public class SQL_Mannschaft {
         dbW.execSQL(CREATE_MANNSCHAFT_TABLE);
     }
 
+    /**
+     * Löscht die Mannschaft-Tabelle in der Datenbank
+     */
     public void deleteTable(){
         dbW.execSQL("DROP TABLE IF EXISTS " + TABLE_MANNSCHAFT);
     }
+
+
 
     public Mannschaft createAndGetNewMannschaft(Resources res){
         ContentValues values = new ContentValues();
@@ -80,6 +88,10 @@ public class SQL_Mannschaft {
         return getLastId();
     }
 
+
+    /**
+     * Fügt einen neuen Eintrag in die Tabelle ein
+     */
     public void add(Mannschaft mannschaft) {
 
         ContentValues values = new ContentValues();
@@ -97,6 +109,10 @@ public class SQL_Mannschaft {
         dbW.insert(TABLE_MANNSCHAFT, null, values);
     }
 
+
+    /**
+     * Liefert den Datensatz mit einer bestimmten ID zurück
+     */
     public Mannschaft findById(int id){
 
         String query = "Select * FROM " + TABLE_MANNSCHAFT + " WHERE " + COLUMN_ID + " = " + id;
@@ -127,6 +143,10 @@ public class SQL_Mannschaft {
         return mannschaft;
     }
 
+
+    /**
+     * Liefert sämtliche Datensätze zurück die die Sportart aufweisen
+     */
     public ArrayList<Mannschaft> findBySportart(String sportart){
 
         String query = "Select * FROM " + TABLE_MANNSCHAFT + " WHERE " + COLUMN_SPORTART + " =  \"" + sportart + "\"";
@@ -161,6 +181,10 @@ public class SQL_Mannschaft {
         return mannschaftsListe;
     }
 
+
+    /**
+     * Aktualisiert einen Datensatz
+     */
     public void update(Mannschaft mannschaft) {
 
         ContentValues values = new ContentValues();
@@ -179,6 +203,10 @@ public class SQL_Mannschaft {
         dbW.update(TABLE_MANNSCHAFT, values, COLUMN_ID + " = " + mannschaft.getId(), null);
     }
 
+
+    /**
+     * Löscht einen Datensatz
+     */
     public void delete(Mannschaft mannschaft) {
         dbW.delete(TABLE_MANNSCHAFT, COLUMN_ID + " = " + mannschaft.getId(), null);
     }
@@ -211,6 +239,10 @@ public class SQL_Mannschaft {
         return mannschaft;
     }
 
+
+    /**
+     * Liefert sämtliche Mannschaften zurück
+     */
     public ArrayList<Mannschaft> getAll(){
         String query = "Select * FROM " + TABLE_MANNSCHAFT;
 

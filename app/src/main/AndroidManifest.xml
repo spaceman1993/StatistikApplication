@@ -53,15 +53,15 @@
             android:label="@string/title_activity_first_start" >
         </activity>
         <activity
-            android:name=".createStatiActivities.ErfasseNeueStatiActivity"
+            android:name=".createStatiActivities.ErfassungsoptionenActivity"
             android:label="@string/title_activity_erfasse_neue_stati" >
         </activity>
         <activity
-            android:name=".createStatiActivities.ErfassungsartActivity"
+            android:name=".createStatiActivities.AufnahmemodusActivity"
             android:label="@string/title_activity_erfassungsart" >
         </activity>
         <activity
-            android:name=".createStatiActivities.ErfassungsActivity"
+            android:name=".createStatiActivities.LiveErfassungActivity"
             android:label="@string/title_activity_erfassungs" >
         </activity>
         <activity

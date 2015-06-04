@@ -12,71 +12,37 @@
         android:scaleType="fitXY"
         />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="0dp"
-        android:paddingLeft="@dimen/activity_horizontal_marginLeft"
-        android:paddingRight="10dp"
-        android:paddingTop="0dp">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_horizontal_marginRight"
+        android:paddingLeft="45dp"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/header"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/benennung"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:paddingBottom="0dp"
-            android:paddingLeft="@dimen/activity_horizontal_marginLeft"
-            android:paddingRight="@dimen/activity_horizontal_marginRight"
-            android:paddingTop="0dp"
-            android:gravity="center" >
+            android:text="Benennung"
+            android:paddingBottom="10dp"
+            style="@style/seitenueberschrift"/>
 
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/footer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:paddingBottom="20dp">
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:gravity="end|center"
-                android:paddingRight="35dp">
-
-                <Button
-                    android:id="@+id/stati_Fertig"
-                    android:background= "@drawable/ic_ok"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:onClick="stati_Fertig_Click" />
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/body"
-            android:layout_below="@id/header"
-            android:layout_above="@id/footer"
-            android:orientation="vertical"
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_width="match_parent" >
+            android:stretchMode="columnWidth"
+            android:clickable="true"
+            android:verticalSpacing="20dp"
+            android:gravity="center"
+            android:numColumns="2"
+            android:paddingBottom="60dp"
+            android:clipToPadding="false">
 
-            <ListView
-                android:id="@+id/erfassungsListe"
-                android:background="@android:color/transparent"
-                android:cacheColorHint="@android:color/transparent"
-                android:layout_height="fill_parent"
-                android:layout_width="fill_parent"
-                android:drawSelectorOnTop="true"
-                android:choiceMode="none">
-            </ListView>
+        </GridView>
 
         </LinearLayout>
-    </RelativeLayout>
 
 
     <ImageView

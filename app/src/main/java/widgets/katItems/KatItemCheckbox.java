@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import database.DBHandler;
 import database.data.Kategorie;
@@ -19,74 +20,64 @@ import szut.de.statistikapplication.R;
 /**
  * Created by roese on 24.03.2015.
  */
-public class KatItemCheckbox extends LinearLayout{
+public class KatItemCheckbox extends KatItem{
 
     private ImageView icon;
     private CheckBox checkBox;
     private TextView beschreibung;
 
-    private Statistikwerte statistikwert;
-
     public KatItemCheckbox(Context context, Statistik statistik, Spieler spieler, Kategorie kategorie) {
-        super(context);
-        init(context, statistik, spieler, kategorie);
+        super(context, statistik, spieler, kategorie);
     }
 
     public KatItemCheckbox(Context context, AttributeSet attrs, Statistik statistik, Spieler spieler, Kategorie kategorie) {
-        super(context, attrs);
-        init(context, statistik, spieler, kategorie);
+        super(context, attrs, statistik, spieler, kategorie);
     }
 
+    public void initView(Context context) {
 
-
-    public void init(Context context, Statistik statistik, Spieler spieler, Kategorie kategorie){
-
-        DBHandler dbHandler = new DBHandler(context, null, null, 1);
-
-        statistikwert = dbHandler.findStatistikwert(statistik.getId(), spieler.getId(), kategorie.getId());
-        statistikwert.setWert("0");
-        dbHandler.update(statistikwert);
-
-        dbHandler.close();
-
-        initView(context);
-        createListener();
-    }
-
-    private void initView(Context context) {
-
-        LayoutInflater.from(context).inflate(R.layout.build_checkbox, this);
+        LayoutInflater.from(context).inflate(R.layout.build_checkbox, this, true);
 
         icon = (ImageView) this.findViewById(R.id.icon);
-        checkBox = (CheckBox) this.findViewById(R.id.checkbox);
+        checkBox = (CheckBox) this.findViewById(R.id.wert);
         beschreibung = (TextView) this.findViewById(R.id.beschreibung);
+
+        icon.setImageBitmap(kategorie.getFoto());
+        beschreibung.setText(kategorie.getName());
+        if(statistikwert.getWert().equals("1")) {
+            checkBox.setChecked(true);
+        }
+        else{
+            checkBox.setChecked(false);
+        }
+
+
+        findViewById(R.id.katItemView).setOnClickListener(this);
+        findViewById(R.id.katItemView).setOnLongClickListener(this);
     }
 
+    @Override
+    public void onClick(View v) {
+        DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
 
-    private void createListener(){
+        if(checkBox.isChecked()){
+            checkBox.setChecked(false);
+            statistikwert.setWert("0");
+        }
+        else{
+            checkBox.setChecked(true);
+            statistikwert.setWert("1");
+        }
 
-        View.OnClickListener onClickListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+        dbHandler.update(statistikwert);
+        dbHandler.close();
 
-                if(checkBox.isChecked()){
-                    checkBox.setChecked(false);
-                    statistikwert.setWert("0");
-                }
-                else{
-                    checkBox.setChecked(true);
-                    statistikwert.setWert("1");
-                }
+    }
 
-                dbHandler.update(statistikwert);
-                dbHandler.close();
-            }
-        };
-
-        icon.setOnClickListener(onClickListener);
-        beschreibung.setOnClickListener(onClickListener);
-
+    @Override
+    public boolean onLongClick(View v) {
+        //long clicked
+        return true;
     }
 
 }
